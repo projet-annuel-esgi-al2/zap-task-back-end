@@ -1,0 +1,132 @@
+name: PHP CI
+
+on:
+  push
+
+jobs:
+  phpstan:
+    name: PHPStan - Static Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, pdo_mysql
+          coverage: none
+          tools: composer:v2
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Cache Result cache
+        uses: actions/cache@v4
+        with:
+          path: ./tmp
+          key: "result-cache-${{ github.run_id }}"
+          restore-keys: |
+            result-cache-
+      - name: Get PHPStan version
+        id: phpstan-version
+        run: |
+          echo "Phpstan version = $(./vendor/bin/phpstan -V)"
+          echo "phpstan_version=$(echo $(./vendor/bin/phpstan -V) | awk '{print $NF}')" >> $GITHUB_OUTPUT
+      - uses: php-actions/phpstan@v3
+        with:
+          version: ${{ steps.phpstan-version.outputs.phpstan_version }}
+          path: app/
+          level: 4
+          configuration: phpstan.neon
+          memory_limit: 2G
+          args: -vvv
+
+  pint:
+    name: Pint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run Laravel Pint
+        run: vendor/bin/pint --test
+
+  phpunit:
+    name: PHPUnit - Unit Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, pdo_pgsql
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress && npm install
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          npm run build
+          php artisan key:generate
+
+      - name: Run test suite
+        run: vendor/bin/phpunit
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: test
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
