@@ -110,7 +110,7 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}"
-          restore-keys: ${{ runner.os }}-composer-
+          restore-keys: "${{ runner.os }}-composer-"
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress && npm install
@@ -119,7 +119,7 @@ jobs:
         uses: Daniel-Marynicz/postgresql-action@master
         with:
           postgres_image_tag: 16
-          postgres_extensions: uuid-ossp
+          postgres_extensions: "uuid-ossp"
           postgres_user: root
           postgres_password: password
           postgres_db: zaptask_test
