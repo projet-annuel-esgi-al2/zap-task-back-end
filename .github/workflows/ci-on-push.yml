@@ -121,8 +121,8 @@ jobs:
           postgres_image_tag: 16
           postgres_extensions: uuid-ossp
           postgres_user: root
-          postgres_password: ${DB_PASSWORD:-password}
-          postgres_db: ${DB_TESTING_DATABASE:zaptask_test}
+          postgres_password: password
+          postgres_db: zaptask_test
 
       - name: Prepare environment
         run: |
