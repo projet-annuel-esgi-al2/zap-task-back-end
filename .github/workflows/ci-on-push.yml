@@ -113,13 +113,14 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: | 
+          composer install --prefer-dist --no-progress
+          npm install
+          npm run build
 
       - name: Prepare environment
         run: |
           cp .env.example .env
-          npm install
-          npm run build
           php artisan key:generate
 
       - name: Run test suite
