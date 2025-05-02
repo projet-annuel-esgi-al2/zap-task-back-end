@@ -5,7 +5,7 @@ on:
 
 jobs:
   phpstan:
-    name: Static Analysis (PHPStan)
+    name: PHPStan - Static Analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +37,7 @@ jobs:
         run: vendor/bin/phpstan analyse
 
   pint:
-    name: Code Style (Laravel Pint)
+    name: Pint
     runs-on: ubuntu-latest
 
     steps:
@@ -58,7 +58,7 @@ jobs:
         run: vendor/bin/pint --test
 
   phpunit:
-    name: Tests (PHPUnit)
+    name: PHPUnit - Unit Tests
     runs-on: ubuntu-latest
 
     services:
