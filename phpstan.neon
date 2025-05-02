@@ -1,0 +1,31 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+    - vendor/ekino/phpstan-banned-code/extension.neon
+
+parameters:
+    tmpDir: tmp
+    paths:
+        - app
+
+    # The level 9 is the highest level
+    level: 4
+
+    banned_code:
+        nodes:
+            - type: Expr_FuncCall
+              functions:
+                  - dd
+                  - dump
+                  - var_dump
+
+#    excludePaths:
+#        - ./app/Console/Commands/Legacy/FillMissingRealtorsFromHubspot.php
+#        - ./app/Macros/*
+#        - ./app/Services/Gercop/Testing/Responses/FakeResponse.php
+
+#    universalObjectCratesClasses:
+#            - Laravel\Nova\Fields\ActionFields
+
+#rules:
+#    - Spatie\Ray\PHPStan\RemainingRayCallRule
+
