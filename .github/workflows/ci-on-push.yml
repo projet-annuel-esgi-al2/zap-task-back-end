@@ -1,8 +1,7 @@
 name: PHP CI
 
 on:
-  push:
-    branches: [ main, staging ]
+  push
 
 jobs:
   phpstan:
