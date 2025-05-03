@@ -83,8 +83,8 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_PASSWORD: root
-          POSTGRES_USER: password
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: zaptask_test
         ports:
           - 5432:5432
