@@ -35,8 +35,8 @@ return new class extends Migration
             $table->dropColumn('uuid');
         });
 
-//        DB::statement('ALTER TABLE users ALTER COLUMN id TYPE integer USING (id::integer);');
-//        DB::statement('ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval(\'users_id_seq\');');
+        //        DB::statement('ALTER TABLE users ALTER COLUMN id TYPE integer USING (id::integer);');
+        //        DB::statement('ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval(\'users_id_seq\');');
         DB::statement('DROP EXTENSION IF EXISTS "uuid-ossp";');
     }
 };
