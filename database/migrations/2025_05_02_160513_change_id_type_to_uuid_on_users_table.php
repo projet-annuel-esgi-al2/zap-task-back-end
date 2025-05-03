@@ -29,14 +29,12 @@ return new class extends Migration
             $table->dropPrimary('users_pkey');
             $table->id();
         });
-        DB::statement('ALTER TABLE users ALTER COLUMN uuid DROP DEFAULT;');
 
+        DB::statement('ALTER TABLE users ALTER COLUMN uuid DROP DEFAULT;');
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('uuid');
         });
 
-        //        DB::statement('ALTER TABLE users ALTER COLUMN id TYPE integer USING (id::integer);');
-        //        DB::statement('ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval(\'users_id_seq\');');
         DB::statement('DROP EXTENSION IF EXISTS "uuid-ossp";');
     }
 };
