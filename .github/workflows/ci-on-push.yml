@@ -83,9 +83,9 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: test
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: zaptask_test
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -110,10 +110,19 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: "${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}"
-          restore-keys: ${{ runner.os }}-composer-
+          restore-keys: "${{ runner.os }}-composer-"
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress && npm install
+
+#      - name: Setup Postgres database
+#        uses: Daniel-Marynicz/postgresql-action@master
+#        with:
+#          postgres_image_tag: 16
+#          postgres_extensions: "uuid-ossp"
+#          postgres_user: root
+#          postgres_password: password
+#          postgres_db: zaptask_test
 
       - name: Prepare environment
         run: |
@@ -127,6 +136,6 @@ jobs:
           DB_CONNECTION: pgsql
           DB_HOST: 127.0.0.1
           DB_PORT: 5432
-          DB_DATABASE: test
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
+          DB_TESTING_DATABASE: zaptask_test
+          DB_USERNAME: root
+          DB_PASSWORD: password
