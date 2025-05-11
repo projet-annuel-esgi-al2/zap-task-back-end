@@ -10,6 +10,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    /** 
     public function up(): void
     {
         DB::statement('CREATE EXTENSION if NOT EXISTS "uuid-ossp"');
@@ -37,4 +38,5 @@ return new class extends Migration
 
         DB::statement('DROP EXTENSION IF EXISTS "uuid-ossp";');
     }
+   
 };
