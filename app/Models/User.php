@@ -20,7 +20,6 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property ?string $rememberToken
  * @property PersonalAccessToken $latestAccessToken
  * @property Collection $tokens
- *
  * */
 class User extends Authenticatable
 {
@@ -28,6 +27,7 @@ class User extends Authenticatable
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
     use HasUUID;
 
     /**
