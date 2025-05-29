@@ -73,7 +73,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Pint version
-        run: echo $(pint --version)
+        run: echo $(vendor/bin/pint --version)
 
       - name: Run Laravel Pint
         run: vendor/bin/pint --test
