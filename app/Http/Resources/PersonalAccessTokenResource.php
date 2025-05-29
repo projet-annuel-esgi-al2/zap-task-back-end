@@ -18,7 +18,6 @@ class PersonalAccessTokenResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
             'tokenable_type' => $this->tokenable_type,
             'tokenable_id' => $this->tokenable_id,
             'name' => $this->name,
