@@ -18,4 +18,5 @@ class Action extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
 }

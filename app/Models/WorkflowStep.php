@@ -26,11 +26,11 @@ class WorkflowStep extends Model
 
     public function trigger()
     {
-        return $this->belongsTo(Trigger::class, 'ref_id')->where('type', 'trigger');
+        return $this->belongsTo(Trigger::class, 'ref_id');
     }
 
     public function action()
     {
-        return $this->belongsTo(Action::class, 'ref_id')->where('type', 'action');
+        return $this->belongsTo(Action::class, 'ref_id');
     }
 }

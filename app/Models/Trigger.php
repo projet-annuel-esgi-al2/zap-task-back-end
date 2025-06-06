@@ -18,4 +18,9 @@ class Trigger extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
+    public function workflowSteps()
+    {
+        return $this->hasMany(WorkflowStep::class, 'ref_id');
+    }
 }
