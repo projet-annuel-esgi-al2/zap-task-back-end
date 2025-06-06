@@ -52,4 +52,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function services()
+    {
+        return $this->hasMany(UserService::class);
+    }
+
+    public function workflows()
+    {
+        return $this->hasMany(Workflow::class);
+    }
 }
