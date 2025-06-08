@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Model::shouldBeStrict($this->app->isLocal());
+        // Set the default morph key to uuid to automatically generate the correct foreign id type in migrations.
+        Builder::defaultMorphKeyType('uuid');
+
+        // Turn morph map enforcement
+        Relation::requireMorphMap();
+
+        // Use sting mapping instead of model name in polymorphic relationship.
+        Relation::morphMap([
+            'user' => \App\Models\User::class,
+        ]);
     }
 }
