@@ -7,18 +7,27 @@ use App\Http\Resources\PersonalAccessTokenResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticateUserController extends Controller
 {
     public function __invoke(Request $request)
     {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (! Auth::attempt($credentials)) {
+            abort(Response::HTTP_UNAUTHORIZED, 'Incorrect email or password');
+        }
+
         $user = User::query()
-            ->where('email', $request->input('email'))
+            ->where('email', $credentials['email'])
             ->first();
 
-        if (is_null($user) || ! Hash::check($request->input('password'), $user->password)) {
-            abort(Response::HTTP_UNAUTHORIZED, 'Incorrect email or password');
+        if ($user->latestAccessToken()->doesntExist()) {
+            abort(Response::HTTP_UNAUTHORIZED, 'No access token');
         }
 
         return response()->json(PersonalAccessTokenResource::make($user->latestAccessToken));
