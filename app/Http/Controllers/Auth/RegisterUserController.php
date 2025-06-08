@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\PersonalAccessTokenResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -35,10 +35,6 @@ class RegisterUserController extends Controller
 
         event(new Registered($user));
 
-        $user->load([
-            'latestAccessToken',
-        ]);
-
-        return response()->json(UserResource::make($user), Response::HTTP_CREATED);
+        return response()->json(PersonalAccessTokenResource::make($user->latestAccessToken), Response::HTTP_CREATED);
     }
 }
