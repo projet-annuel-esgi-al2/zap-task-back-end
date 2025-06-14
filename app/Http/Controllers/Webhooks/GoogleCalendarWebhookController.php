@@ -1,27 +1,25 @@
 <?php
 namespace App\Http\Controllers\Webhooks;
 
+use App\Services\Contracts\WebhookHandlerInterface;
+use App\Services\Google\GoogleCalendarWebhookHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Response;
 
 class GoogleCalendarWebhookController
 {
-    public function __invoke(Request $request)
+    protected $handler;
+
+    public function __construct(GoogleCalendarWebhookHandler $handler)
     {
+        $this->handler = $handler;
+    }
 
-        if ($request->header('X-Goog-Resource-State') === 'sync') {
-            return response('Sync received', 200);
-        }
+    public function __invoke(Request $request)
+    {    Log::info('Webhook handler reçu');
 
-        // logs p
-        Log::info('Webhook Google Calendar reçu', [
-            'headers' => $request->headers->all(),
-            'body' => $request->all(),
-        ]);
+        abort(200, 'Webhook controller reached'); // test immédiat
 
-        // actions au futur ici
-
-        return response()->noContent(); // 204
+        return $this->handler->handle($request);
     }
 }

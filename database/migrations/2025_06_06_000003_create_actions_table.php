@@ -8,7 +8,7 @@ return new class extends Migration {
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->uuid('service_id')->constrained()->onDelete('cascade');
             $table->json('config_schema')->nullable();
             $table->timestamps();
         });

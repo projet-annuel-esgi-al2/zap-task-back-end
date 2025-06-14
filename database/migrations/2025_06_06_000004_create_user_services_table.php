@@ -7,7 +7,7 @@ return new class extends Migration {
         Schema::create('user_services', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->uuid('service_id')->constrained()->onDelete('cascade');
 
             $table->text('access_token');
             $table->text('refresh_token')->nullable();

@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\GoogleOAuthController;
+use App\Http\Controllers\Webhooks\GoogleCalendarWebhookController;
+
+
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -20,7 +23,10 @@ Route::get('/google/redirect', [GoogleOAuthController::class, 'redirect']);
 Route::get('/google/callback', [GoogleOAuthController::class, 'callback']);
 
 // Webhook Google Calendar
-Route::post('/webhooks/google/calendar', [GoogleCalendarWebhookController::class, '__invoke']);
+//Route::post('/webhooks/google/calendar', [GoogleCalendarWebhookController::class, '__invoke']);
+Route::post('/google/calendar/webhook', GoogleCalendarWebhookController::class)
+    ->withoutMiddleware([\Illuminate\Session\Middleware\StartSession::class, \Illuminate\View\Middleware\ShareErrorsFromSession::class])
+    ->name('google.calendar.webhook');
 
 
 
