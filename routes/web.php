@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\GoogleOAuthController;
+use App\Http\Webhooks\GoogleCalendarWebhookController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\GoogleOAuthController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -14,15 +15,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-
 // OAuth Google
 Route::get('/google/redirect', [GoogleOAuthController::class, 'redirect']);
 Route::get('/google/callback', [GoogleOAuthController::class, 'callback']);
 
 // Webhook Google Calendar
 Route::post('/webhooks/google/calendar', [GoogleCalendarWebhookController::class, '__invoke']);
-
-
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

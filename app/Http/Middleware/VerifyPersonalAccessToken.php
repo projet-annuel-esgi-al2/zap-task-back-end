@@ -18,7 +18,7 @@ class VerifyPersonalAccessToken
     {
         $personalAccessToken = $request->header('Pat');
 
-        if (is_null($personalAccessToken)) {
+        if (! $personalAccessToken) {
             abort(Response::HTTP_UNAUTHORIZED, 'No access token specified');
         }
 

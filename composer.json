@@ -10,10 +10,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "google/apiclient": "^2.18",
+        "google/apiclient-services": "^0.398.0",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
-        "laravel/socialite": "^5.20",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.20",
         "laravel/tinker": "^2.10.1",
         "ramsey/uuid": "^4.7",
         "saloonphp/laravel-plugin": "^3.5",
@@ -22,6 +24,7 @@
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.5",
         "ekino/phpstan-banned-code": "^3.0",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "^3.4",
@@ -34,6 +37,9 @@
         "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
@@ -46,6 +52,9 @@
         }
     },
     "scripts": {
+        "pre-autoload-dump": [
+            "Google\\Task\\Composer::cleanup"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -78,7 +87,10 @@
     "extra": {
         "laravel": {
             "dont-discover": []
-        }
+        },
+        "google/apiclient-services": [
+            "Calendar"
+        ]
     },
     "config": {
         "optimize-autoloader": true,
