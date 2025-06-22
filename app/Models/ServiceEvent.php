@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $trigger_notification_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceEvent newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceEvent newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceEvent query()
@@ -29,8 +28,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceEvent whereTriggerNotificationType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceEvent whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceEvent whereUpdatedAt($value)
- *
  * @mixin Eloquent
+ * @property-read \App\Models\Service $service
  * @mixin \Eloquent
  */
 class ServiceEvent extends Model
