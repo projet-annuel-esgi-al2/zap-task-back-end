@@ -27,9 +27,9 @@ class GoogleCalendarConnector extends Connector
     protected function defaultOauthConfig(): OAuthConfig
     {
         return OAuthConfig::make()
-            ->setClientId(config('app.google_client_id', env('GOOGLE_CLIENT_ID')))
-            ->setClientSecret(config('app.google_client_secret', env('GOOGLE_CLIENT_SECRET')))
-            ->setRedirectUri(config('app.google_redirect_uri', env('GOOGLE_REDIRECT_URI')))
+            ->setClientId(config('services.google.client_id'))
+            ->setClientSecret(config('services.google.client_secret'))
+            ->setRedirectUri(config('services.google.redirect_uri'))
             ->setDefaultScopes(config('services.google.calendar.default_scopes'))
             ->setAuthorizeEndpoint(config('services.google.calendar.auth_url'))
             ->setTokenEndpoint(config('services.google.calendar.token_url'))

@@ -116,7 +116,7 @@ jobs:
           restore-keys: "${{ runner.os }}-composer-"
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress && npm install
+        run: composer install --prefer-dist --no-progress
 
 #      - name: Setup Postgres database
 #        uses: Daniel-Marynicz/postgresql-action@master
@@ -130,7 +130,6 @@ jobs:
       - name: Prepare environment
         run: |
           cp .env.example .env
-          npm run build
           php artisan key:generate
 
       - name: Run test suite

@@ -14,6 +14,7 @@ class GoogleOAuthController extends Controller
     {
         $client = new Client;
 
+        /** @phpstan-ignore-next-line */
         return Socialite::driver('google')
             ->scopes(['https://www.googleapis.com/auth/calendar'])
             ->with([
@@ -41,7 +42,11 @@ class GoogleOAuthController extends Controller
     // callback debuggage
     public function callback()
     {
-        /** @var \Laravel\Socialite\Two\User $googleUser */
+        /**
+         * @var \Laravel\Socialite\Two\User $googleUser
+         *
+         * @phpstan-ignore-next-line
+         */
         $googleUser = Socialite::driver('google')->stateless()->user();
         Log::info(json_encode($googleUser->attributes));
         Log::info($googleUser->token);
