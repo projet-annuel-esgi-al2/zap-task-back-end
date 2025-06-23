@@ -162,6 +162,11 @@ trait EnumTrait
         return Arr::random(self::valuesExcept($keys));
     }
 
+    public static function randomCase()
+    {
+        return Arr::random(self::cases());
+    }
+
     public static function optionsWithPrefixedTranslations(?string $locale = null)
     {
         return self::toCollection()->flatMap(fn ($item) => [$item->value => Str::headline(

@@ -49,7 +49,8 @@ class ServiceOAuthControllerTest extends TestCase
         $this->withHeaders([
             'Pat' => $user->latestAccessToken->token,
         ])
-            ->get('/api/subscriptions/'.$service->identifier)
-            ->assertStatus(Response::HTTP_NOT_FOUND);
+            ->get('/api/subscriptions/'.$service->identifier->value)
+            ->assertStatus(Response::HTTP_MOVED_PERMANENTLY)
+            ->assertHeader('Location', route('service-oauth-redirect', ['serviceIdentifier' => $service->identifier->value]));
     }
 }

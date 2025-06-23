@@ -22,7 +22,8 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         Route::get('/', [ServiceOAuthController::class, 'get']);
     });
 
-    Route::get('{serviceIdentifier}/redirect', [ServiceOAuthController::class, 'redirect']);
+    Route::get('{serviceIdentifier}/redirect', [ServiceOAuthController::class, 'redirect'])
+        ->name('service-oauth-redirect');
     Route::get('{serviceIdentifier}/callback', [ServiceOAuthController::class, 'callback']);
 
     Route::get('/users/{user}', function (User $user) {

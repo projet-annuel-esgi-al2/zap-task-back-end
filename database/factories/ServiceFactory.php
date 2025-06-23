@@ -13,8 +13,8 @@ class ServiceFactory extends Factory
 {
     public function definition(): array
     {
-        $identifier = Service\Identifier::randomValue();
-        $name = Str::of($identifier)->headline();
+        $identifier = Service\Identifier::randomCase();
+        $name = Str::of($identifier->value)->headline();
 
         return [
             'identifier' => $identifier,

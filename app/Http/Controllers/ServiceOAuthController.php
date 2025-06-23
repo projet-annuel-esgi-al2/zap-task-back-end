@@ -16,7 +16,9 @@ class ServiceOAuthController extends Controller
     public function get(Identifier $serviceIdentifier): JsonResponse
     {
         if (! auth()->user()->subscribedToService($serviceIdentifier)) {
-            return response()->json('User is not subscribed to this service', Response::HTTP_NOT_FOUND);
+            return response()
+                ->json('User is not subscribed to this service', Response::HTTP_MOVED_PERMANENTLY)
+                ->withHeaders(['Location' => route('service-oauth-redirect', ['serviceIdentifier' => $serviceIdentifier])]);
         }
 
         return response()->json(null, Response::HTTP_FOUND);
@@ -38,7 +40,7 @@ class ServiceOAuthController extends Controller
             $socialite->with($service->oauth_token_options);
         }
 
-        return $socialite->redirect();
+        return $socialite->redirectUrl('https://example.com')->redirect();
     }
 
     public function callback(Identifier $serviceIdentifier): RedirectResponse
