@@ -48,9 +48,9 @@ class ServiceOAuthController extends Controller
 
         $oauthToken = OAuthToken::create([
             'user_id' => auth()->user()->id,
-            'value' => $oauthUser->token,
-            'refresh_token' => $oauthUser->refreshToken,
-            'expires_at' => now()->addSeconds($oauthUser->expiresIn),
+            'value' => $oauthUser->token, // @phpstan-ignore-line
+            'refresh_token' => $oauthUser->refreshToken, // @phpstan-ignore-line
+            'expires_at' => now()->addSeconds($oauthUser->expiresIn), // @phpstan-ignore-line
         ]);
 
         ServiceSubscription::create([
