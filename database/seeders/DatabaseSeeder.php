@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ServiceSeeder::class,
             ServiceScopeSeeder::class,
-            ServiceEventSeeder::class,
+            ServiceActionSeeder::class,
         ]);
     }
 }

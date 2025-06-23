@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\ServiceEvent;
+namespace App\Enums\ServiceAction;
 
 use App\Enums\Traits\EnumTrait;
 

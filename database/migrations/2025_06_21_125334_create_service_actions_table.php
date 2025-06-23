@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_events', function (Blueprint $table) {
+        Schema::create('service_actions', function (Blueprint $table) {
             $table->uuid('id')
                 ->default(new Expression('uuid_generate_v4()'))
                 ->primary();
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreignUuid('service_id')
                 ->constrained();
             $table->string('type'); // trigger or action
+            $table->jsonb('parameters')
+                ->default('{}');
             $table->string('trigger_notification_type')
                 ->nullable(); // polling or webhook
             $table->timestamps();
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_events');
+        Schema::dropIfExists('service_actions');
     }
 };

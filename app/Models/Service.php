@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\Service\Identifier;
 use App\Models\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Service whereSocialiteDriverIdentifier($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Service whereUpdatedAt($value)
  *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceEvent> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceAction> $events
  * @property-read int|null $events_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceScope> $scopes
  * @property-read int|null $scopes_count
@@ -58,9 +57,9 @@ class Service extends Model
         ];
     }
 
-    public function events(): HasMany
+    public function actions(): HasMany
     {
-        return $this->hasMany(ServiceEvent::class);
+        return $this->hasMany(ServiceAction::class);
     }
 
     public function scopes(): HasMany

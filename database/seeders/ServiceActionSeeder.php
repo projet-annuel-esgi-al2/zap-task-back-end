@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Enums\ServiceEvent\Identifier;
-use App\Enums\ServiceEvent\TriggerNotificationType;
-use App\Enums\ServiceEvent\Type;
+use App\Enums\ServiceAction\Identifier;
+use App\Enums\ServiceAction\TriggerNotificationType;
+use App\Enums\ServiceAction\Type;
 use App\Models\Service;
-use App\Models\ServiceEvent;
+use App\Models\ServiceAction;
 use Database\Seeders\Traits\ReadsJsonFile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 
-class ServiceEventSeeder extends Seeder
+class ServiceActionSeeder extends Seeder
 {
     use ReadsJsonFile;
 
@@ -37,6 +37,7 @@ class ServiceEventSeeder extends Seeder
                 unset($record['service_identifier']);
 
                 return array_merge($record, [
+                    'parameters' => json_encode($record['parameters']),
                     'service_id' => $serviceId,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -44,7 +45,6 @@ class ServiceEventSeeder extends Seeder
             })
             ->toArray();
 
-        ServiceEvent::insert($seedData);
-
+        ServiceAction::insert($seedData);
     }
 }
