@@ -13,6 +13,16 @@ use Laravel\Socialite\Facades\Socialite;
 
 class ServiceOAuthController extends Controller
 {
+    /**
+     * Check if the authenticated user is subscribed to a service
+     *
+     * @authenticated
+     *
+     * @response 301 { "message": "User is not subscribed to this service."}
+     * @responseHeader Location string The redirect url
+     *
+     * @response 302
+     */
     public function get(Identifier $serviceIdentifier): JsonResponse
     {
         if (! auth()->user()->subscribedToService($serviceIdentifier)) {
