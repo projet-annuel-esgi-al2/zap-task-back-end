@@ -34,7 +34,7 @@ class ServiceOAuthControllerTest extends TestCase
         $this->withHeaders([
             'Pat' => $user->latestAccessToken->token,
         ])
-            ->get('/api/subscriptions/'.$serviceSubscription->service->identifier)
+            ->get('/api/subscriptions/'.$serviceSubscription->service->identifier->value)
             ->assertStatus(Response::HTTP_FOUND);
     }
 
