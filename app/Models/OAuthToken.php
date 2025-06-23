@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -12,13 +13,16 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read OAuthToken|null $parentToken
  * @property-read \App\Models\ServiceSubscription|null $serviceSubscription
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OAuthToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OAuthToken newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OAuthToken query()
+ *
  * @mixin \Eloquent
  */
 class OAuthToken extends Model
 {
+    use HasFactory;
     use HasUUID;
 
     protected $table = 'oauth_tokens';

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\OAuthToken $oauthToken
  * @property-read \App\Models\Service $service
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription query()
@@ -22,10 +24,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription whereOauthTokenId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription whereServiceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class ServiceSubscription extends Model
 {
+    use HasFactory;
     use HasUUID;
 
     protected $fillable = [
