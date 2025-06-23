@@ -30,6 +30,8 @@ class AuthenticateUserController extends Controller
             abort(Response::HTTP_UNAUTHORIZED, 'No access token');
         }
 
+        Auth::login($user);
+
         return response()->json(PersonalAccessTokenResource::make($user->latestAccessToken));
     }
 }
