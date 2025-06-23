@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ServiceEvent\TriggerNotificationType;
+use App\Enums\ServiceEvent\Type;
 use App\Models\Traits\HasUUID;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Model;
@@ -51,6 +53,8 @@ class ServiceEvent extends Model
     protected function casts(): array
     {
         return [
+            'type' => Type::class,
+            'trigger_notification_type' => TriggerNotificationType::class,
         ];
     }
 

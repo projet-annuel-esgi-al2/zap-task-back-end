@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\Service\Identifier;
 use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $identifier
  * @property string $socialite_driver_identifier
+ * @property array $oauth_token_options
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -50,6 +53,7 @@ class Service extends Model
     protected function casts(): array
     {
         return [
+            'identifier' => Identifier::class,
             'oauth_token_options' => 'array',
         ];
     }

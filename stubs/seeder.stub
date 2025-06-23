@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Database\Seeders\Traits\ReadsJsonFile;
+use Illuminate\Database\Seeder;
+
+class {{ class }} extends Seeder
+{
+    use ReadsJsonFile;
+
+    public function run(): void
+    {
+        //
+    }
+}
