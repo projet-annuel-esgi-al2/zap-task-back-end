@@ -19,9 +19,12 @@ return new class extends Migration
             $table->foreignUuid('user_id')
                 ->constrained();
             $table->string('value');
-            $table->string('refresh_token');
-            $table->dateTime('expires_at');
-            $table->foreignUuid('parent_token_id');
+            $table->string('refresh_token')
+                ->nullable();
+            $table->dateTime('expires_at')
+                ->nullable();
+            $table->foreignUuid('parent_token_id')
+                ->nullable();
             $table->timestamps();
         });
     }

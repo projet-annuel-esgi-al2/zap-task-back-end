@@ -17,8 +17,12 @@ return new class extends Migration
                 ->default(new Expression('uuid_generate_v4()'))
                 ->primary();
             $table->string('identifier');
-            $table->string('socialite_driver_identifier');
             $table->string('name');
+            $table->string('socialite_driver_identifier')
+                ->nullable();
+            $table->jsonb('oauth_token_options')
+                ->default('{}')
+                ->nullable();
             $table->timestamps();
         });
     }

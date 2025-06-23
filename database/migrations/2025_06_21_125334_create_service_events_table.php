@@ -21,7 +21,8 @@ return new class extends Migration
             $table->foreignUuid('service_id')
                 ->constrained();
             $table->string('type'); // trigger or action
-            $table->string('trigger_notification_type'); // polling or webhook
+            $table->string('trigger_notification_type')
+                ->nullable(); // polling or webhook
             $table->timestamps();
         });
     }
