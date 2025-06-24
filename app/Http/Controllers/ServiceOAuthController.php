@@ -19,15 +19,16 @@ class ServiceOAuthController extends Controller
      * @authenticated
      *
      * @response 301 { "message": "User is not subscribed to this service."}
+     *
      * @responseHeader Location string The redirect url
      *
      * @response 302
      */
     public function get(Identifier $serviceIdentifier): JsonResponse
     {
-        if (! auth()->user()->subscribedToService($serviceIdentifier)) {
+        if (! auth()->user()?->subscribedToService($serviceIdentifier)) {
             return response()
-                ->json('User is not subscribed to this service', Response::HTTP_MOVED_PERMANENTLY)
+                ->json('User is not subscribed to this service', Response::HTTP_NOT_FOUND)
                 ->withHeaders(['Location' => route('service-oauth-redirect', ['serviceIdentifier' => $serviceIdentifier])]);
         }
 
