@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property string $identifier
+ * @property Identifier $identifier
  * @property string $socialite_driver_identifier
  * @property array $oauth_token_options
  * @property string $name

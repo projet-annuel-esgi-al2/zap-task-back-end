@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ServiceAction\Identifier;
 use App\Enums\ServiceAction\TriggerNotificationType;
 use App\Enums\ServiceAction\Type;
 use App\Models\Traits\HasUUID;
@@ -12,10 +13,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property string $id
  * @property string $name
- * @property string $identifier
+ * @property Identifier $identifier
  * @property string $service_id
- * @property string $type
- * @property string $trigger_notification_type
+ * @property Type $type
+ * @property array $parameters
+ * @property TriggerNotificationType $trigger_notification_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  *
@@ -54,6 +56,7 @@ class ServiceAction extends Model
     protected function casts(): array
     {
         return [
+            'identifier' => Identifier::class,
             'type' => Type::class,
             'parameters' => 'array',
             'trigger_notification_type' => TriggerNotificationType::class,
