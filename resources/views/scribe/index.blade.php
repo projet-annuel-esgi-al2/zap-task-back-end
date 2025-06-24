@@ -61,33 +61,42 @@
                     <a href="#introduction">Introduction</a>
                 </li>
                             </ul>
-                    <ul id="tocify-header-authenticating-requests" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="authenticating-requests">
-                    <a href="#authenticating-requests">Authenticating requests</a>
+                    <ul id="tocify-header-authentication" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="authentication">
+                    <a href="#authentication">Authentication</a>
                 </li>
+                                    <ul id="tocify-subheader-authentication" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="authentication-POSTapi-register">
+                                <a href="#authentication-POSTapi-register">Register a new user</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-me">
+                                <a href="#authentication-POSTapi-me">Login a previously registered user</a>
+                            </li>
+                                                                        </ul>
                             </ul>
-                    <ul id="tocify-header-endpoints" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
+                    <ul id="tocify-header-services-oauth" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="services-oauth">
+                    <a href="#services-oauth">Services OAuth</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-register">
-                                <a href="#endpoints-POSTapi-register">Handle the incoming request.</a>
+                                    <ul id="tocify-subheader-services-oauth" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="services-oauth-GETapi-subscriptions--serviceIdentifier-">
+                                <a href="#services-oauth-GETapi-subscriptions--serviceIdentifier-">Is User subscribed to service?</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-me">
-                                <a href="#endpoints-POSTapi-me">POST api/me</a>
+                                                                                <li class="tocify-item level-2" data-unique="services-oauth-GETapi--serviceIdentifier--redirect">
+                                <a href="#services-oauth-GETapi--serviceIdentifier--redirect">Fetch Service's OAuth consent screen</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-subscriptions--serviceIdentifier-">
-                                <a href="#endpoints-GETapi-subscriptions--serviceIdentifier-">Check if the authenticated user is subscribed to a service</a>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-services-and-actions" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="services-and-actions">
+                    <a href="#services-and-actions">Services and Actions</a>
+                </li>
+                                    <ul id="tocify-subheader-services-and-actions" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="services-and-actions-GETapi--serviceIdentifier--actions">
+                                <a href="#services-and-actions-GETapi--serviceIdentifier--actions">Fetch actions for a specified Service</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi--serviceIdentifier--redirect">
-                                <a href="#endpoints-GETapi--serviceIdentifier--redirect">GET api/{serviceIdentifier}/redirect</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi--serviceIdentifier--callback">
-                                <a href="#endpoints-GETapi--serviceIdentifier--callback">GET api/{serviceIdentifier}/callback</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-users--user_id-">
-                                <a href="#endpoints-GETapi-users--user_id-">GET api/users/{user_id}</a>
+                                                                                <li class="tocify-item level-2" data-unique="services-and-actions-GETapi-services">
+                                <a href="#services-and-actions-GETapi-services">Fetch all available services</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -100,7 +109,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 23, 2025</li>
+        <li>Last updated: June 24, 2025</li>
     </ul>
 </div>
 
@@ -116,14 +125,13 @@
 &lt;aside&gt;As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
 You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).&lt;/aside&gt;</code></pre>
 
-        <h1 id="authenticating-requests">Authenticating requests</h1>
-<p>This API is not authenticated.</p>
+        
 
-        <h1 id="endpoints">Endpoints</h1>
+        <h1 id="authentication">Authentication</h1>
 
     
 
-                                <h2 id="endpoints-POSTapi-register">Handle the incoming request.</h2>
+                                <h2 id="authentication-POSTapi-register">Register a new user</h2>
 
 <p>
 </p>
@@ -141,7 +149,9 @@ You can switch the language used with the tabs at the top right (or from the nav
     --header "Accept: application/json" \
     --data "{
     \"name\": \"vmqeopfuudtdsufvyvddq\",
-    \"password\": \"consequatur\"
+    \"email\": \"qkunze@example.com\",
+    \"password\": \"consequatur\",
+    \"password_confirmation\": \"consequatur\"
 }"
 </code></pre></div>
 
@@ -158,7 +168,9 @@ const headers = {
 
 let body = {
     "name": "vmqeopfuudtdsufvyvddq",
-    "password": "consequatur"
+    "email": "qkunze@example.com",
+    "password": "consequatur",
+    "password_confirmation": "consequatur"
 };
 
 fetch(url, {
@@ -255,13 +267,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
-<i>optional</i> &nbsp;
+ &nbsp;
                 <input type="text" style="display: none"
                               name="email"                data-endpoint="POSTapi-register"
-               value=""
+               value="qkunze@example.com"
                data-component="body">
     <br>
-
+<p>Example: <code>qkunze@example.com</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -274,9 +286,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>consequatur</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="POSTapi-register"
+               value="consequatur"
+               data-component="body">
+    <br>
+<p>Example: <code>consequatur</code></p>
+        </div>
         </form>
 
-                    <h2 id="endpoints-POSTapi-me">POST api/me</h2>
+                    <h2 id="authentication-POSTapi-me">Login a previously registered user</h2>
 
 <p>
 </p>
@@ -418,7 +441,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="endpoints-GETapi-subscriptions--serviceIdentifier-">Check if the authenticated user is subscribed to a service</h2>
+                <h1 id="services-oauth">Services OAuth</h1>
+
+    
+
+                                <h2 id="services-oauth-GETapi-subscriptions--serviceIdentifier-">Is User subscribed to service?</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -456,15 +483,6 @@ fetch(url, {
 
 <span id="example-responses-GETapi-subscriptions--serviceIdentifier-">
             <blockquote>
-            <p>Example response (301):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;User is not subscribed to this service.&quot;
-}</code>
- </pre>
-            <blockquote>
             <p>Example response (302):</p>
         </blockquote>
                 <pre>
@@ -483,8 +501,15 @@ content-type: application/json
 vary: Origin
  </code></pre></details>         <pre>
 
+<code class="language-json" style="max-height: 300px;">&quot;No access token specified&quot;</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No access token specified&quot;
+    &quot;message&quot;: &quot;User is not subscribed to this service.&quot;
 }</code>
  </pre>
     </span>
@@ -571,9 +596,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="endpoints-GETapi--serviceIdentifier--redirect">GET api/{serviceIdentifier}/redirect</h2>
+                    <h2 id="services-oauth-GETapi--serviceIdentifier--redirect">Fetch Service&#039;s OAuth consent screen</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -608,6 +634,13 @@ fetch(url, {
 
 <span id="example-responses-GETapi--serviceIdentifier--redirect">
             <blockquote>
+            <p>Example response (302):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+            <blockquote>
             <p>Example response (401):</p>
         </blockquote>
                 <details class="annotation">
@@ -619,9 +652,7 @@ content-type: application/json
 vary: Origin
  </code></pre></details>         <pre>
 
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No access token specified&quot;
-}</code>
+<code class="language-json" style="max-height: 300px;">&quot;No access token specified&quot;</code>
  </pre>
     </span>
 <span id="execution-results-GETapi--serviceIdentifier--redirect" hidden>
@@ -641,7 +672,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi--serviceIdentifier--redirect" data-method="GET"
       data-path="api/{serviceIdentifier}/redirect"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -707,27 +738,31 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="endpoints-GETapi--serviceIdentifier--callback">GET api/{serviceIdentifier}/callback</h2>
+                <h1 id="services-and-actions">Services and Actions</h1>
+
+    
+
+                                <h2 id="services-and-actions-GETapi--serviceIdentifier--actions">Fetch actions for a specified Service</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi--serviceIdentifier--callback">
+<span id="example-requests-GETapi--serviceIdentifier--actions">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://zaptask/api/google-calendar/callback" \
+    --get "http://zaptask/api/google-calendar/actions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://zaptask/api/google-calendar/callback"
+    "http://zaptask/api/google-calendar/actions"
 );
 
 const headers = {
@@ -742,7 +777,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi--serviceIdentifier--callback">
+<span id="example-responses-GETapi--serviceIdentifier--actions">
             <blockquote>
             <p>Example response (401):</p>
         </blockquote>
@@ -755,48 +790,46 @@ content-type: application/json
 vary: Origin
  </code></pre></details>         <pre>
 
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No access token specified&quot;
-}</code>
+<code class="language-json" style="max-height: 300px;">&quot;No access token specified&quot;</code>
  </pre>
     </span>
-<span id="execution-results-GETapi--serviceIdentifier--callback" hidden>
+<span id="execution-results-GETapi--serviceIdentifier--actions" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi--serviceIdentifier--callback"></span>:
+                id="execution-response-status-GETapi--serviceIdentifier--actions"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi--serviceIdentifier--callback"
+    <pre class="json"><code id="execution-response-content-GETapi--serviceIdentifier--actions"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi--serviceIdentifier--callback" hidden>
+<span id="execution-error-GETapi--serviceIdentifier--actions" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi--serviceIdentifier--callback">
+    <pre><code id="execution-error-message-GETapi--serviceIdentifier--actions">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi--serviceIdentifier--callback" data-method="GET"
-      data-path="api/{serviceIdentifier}/callback"
+<form id="form-GETapi--serviceIdentifier--actions" data-method="GET"
+      data-path="api/{serviceIdentifier}/actions"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi--serviceIdentifier--callback', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi--serviceIdentifier--actions', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi--serviceIdentifier--callback"
-                    onclick="tryItOut('GETapi--serviceIdentifier--callback');">Try it out ⚡
+                    id="btn-tryout-GETapi--serviceIdentifier--actions"
+                    onclick="tryItOut('GETapi--serviceIdentifier--actions');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi--serviceIdentifier--callback"
-                    onclick="cancelTryOut('GETapi--serviceIdentifier--callback');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi--serviceIdentifier--actions"
+                    onclick="cancelTryOut('GETapi--serviceIdentifier--actions');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi--serviceIdentifier--callback"
+                    id="btn-executetryout-GETapi--serviceIdentifier--actions"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -804,7 +837,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/{serviceIdentifier}/callback</code></b>
+            <b><code>api/{serviceIdentifier}/actions</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -812,7 +845,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi--serviceIdentifier--callback"
+                              name="Content-Type"                data-endpoint="GETapi--serviceIdentifier--actions"
                value="application/json"
                data-component="header">
     <br>
@@ -823,7 +856,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi--serviceIdentifier--callback"
+                              name="Accept"                data-endpoint="GETapi--serviceIdentifier--actions"
                value="application/json"
                data-component="header">
     <br>
@@ -835,7 +868,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small>string</small>&nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="serviceIdentifier"                data-endpoint="GETapi--serviceIdentifier--callback"
+                              name="serviceIdentifier"                data-endpoint="GETapi--serviceIdentifier--actions"
                value="google-calendar"
                data-component="url">
     <br>
@@ -843,27 +876,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="endpoints-GETapi-users--user_id-">GET api/users/{user_id}</h2>
+                    <h2 id="services-and-actions-GETapi-services">Fetch all available services</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-users--user_id-">
+<span id="example-requests-GETapi-services">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://zaptask/api/users/efa4eb8b-1d79-4616-b0de-0dbf17d94d9a" \
+    --get "http://zaptask/api/services" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://zaptask/api/users/efa4eb8b-1d79-4616-b0de-0dbf17d94d9a"
+    "http://zaptask/api/services"
 );
 
 const headers = {
@@ -878,7 +911,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-users--user_id-">
+<span id="example-responses-GETapi-services">
             <blockquote>
             <p>Example response (401):</p>
         </blockquote>
@@ -891,48 +924,46 @@ content-type: application/json
 vary: Origin
  </code></pre></details>         <pre>
 
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No access token specified&quot;
-}</code>
+<code class="language-json" style="max-height: 300px;">&quot;No access token specified&quot;</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-users--user_id-" hidden>
+<span id="execution-results-GETapi-services" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-users--user_id-"></span>:
+                id="execution-response-status-GETapi-services"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-users--user_id-"
+    <pre class="json"><code id="execution-response-content-GETapi-services"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-users--user_id-" hidden>
+<span id="execution-error-GETapi-services" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-users--user_id-">
+    <pre><code id="execution-error-message-GETapi-services">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-users--user_id-" data-method="GET"
-      data-path="api/users/{user_id}"
+<form id="form-GETapi-services" data-method="GET"
+      data-path="api/services"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-users--user_id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-services', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-users--user_id-"
-                    onclick="tryItOut('GETapi-users--user_id-');">Try it out ⚡
+                    id="btn-tryout-GETapi-services"
+                    onclick="tryItOut('GETapi-services');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-users--user_id-"
-                    onclick="cancelTryOut('GETapi-users--user_id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-services"
+                    onclick="cancelTryOut('GETapi-services');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-users--user_id-"
+                    id="btn-executetryout-GETapi-services"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -940,7 +971,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/users/{user_id}</code></b>
+            <b><code>api/services</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -948,7 +979,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-users--user_id-"
+                              name="Content-Type"                data-endpoint="GETapi-services"
                value="application/json"
                data-component="header">
     <br>
@@ -959,25 +990,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-users--user_id-"
+                              name="Accept"                data-endpoint="GETapi-services"
                value="application/json"
                data-component="header">
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>user_id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="user_id"                data-endpoint="GETapi-users--user_id-"
-               value="efa4eb8b-1d79-4616-b0de-0dbf17d94d9a"
-               data-component="url">
-    <br>
-<p>The ID of the user. Example: <code>efa4eb8b-1d79-4616-b0de-0dbf17d94d9a</code></p>
-            </div>
-                    </form>
+                        </form>
 
             
 

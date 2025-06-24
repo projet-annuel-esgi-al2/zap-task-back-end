@@ -11,17 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class VerifyPersonalAccessToken
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): JsonResponse|Response
     {
         $personalAccessToken = $request->header('Pat');
 
         if (! $personalAccessToken) {
-            response()->json('No access token specified', Response::HTTP_UNAUTHORIZED);
+            return response()->json('No access token specified', Response::HTTP_UNAUTHORIZED);
         }
 
         $user = User::query()
@@ -29,7 +24,7 @@ class VerifyPersonalAccessToken
             ->first();
 
         if (is_null($user)) {
-            response()->json('Invalid access token', Response::HTTP_UNAUTHORIZED);
+            return response()->json('Invalid access token', Response::HTTP_UNAUTHORIZED);
         }
 
         Auth::login($user);

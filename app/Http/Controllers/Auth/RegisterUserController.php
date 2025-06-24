@@ -15,7 +15,12 @@ use Illuminate\Validation\Rules;
 class RegisterUserController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @group Authentication
+     *
+     * Register a new user
+     *
+     * @bodyParam email string required
+     * @bodyParam password_confirmation string required
      */
     public function __invoke(Request $request): JsonResponse
     {

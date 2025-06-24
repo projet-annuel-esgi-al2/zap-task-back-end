@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticateUserController extends Controller
 {
+    /**
+     * @group Authentication
+     *
+     * Login a previously registered user
+     */
     public function __invoke(Request $request): JsonResponse
     {
         $credentials = $request->validate([

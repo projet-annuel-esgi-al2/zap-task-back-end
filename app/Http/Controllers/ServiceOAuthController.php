@@ -8,17 +8,20 @@ use App\Models\Service;
 use App\Models\ServiceSubscription;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 
 class ServiceOAuthController extends Controller
 {
     /**
-     * Check if the authenticated user is subscribed to a service
+     * @group Services OAuth
+     *
+     * Is User subscribed to service?
      *
      * @authenticated
      *
-     * @response 301 { "message": "User is not subscribed to this service."}
+     * @response 404 { "message": "User is not subscribed to this service."}
      *
      * @responseHeader Location string The redirect url
      *
@@ -35,7 +38,16 @@ class ServiceOAuthController extends Controller
         return response()->json(null, Response::HTTP_FOUND);
     }
 
-    public function redirect(Identifier $serviceIdentifier): RedirectResponse
+    /**
+     * @group Services OAuth
+     *
+     * Fetch Service's OAuth consent screen
+     *
+     * @authenticated
+     *
+     * @response 302
+     */
+    public function redirect(Request $request, Identifier $serviceIdentifier): RedirectResponse
     {
         $service = Service::firstWhere('identifier', $serviceIdentifier->value);
 
@@ -51,9 +63,12 @@ class ServiceOAuthController extends Controller
             $socialite->with($service->oauth_token_options);
         }
 
-        return $socialite->redirectUrl('https://example.com')->redirect();
+        return $socialite->redirect();
     }
 
+    /**
+     * @hideFromAPIDocumentation
+     * */
     public function callback(Identifier $serviceIdentifier): RedirectResponse
     {
         $service = Service::where('identifier', $serviceIdentifier->value)->first();
