@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use App\Models\User;
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyPersonalAccessToken
@@ -14,21 +16,23 @@ class VerifyPersonalAccessToken
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): JsonResponse|Response
     {
         $personalAccessToken = $request->header('Pat');
 
-        if (is_null($personalAccessToken)) {
-            abort(Response::HTTP_UNAUTHORIZED, 'No access token specified');
+        if (! $personalAccessToken) {
+            response()->json('No access token specified', Response::HTTP_UNAUTHORIZED);
         }
 
-        $isInvalidAccessToken = User::query()
+        $user = User::query()
             ->whereHas('latestAccessToken', fn ($q) => $q->where('token', $personalAccessToken))
-            ->doesntExist();
+            ->first();
 
-        if ($isInvalidAccessToken) {
-            abort(Response::HTTP_UNAUTHORIZED, 'Invalid access token');
+        if (is_null($user)) {
+            response()->json('Invalid access token', Response::HTTP_UNAUTHORIZED);
         }
+
+        Auth::login($user);
 
         return $next($request);
     }

@@ -3,8 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Service\Identifier;
 use App\Models\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,7 +23,34 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property ?string $rememberToken
  * @property PersonalAccessToken $latestAccessToken
  * @property Collection $tokens
- * */
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read int|null $tokens_count
+ *
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\OAuthToken> $oauthTokens
+ * @property-read int|null $oauth_tokens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceSubscription> $serviceSubscriptions
+ * @property-read int|null $service_subscriptions_count
+ *
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -29,6 +59,10 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     use HasUUID;
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
@@ -41,21 +75,11 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -69,5 +93,22 @@ class User extends Authenticatable
         return $this->tokens()
             ->latest()
             ->one();
+    }
+
+    public function oauthTokens(): HasMany
+    {
+        return $this->hasMany(OAuthToken::class);
+    }
+
+    public function serviceSubscriptions(): HasManyThrough
+    {
+        return $this->hasManyThrough(ServiceSubscription::class, OAuthToken::class, 'user_id', 'oauth_token_id');
+    }
+
+    public function subscribedToService(Identifier $serviceIdentifier): bool
+    {
+        return $this->serviceSubscriptions()
+            ->whereHas('service', fn ($q) => $q->where('identifier', $serviceIdentifier))
+            ->exists();
     }
 }

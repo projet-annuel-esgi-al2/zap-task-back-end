@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+{{ factoryImport }}
+use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Model;
+
+class {{ class }} extends Model
+{
+    use HasUUID;
+    {{ factory }}
+
+    protected $fillable = [];
+
+    protected function casts(): array
+    {
+        return [];
+    }
+}
