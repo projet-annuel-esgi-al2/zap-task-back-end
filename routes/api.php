@@ -6,9 +6,7 @@ use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\ServiceOAuthController;
 use App\Http\Middleware\VerifyPersonalAccessToken;
 use App\Http\Resources\Api\ServiceResource;
-use App\Http\Resources\Api\UserResource;
 use App\Models\Service;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/register')->group(function () {
@@ -30,7 +28,11 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         Route::get('redirect', [ServiceOAuthController::class, 'redirect'])
             ->name('service-oauth-redirect');
         Route::get('callback', [ServiceOAuthController::class, 'callback']);
-        /** end */
+
+        /**
+         * @group Services and Actions
+         * Fetch actions for a specified Service
+         * */
         Route::get('actions', function (Identifier $serviceIdentifier) {
             return Service::with('actions')
                 ->where('identifier', $serviceIdentifier)
@@ -39,11 +41,12 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         });
     });
 
+    /**
+     * @group Services and Actions
+     *
+     * Fetch all available services
+     */
     Route::get('services', function () {
         return Service::all()->toResourceCollection(ServiceResource::class);
-    });
-
-    Route::get('/users/{user}', function (User $user) {
-        return UserResource::make($user);
     });
 });
