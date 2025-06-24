@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PersonalAccessTokenResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticateUserController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -19,7 +20,7 @@ class AuthenticateUserController extends Controller
         ]);
 
         if (! Auth::attempt($credentials)) {
-            abort(Response::HTTP_UNAUTHORIZED, 'Incorrect email or password');
+            return response()->json('Incorrect email or password', Response::HTTP_UNAUTHORIZED);
         }
 
         $user = User::query()
@@ -27,10 +28,8 @@ class AuthenticateUserController extends Controller
             ->first();
 
         if ($user->latestAccessToken()->doesntExist()) {
-            abort(Response::HTTP_UNAUTHORIZED, 'No access token');
+            return response()->json('No access token', Response::HTTP_UNAUTHORIZED);
         }
-
-        Auth::login($user);
 
         return response()->json(PersonalAccessTokenResource::make($user->latestAccessToken));
     }
