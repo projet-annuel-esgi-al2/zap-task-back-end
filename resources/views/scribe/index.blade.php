@@ -85,6 +85,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="services-oauth-GETapi--serviceIdentifier--redirect">
                                 <a href="#services-oauth-GETapi--serviceIdentifier--redirect">Fetch Service's OAuth consent screen</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="services-oauth-GETapi--serviceIdentifier--callback">
+                                <a href="#services-oauth-GETapi--serviceIdentifier--callback">Post the OAuth token</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-services-and-actions" class="tocify-header">
@@ -109,7 +112,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 24, 2025</li>
+        <li>Last updated: June 25, 2025</li>
     </ul>
 </div>
 
@@ -731,6 +734,148 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="serviceIdentifier"                data-endpoint="GETapi--serviceIdentifier--redirect"
+               value="google-calendar"
+               data-component="url">
+    <br>
+<p>Example: <code>google-calendar</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="services-oauth-GETapi--serviceIdentifier--callback">Post the OAuth token</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi--serviceIdentifier--callback">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://zaptask/api/google-calendar/callback" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://zaptask/api/google-calendar/callback"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi--serviceIdentifier--callback">
+            <blockquote>
+            <p>Example response (302):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">&quot;No access token specified&quot;</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi--serviceIdentifier--callback" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi--serviceIdentifier--callback"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi--serviceIdentifier--callback"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi--serviceIdentifier--callback" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi--serviceIdentifier--callback">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi--serviceIdentifier--callback" data-method="GET"
+      data-path="api/{serviceIdentifier}/callback"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi--serviceIdentifier--callback', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi--serviceIdentifier--callback"
+                    onclick="tryItOut('GETapi--serviceIdentifier--callback');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi--serviceIdentifier--callback"
+                    onclick="cancelTryOut('GETapi--serviceIdentifier--callback');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi--serviceIdentifier--callback"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/{serviceIdentifier}/callback</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi--serviceIdentifier--callback"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi--serviceIdentifier--callback"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>serviceIdentifier</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="serviceIdentifier"                data-endpoint="GETapi--serviceIdentifier--callback"
                value="google-calendar"
                data-component="url">
     <br>

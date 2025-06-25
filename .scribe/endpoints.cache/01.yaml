@@ -121,3 +121,59 @@ endpoints:
     method: null
     route: null
     custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/{serviceIdentifier}/callback'
+    metadata:
+      groupName: 'Services OAuth'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Post the OAuth token'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      serviceIdentifier:
+        name: serviceIdentifier
+        description: ''
+        required: true
+        example: google-calendar
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      serviceIdentifier: google-calendar
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: '{}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: '"No access token specified"'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
