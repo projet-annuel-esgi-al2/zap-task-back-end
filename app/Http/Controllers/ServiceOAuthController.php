@@ -52,7 +52,7 @@ class ServiceOAuthController extends Controller
         $service = Service::firstWhere('identifier', $serviceIdentifier->value);
 
         $socialiteDriverIdentifier = $service->socialite_driver_identifier;
-        $scopes = $service->scopes()->pluck('scope_value');
+        $scopes = $service->scopes()->pluck('scope_value')->toArray();
 
         /** @phpstan-ignore-next-line */
         $socialite = Socialite::driver($socialiteDriverIdentifier)
