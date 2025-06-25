@@ -27,7 +27,6 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         /** ServiceOAuth routes */
         Route::get('redirect', [ServiceOAuthController::class, 'redirect'])
             ->name('service-oauth-redirect');
-        Route::get('callback', [ServiceOAuthController::class, 'callback']);
 
         /**
          * @group Services and Actions
@@ -50,3 +49,6 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         return Service::all()->toResourceCollection(ServiceResource::class);
     });
 });
+
+Route::get('/{serviceIdentifier}/callback', [ServiceOAuthController::class, 'callback'])
+    ->name('service-oauth-callback');

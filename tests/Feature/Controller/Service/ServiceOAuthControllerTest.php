@@ -35,7 +35,7 @@ class ServiceOAuthControllerTest extends TestCase
             'Pat' => $user->latestAccessToken->token,
         ])
             ->get('/api/subscriptions/'.$serviceSubscription->service->identifier->value)
-            ->assertStatus(Response::HTTP_FOUND);
+            ->assertStatus(Response::HTTP_OK);
     }
 
     public function test_returns_not_found_when_user_is_not_subscribed_to_service(): void
