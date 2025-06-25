@@ -67,8 +67,14 @@ class ServiceOAuthController extends Controller
     }
 
     /**
-     * @hideFromAPIDocumentation
-     * */
+     * @group Services OAuth
+     *
+     * Post the OAuth token
+     *
+     * @authenticated
+     *
+     * @response 302
+     */
     public function callback(Identifier $serviceIdentifier): RedirectResponse
     {
         $service = Service::where('identifier', $serviceIdentifier->value)->first();
