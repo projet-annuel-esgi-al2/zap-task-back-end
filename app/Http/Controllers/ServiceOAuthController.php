@@ -6,10 +6,12 @@ use App\Enums\Service\Identifier;
 use App\Models\OAuthToken;
 use App\Models\Service;
 use App\Models\ServiceSubscription;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
+use Illuminate\View\View;
 use Laravel\Socialite\Facades\Socialite;
 
 class ServiceOAuthController extends Controller
@@ -25,7 +27,7 @@ class ServiceOAuthController extends Controller
      *
      * @responseHeader Location string The redirect url
      *
-     * @response 302
+     * @response 200
      */
     public function get(Identifier $serviceIdentifier): JsonResponse
     {
@@ -35,7 +37,7 @@ class ServiceOAuthController extends Controller
                 ->withHeaders(['Location' => route('service-oauth-redirect', ['serviceIdentifier' => $serviceIdentifier])]);
         }
 
-        return response()->json(null, Response::HTTP_FOUND);
+        return response()->json(null, Response::HTTP_OK);
     }
 
     /**
@@ -47,38 +49,49 @@ class ServiceOAuthController extends Controller
      *
      * @response 302
      */
-    public function redirect(Request $request, Identifier $serviceIdentifier): RedirectResponse
+    public function redirect(Identifier $serviceIdentifier): JsonResponse
     {
         $service = Service::firstWhere('identifier', $serviceIdentifier->value);
 
         $socialiteDriverIdentifier = $service->socialite_driver_identifier;
         $scopes = $service->scopes()->pluck('scope_value')->toArray();
 
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        $encodedUserId = self::encodeUserId($user);
+
         /** @phpstan-ignore-next-line */
         $socialite = Socialite::driver($socialiteDriverIdentifier)
-            ->scopes($scopes)
-            ->stateless();
+            ->stateless()
+            ->with(['state' => $encodedUserId])
+            ->scopes($scopes);
 
         if (! empty($service->oauth_token_options)) {
-            $socialite->with($service->oauth_token_options);
+            $socialite->with([
+                ...$service->oauth_token_options,
+                'state' => $encodedUserId,
+            ]);
         }
 
-        return $socialite->redirect();
+        return response()->json([
+            'url' => $socialite->redirect()->getTargetUrl(),
+        ]);
     }
 
     /**
      * @hideFromAPIDocumentation
      * */
-    public function callback(Identifier $serviceIdentifier): RedirectResponse
+    public function callback(Request $request, Identifier $serviceIdentifier): View
     {
         $service = Service::where('identifier', $serviceIdentifier->value)->first();
-        $oauthUser = Socialite::driver($service->socialite_driver_identifier)->user();
+        /** @phpstan-ignore-next-line */
+        $oauthUser = Socialite::driver($service->socialite_driver_identifier)->stateless()->user();
 
         $oauthToken = OAuthToken::create([
-            'user_id' => auth()->user()->id,
-            'value' => $oauthUser->token, // @phpstan-ignore-line
-            'refresh_token' => $oauthUser->refreshToken, // @phpstan-ignore-line
-            'expires_at' => now()->addSeconds($oauthUser->expiresIn), // @phpstan-ignore-line
+            'user_id' => self::decodeUserId($request->query('state')),
+            'value' => $oauthUser->token,
+            'refresh_token' => $oauthUser->refreshToken,
+            'expires_at' => now()->addSeconds($oauthUser->expiresIn),
         ]);
 
         ServiceSubscription::create([
@@ -86,6 +99,16 @@ class ServiceOAuthController extends Controller
             'oauth_token_id' => $oauthToken->id,
         ]);
 
-        return redirect('/');
+        return view('close');
+    }
+
+    private static function encodeUserId(User $user): string
+    {
+        return base64_encode(json_encode(['user_id' => auth()->user()->id]));
+    }
+
+    private static function decodeUserId(string $userId): string
+    {
+        return Arr::get(json_decode(base64_decode($userId), true), 'user_id');
     }
 }

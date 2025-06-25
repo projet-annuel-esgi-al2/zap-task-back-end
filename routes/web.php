@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\GoogleOAuthController;
 use App\Http\Webhooks\GoogleCalendarWebhookController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,10 +13,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 });
-
-// OAuth Google
-Route::get('/google/redirect', [GoogleOAuthController::class, 'redirect']);
-Route::get('/google/callback', [GoogleOAuthController::class, 'callback']);
 
 // Webhook Google Calendar
 Route::post('/webhooks/google/calendar', [GoogleCalendarWebhookController::class, '__invoke']);
