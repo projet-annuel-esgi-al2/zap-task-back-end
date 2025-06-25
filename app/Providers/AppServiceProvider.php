@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Schema\Builder;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as AppEventServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        AppEventServiceProvider::disableEventDiscovery();
+
         Model::shouldBeStrict($this->app->isLocal());
         // Set the default morph key to uuid to automatically generate the correct foreign id type in migrations.
         Builder::defaultMorphKeyType('uuid');
