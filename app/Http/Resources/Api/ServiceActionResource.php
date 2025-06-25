@@ -16,7 +16,7 @@ class ServiceActionResource extends JsonResource
             'name' => $this->name,
             'identifier' => $this->identifier->value,
             'type' => $this->type->value,
-            'parameters' => $this->parameters,
+            'parameters' => $this->parameters_for_api,
         ];
     }
 }

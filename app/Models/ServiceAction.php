@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Enums\ServiceAction\Identifier;
 use App\Enums\ServiceAction\TriggerNotificationType;
 use App\Enums\ServiceAction\Type;
+use App\Models\Traits\HasHttpParameters;
 use App\Models\Traits\HasUUID;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -42,10 +44,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereParameters($value)
  *
+ * @property string|null $url
+ * @property array $body_parameters
+ * @property array $url_parameters
+ * @property array $query_parameters
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereBodyParameters($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereQueryParameters($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereUrlParameters($value)
+ *
+ * @property-read array $body_parameters_for_api
+ * @property-read array $query_parameters_for_api
+ * @property-read array $url_parameters_for_api
+ * @property-read array $parameters_for_api
+ *
  * @mixin \Eloquent
  */
 class ServiceAction extends Model
 {
+    use HasFactory;
+    use HasHttpParameters;
     use HasUUID;
 
     protected $fillable = [
@@ -54,7 +73,10 @@ class ServiceAction extends Model
         'identifier',
         'service_id',
         'type',
-        'parameters',
+        'url',
+        'body_parameters',
+        'url_parameters',
+        'query_parameters',
         'trigger_notification_type',
     ];
 
@@ -63,7 +85,9 @@ class ServiceAction extends Model
         return [
             'identifier' => Identifier::class,
             'type' => Type::class,
-            'parameters' => 'array',
+            'body_parameters' => 'array',
+            'url_parameters' => 'array',
+            'query_parameters' => 'array',
             'trigger_notification_type' => TriggerNotificationType::class,
         ];
     }

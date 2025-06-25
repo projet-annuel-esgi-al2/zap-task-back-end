@@ -37,7 +37,9 @@ class ServiceActionSeeder extends Seeder
                 unset($record['service_identifier']);
 
                 return array_merge($record, [
-                    'parameters' => json_encode($record['parameters']),
+                    'body_parameters' => json_encode($record['body_parameters']),
+                    'url_parameters' => json_encode($record['url_parameters']),
+                    'query_parameters' => json_encode($record['query_parameters']),
                     'service_id' => $serviceId,
                     'created_at' => now(),
                     'updated_at' => now(),

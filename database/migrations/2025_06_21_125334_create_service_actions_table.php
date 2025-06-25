@@ -21,7 +21,13 @@ return new class extends Migration
             $table->foreignUuid('service_id')
                 ->constrained();
             $table->string('type'); // trigger or action
-            $table->jsonb('parameters')
+            $table->string('url')
+                ->nullable();
+            $table->jsonb('body_parameters')
+                ->default('{}');
+            $table->jsonb('url_parameters')
+                ->default('{}');
+            $table->jsonb('query_parameters')
                 ->default('{}');
             $table->string('trigger_notification_type')
                 ->nullable(); // polling or webhook

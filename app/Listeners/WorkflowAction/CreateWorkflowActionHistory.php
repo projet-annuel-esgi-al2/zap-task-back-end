@@ -5,8 +5,10 @@ namespace App\Listeners\WorkflowAction;
 use App\Enums\WorkflowActionHistory\ExecutionStatus;
 use App\Events\WorkflowAction\WorkflowActionExecuted;
 use App\Models\WorkflowActionHistory;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 
-class CreateWorkflowActionHistory
+class CreateWorkflowActionHistory implements ShouldQueue, ShouldQueueAfterCommit
 {
     public function handle(WorkflowActionExecuted $event): void
     {

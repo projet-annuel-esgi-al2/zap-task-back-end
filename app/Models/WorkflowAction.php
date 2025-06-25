@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\WorkflowAction\Status;
+use App\Models\Traits\HasHttpParameters;
 use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -50,6 +52,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class WorkflowAction extends Model
 {
+    use HasFactory;
+    use HasHttpParameters;
     use HasUUID;
 
     protected $fillable = [

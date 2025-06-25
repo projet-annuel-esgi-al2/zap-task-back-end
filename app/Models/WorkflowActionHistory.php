@@ -15,6 +15,29 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory query()
  *
+ * @property string $id
+ * @property int $execution_order
+ * @property string|null $exception
+ * @property string|null $url
+ * @property array<array-key, mixed> $body_parameters
+ * @property array<array-key, mixed> $url_parameters
+ * @property array<array-key, mixed> $query_parameters
+ * @property \Illuminate\Support\Carbon $executed_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereBodyParameters($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereException($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereExecutedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereExecutionOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereExecutionStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereQueryParameters($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereUrlParameters($value)
+ *
  * @mixin \Eloquent
  */
 class WorkflowActionHistory extends Model
