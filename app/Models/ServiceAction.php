@@ -9,6 +9,7 @@ use App\Models\Traits\HasUUID;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $id
@@ -36,6 +37,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @mixin Eloquent
  *
  * @property-read \App\Models\Service $service
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkflowAction> $workflowActions
+ * @property-read int|null $workflow_actions_count
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereParameters($value)
  *
  * @mixin \Eloquent
  */
@@ -66,5 +71,10 @@ class ServiceAction extends Model
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function workflowActions(): HasMany
+    {
+        return $this->hasMany(WorkflowAction::class);
     }
 }
