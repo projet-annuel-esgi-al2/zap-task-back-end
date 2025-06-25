@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription whereOauthTokenId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription whereServiceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceSubscription whereUpdatedAt($value)
+ * @method static \Database\Factories\ServiceSubscriptionFactory factory($count = null, $state = [])
  *
  * @mixin \Eloquent
  */

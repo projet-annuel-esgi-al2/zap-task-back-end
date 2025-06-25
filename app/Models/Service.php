@@ -31,6 +31,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $events_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceScope> $scopes
  * @property-read int|null $scopes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceAction> $actions
+ * @property-read int|null $actions_count
+ *
+ * @method static \Database\Factories\ServiceFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Service whereOauthTokenOptions($value)
  *
  * @mixin \Eloquent
  */

@@ -48,6 +48,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read int|null $oauth_tokens_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceSubscription> $serviceSubscriptions
  * @property-read int|null $service_subscriptions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Workflow> $workflows
+ * @property-read int|null $workflows_count
  *
  * @mixin \Eloquent
  */
@@ -110,5 +112,10 @@ class User extends Authenticatable
         return $this->serviceSubscriptions()
             ->whereHas('service', fn ($q) => $q->where('identifier', $serviceIdentifier))
             ->exists();
+    }
+
+    public function workflows(): HasMany
+    {
+        return $this->hasMany(Workflow::class);
     }
 }

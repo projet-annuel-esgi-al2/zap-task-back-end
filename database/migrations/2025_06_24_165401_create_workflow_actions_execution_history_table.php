@@ -12,15 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_actions', function (Blueprint $table) {
+        Schema::create('workflow_actions_execution_history', function (Blueprint $table) {
             $table->uuid('id')
                 ->default(new Expression('uuid_generate_v4()'))
                 ->primary();
-            $table->string('name');
-            $table->string('identifier');
-            $table->foreignUuid('service_id')
-                ->constrained();
-            $table->string('type'); // trigger or action
+            $table->string('execution_status');
+            $table->unsignedInteger('execution_order');
+            $table->text('exception')
+                ->nullable();
             $table->string('url')
                 ->nullable();
             $table->jsonb('body_parameters')
@@ -29,8 +28,7 @@ return new class extends Migration
                 ->default('{}');
             $table->jsonb('query_parameters')
                 ->default('{}');
-            $table->string('trigger_notification_type')
-                ->nullable(); // polling or webhook
+            $table->dateTime('executed_at');
             $table->timestamps();
         });
     }
@@ -40,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_actions');
+        Schema::dropIfExists('workflow_actions_execution_history');
     }
 };
