@@ -17,12 +17,9 @@ class ServiceActionSeeder extends Seeder
 
     public function run(): void
     {
-        $seedData = self::readDataFromFile();
-
         $seedData = collect(self::readDataFromFile());
 
         $serviceIdentifiers = Service::pluck('id', 'identifier');
-
         $seedData = $seedData
             ->map(function ($record) use ($serviceIdentifiers) {
                 $serviceId = Arr::get($serviceIdentifiers, $record['service_identifier']);
@@ -37,9 +34,6 @@ class ServiceActionSeeder extends Seeder
                 unset($record['service_identifier']);
 
                 return array_merge($record, [
-                    'body_parameters' => json_encode($record['body_parameters']),
-                    'url_parameters' => json_encode($record['url_parameters']),
-                    'query_parameters' => json_encode($record['query_parameters']),
                     'service_id' => $serviceId,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -47,6 +41,6 @@ class ServiceActionSeeder extends Seeder
             })
             ->toArray();
 
-        ServiceAction::insert($seedData);
+        ServiceAction::fillAndInsert($seedData);
     }
 }

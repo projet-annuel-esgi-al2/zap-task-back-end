@@ -25,9 +25,7 @@ class StoreWorkflowActionRequest extends FormRequest
         return [
             'identifier' => 'in:'.Identifier::implodedValues(),
             'execution_order' => 'gte:0',
-            'parameters' => ['array:parameter_key,parameter_value'],
-            'parameters.parameter_key' => 'required',
-            'parameters.parameter_value' => 'required',
+            'parameters' => 'array',
         ];
     }
 }

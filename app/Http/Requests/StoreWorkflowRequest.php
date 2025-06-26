@@ -24,7 +24,7 @@ class StoreWorkflowRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'max:255',
+            'name' => 'required|max:255',
             ...self::getActionRules(),
         ];
     }

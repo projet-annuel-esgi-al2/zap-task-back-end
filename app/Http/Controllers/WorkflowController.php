@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Enums\Workflow\Status;
 use App\Http\Requests\StoreWorkflowRequest;
 use App\Http\Resources\Api\WorkflowResource;
-use App\Models\ServiceAction;
 use App\Models\Workflow;
+use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class WorkflowController extends Controller
 {
@@ -25,51 +26,64 @@ class WorkflowController extends Controller
         return response()->json(WorkflowResource::make($workflow->load(['actions'])));
     }
 
-    public function create(Request $request): JsonResponse
+    public function createOrUpdate(StoreWorkflowRequest $request, ?Workflow $workflow = null): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'max:255',
-        ]);
-
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        $user->workflows()->create([
-            'name' => $validated['name'],
-            'status' => Status::Draft,
-        ]);
+        if (is_null($workflow)) {
+            $workflow = $user->workflows()->create([
+                'name' => $request->input('name'),
+                'status' => Status::Draft,
+            ]);
+        }
 
-        return response()->json();
-    }
-
-    public function update(StoreWorkflowRequest $request, Workflow $workflow): JsonResponse
-    {
-        $validated = $request->validate([
-            'name' => 'max:255',
-        ]);
+        if ($request->has('actions')) {
+            self::createOrUpdateActions($workflow, $request->input('actions'));
+        }
 
         $workflow->update([
-            'name' => $validated['name'],
+            'name' => $request->input('name'),
         ]);
 
-        $requestActions = collect($request->input('actions'))
-            ->sortBy('execution_order')
-            ->values();
+        return response()->json(WorkflowResource::make($workflow->load('actions')->refresh()));
+    }
 
-        $serviceActions = ServiceAction::all();
-        $requestActions->map(function (array $action) {});
+    private static function createOrUpdateActions(Workflow $workflow, array $actions): void
+    {
+        $actions = array_map(fn ($action) => array_merge($action, ['workflow_id' => $workflow->id]), $actions);
 
-        // for each workflow action and request action couple
-        // overwrite (update) the workflow action
-        // take the remaining requestAction (if any) and create them in the DB
-        //        $workflow->actions->each(function (WorkflowAction $action) {
-        //            $action->updateOrInsert(
-        //                ['service_action_id' => $action], //arguments to see if exists
-        //                [], // arguments to update
-        //            );
-        //        });
+        if ($workflow->actions->isEmpty()) {
+            $actionModels = WorkflowAction::fromApiRequest($actions)
+                ->map(fn ($action) => new WorkflowAction($action));
 
-        return response()->json(WorkflowResource::make($workflow));
+            $workflow->actions()->saveMany($actionModels);
+
+            return;
+        }
+
+        // Force mutators to run
+        $actions = WorkflowAction::fromApiRequest($actions)
+            ->map(function ($action) {
+                /** @phpstan-ignore-next-line */
+                return collect(WorkflowAction::make($action)->getAttributes())
+                    ->map(fn ($attribute) => is_array($attribute) ? json_encode($attribute) : $attribute);
+            })
+            ->map(function (Collection $action) {
+                if (! $action->has('id')) {
+                    $action['id'] = Str::uuid()->toString();
+
+                }
+
+                return $action;
+            })
+            ->toArray();
+
+        WorkflowAction::upsert(
+            $actions,
+            uniqueBy: ['id'],
+            update: ['service_action_id', 'url', 'execution_order', 'body_parameters', 'query_parameters', 'url_parameters']
+        );
     }
 
     public function destroy(Workflow $workflow): JsonResponse

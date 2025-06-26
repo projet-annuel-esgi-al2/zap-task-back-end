@@ -4,6 +4,7 @@ use App\Enums\Service\Identifier;
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\ServiceOAuthController;
+use App\Http\Controllers\WorkflowController;
 use App\Http\Middleware\VerifyPersonalAccessToken;
 use App\Http\Resources\Api\ServiceResource;
 use App\Models\Service;
@@ -48,6 +49,8 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
     Route::get('services', function () {
         return Service::all()->toResourceCollection(ServiceResource::class);
     });
+
+    Route::put('/workflows/{workflow?}', [WorkflowController::class, 'createOrUpdate']);
 });
 
 Route::get('/{serviceIdentifier}/callback', [ServiceOAuthController::class, 'callback'])
