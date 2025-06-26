@@ -5,11 +5,14 @@ namespace App\Models;
 use App\Enums\WorkflowAction\Status;
 use App\Models\Traits\HasHttpParameters;
 use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Uri;
 
 /**
  * @property Status $status
@@ -34,6 +37,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Illuminate\Support\Carbon|null $last_executed_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read array $body_parameters_for_api
+ * @property-read array $query_parameters_for_api
+ * @property-read array $url_parameters_for_api
+ * @property-read array $parameters_for_api
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereBodyParameters($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereCreatedAt($value)
@@ -57,6 +64,7 @@ class WorkflowAction extends Model
     use HasUUID;
 
     protected $fillable = [
+        'id',
         'workflow_id',
         'service_action_id',
         'status',
@@ -99,5 +107,59 @@ class WorkflowAction extends Model
         return $this->history()
             ->latest()
             ->one();
+    }
+
+    public function url(): Attribute
+    {
+        return Attribute::make(
+            set: function ($url) {
+                $url = strtr($url, collect($this->url_parameters)->mapWithKeys(fn ($val, $key) => ['{'.$key.'}' => $val])->toArray());
+                $uri = Uri::of($url);
+                if (! empty($this->query_parameters)) {
+                    $uri->withQuery($this->query_parameters);
+                }
+
+                return $uri->value();
+            }
+        );
+    }
+
+    private static function prepareParametersForApi(array $parameters): array
+    {
+        return $parameters;
+    }
+
+    public static function getParametersFromRequest(array $serviceActionParameters, array $parameters): array
+    {
+        return collect($parameters)
+            ->filter(fn ($_, $parameterKey) => collect($serviceActionParameters)
+                ->contains(fn ($param) => $parameterKey === $param['parameter_key'])
+            )
+            ->toArray();
+    }
+
+    public static function fromApiRequest(array $actions): Collection
+    {
+        $serviceActions = ServiceAction::all();
+
+        return collect($actions)
+            ->map(function ($action) use ($serviceActions) {
+                $serviceAction = $serviceActions->find($action['service_action_id']);
+
+                $mergeData = [
+                    'body_parameters' => self::getParametersFromRequest($serviceAction->body_parameters, $action['parameters']),
+                    'query_parameters' => self::getParametersFromRequest($serviceAction->query_parameters, $action['parameters']),
+                    'url_parameters' => self::getParametersFromRequest($serviceAction->url_parameters, $action['parameters']),
+                    'url' => $serviceAction->url,
+                ];
+
+                if (! isset($action['status'])) {
+                    $mergeData['status'] = Status::Draft;
+                }
+
+                unset($action['parameters']);
+
+                return array_merge($action, $mergeData);
+            });
     }
 }
