@@ -114,8 +114,12 @@ class WorkflowAction extends Model
         return Attribute::make(
             set: function ($url) {
                 $url = strtr($url, collect($this->url_parameters)->mapWithKeys(fn ($val, $key) => ['{'.$key.'}' => $val])->toArray());
+                $uri = Uri::of($url);
+                if (! empty($this->query_parameters)) {
+                    $uri->withQuery($this->query_parameters);
+                }
 
-                return Uri::of($url)->withQuery($this->query_parameters)->value();
+                return $uri->value();
             }
         );
     }
