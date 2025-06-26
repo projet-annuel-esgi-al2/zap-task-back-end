@@ -34,6 +34,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Illuminate\Support\Carbon|null $last_executed_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read array $body_parameters_for_api
+ * @property-read array $query_parameters_for_api
+ * @property-read array $url_parameters_for_api
+ * @property-read array $parameters_for_api
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereBodyParameters($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereCreatedAt($value)
