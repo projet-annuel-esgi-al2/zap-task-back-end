@@ -59,6 +59,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read array $url_parameters_for_api
  * @property-read array $parameters_for_api
  *
+ * @method static \Database\Factories\ServiceActionFactory factory($count = null, $state = [])
+ *
  * @mixin \Eloquent
  */
 class ServiceAction extends Model

@@ -3,13 +3,14 @@
 namespace App\Models\Traits;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Arr;
 
 trait HasHttpParameters
 {
     private static function prepareParametersForApi(array $parameters): array
     {
         return collect($parameters)
-            ->filter(fn (array $parameter) => $parameter['hidden'] === false)
+            ->filter(fn (array $parameter) => is_null(Arr::get($parameter, 'hidden')) || Arr::get($parameter, 'hidden') === false)
             ->map(function (array $parameter) {
                 unset($parameter['hidden']);
 
