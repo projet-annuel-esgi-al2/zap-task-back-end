@@ -19,14 +19,11 @@ class ServiceOAuthController extends Controller
     /**
      * @group Services OAuth
      *
-     * Is User subscribed to service?
+     * Check If User Is Subscribed To Service
      *
      * @authenticated
      *
      * @response 404 { "message": "User is not subscribed to this service."}
-     *
-     * @responseHeader Location string The redirect url
-     *
      * @response 200
      */
     public function get(Identifier $serviceIdentifier): JsonResponse
@@ -43,7 +40,7 @@ class ServiceOAuthController extends Controller
     /**
      * @group Services OAuth
      *
-     * Fetch Service's OAuth consent screen
+     * Fetch Service's OAuth Consent Screen
      *
      * @authenticated
      *

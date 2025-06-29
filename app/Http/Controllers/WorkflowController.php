@@ -14,6 +14,20 @@ use Illuminate\Support\Str;
 
 class WorkflowController extends Controller
 {
+    /**
+     * @group Workflows
+     *
+     * Fetch User's Workflows
+     *
+     * @authenticated
+     *
+     * @apiResourceCollection \App\Http\Resources\Api\WorkflowResource
+     *
+     * @apiResourceModel \App\Models\Workflow
+     *
+     * @response 200
+     *
+     * */
     public function index(): JsonResponse
     {
         /** @var \App\Models\User $user */
@@ -22,6 +36,20 @@ class WorkflowController extends Controller
         return response()->json(WorkflowResource::collection($user->workflows));
     }
 
+    /**
+     * @group Workflows
+     *
+     * Fetch A Workflow And Its Actions If Present
+     *
+     * @authenticated
+     *
+     * @apiResource \App\Http\Resources\Api\WorkflowResource
+     *
+     * @apiResourceModel \App\Models\Workflow with=actions
+     *
+     * @response 200
+     *
+     * */
     public function show(Workflow $workflow): JsonResponse
     {
         return response()->json(WorkflowResource::make($workflow->load(['actions'])));
@@ -111,6 +139,16 @@ class WorkflowController extends Controller
         );
     }
 
+    /**
+     * @group Workflows
+     *
+     * Delete A Workflow
+     *
+     * @authenticated
+     *
+     * @response 200
+     *
+     * */
     public function destroy(Workflow $workflow): JsonResponse
     {
         $workflow->delete();
