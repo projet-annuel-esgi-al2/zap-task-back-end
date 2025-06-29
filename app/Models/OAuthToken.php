@@ -55,6 +55,13 @@ class OAuthToken extends Model
         'parent_token_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'expires_at' => 'datetime',
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

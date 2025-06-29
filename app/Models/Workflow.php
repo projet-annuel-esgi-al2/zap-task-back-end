@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\ServiceAction\Type;
 use App\Enums\Workflow\Status;
 use App\Models\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property Status $status
@@ -35,6 +37,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workflow whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workflow whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workflow whereUserId($value)
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkflowAction> $executableActions
+ * @property-read int|null $executable_actions_count
+ * @property-read \App\Models\WorkflowAction|null $trigger
+ *
+ * @method static \Database\Factories\WorkflowFactory factory($count = null, $state = [])
  *
  * @mixin \Eloquent
  */
@@ -69,5 +77,18 @@ class Workflow extends Model
     {
         return $this->hasMany(WorkflowAction::class)
             ->orderBy('execution_order');
+    }
+
+    public function trigger(): HasOne
+    {
+        return $this->hasMany(WorkflowAction::class)
+            ->whereHas('serviceAction', fn ($q) => $q->where('type', Type::Trigger))
+            ->one();
+    }
+
+    public function executableActions(): HasMany
+    {
+        return $this->hasMany(WorkflowAction::class)
+            ->whereHas('serviceAction', fn ($q) => $q->where('type', Type::Action));
     }
 }

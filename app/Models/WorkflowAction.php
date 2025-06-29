@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Uri;
 
@@ -54,6 +55,7 @@ use Illuminate\Support\Uri;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereUrlParameters($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereWorkflowId($value)
+ * @method static \Database\Factories\WorkflowActionFactory factory($count = null, $state = [])
  *
  * @mixin \Eloquent
  */
@@ -133,7 +135,7 @@ class WorkflowAction extends Model
     {
         return collect($parameters)
             ->filter(fn ($_, $parameterKey) => collect($serviceActionParameters)
-                ->contains(fn ($param) => $parameterKey === $param['parameter_key'])
+                ->contains(fn ($param) => $parameterKey === Arr::get($param, 'parameter_key'))
             )
             ->toArray();
     }
