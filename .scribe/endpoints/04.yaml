@@ -1,0 +1,100 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/workflows/{workflow?}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      workflow:
+        name: workflow
+        description: ''
+        required: false
+        example: 1eab7742-9972-473e-95b7-cf6c2c606067
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      workflow: 1eab7742-9972-473e-95b7-cf6c2c606067
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: vmqeopfuudtdsufvyvddq
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      actions:
+        name: actions
+        description: ''
+        required: false
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'actions[].identifier':
+        name: 'actions[].identifier'
+        description: ''
+        required: false
+        example: google-calendar-event-created
+        type: string
+        enumValues:
+          - google-calendar-event-created
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'actions[].execution_order':
+        name: 'actions[].execution_order'
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'actions[].parameters':
+        name: 'actions[].parameters'
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: vmqeopfuudtdsufvyvddq
+      actions:
+        -
+          identifier: google-calendar-event-created
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

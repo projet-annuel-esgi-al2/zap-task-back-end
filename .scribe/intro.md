@@ -3,7 +3,7 @@
 
 
 <aside>
-    <strong>Base URL</strong>: <code>http://zaptask</code>
+    <strong>Base URL</strong>: <code>https://c325-193-248-38-137.ngrok-free.app</code>
 </aside>
 
     This documentation aims to provide all the information you need to work with our API.
