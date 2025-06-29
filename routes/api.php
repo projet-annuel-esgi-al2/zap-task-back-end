@@ -10,19 +10,15 @@ use App\Http\Resources\Api\ServiceResource;
 use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/register')->group(function () {
-    Route::post('/', RegisterUserController::class);
-});
+Route::post('/register', RegisterUserController::class);
+Route::post('/me', AuthenticateUserController::class);
 
-Route::prefix('/me')->group(function () {
-    Route::post('/', AuthenticateUserController::class);
-});
+Route::get('/{serviceIdentifier}/callback', [ServiceOAuthController::class, 'callback'])
+    ->name('service-oauth-callback');
 
 Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
 
-    Route::prefix('subscriptions/{serviceIdentifier}')->group(function () {
-        Route::get('/', [ServiceOAuthController::class, 'get']);
-    });
+    Route::get('/subscriptions/{serviceIdentifier}', [ServiceOAuthController::class, 'get']);
 
     Route::prefix('{serviceIdentifier}/')->group(function () {
         /** ServiceOAuth routes */
@@ -50,8 +46,10 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         return Service::all()->toResourceCollection(ServiceResource::class);
     });
 
-    Route::put('/workflows/{workflow?}', [WorkflowController::class, 'createOrUpdate']);
+    Route::prefix('/workflows')->group(function () {
+        Route::get('/', [WorkflowController::class, 'index']);
+        Route::get('/{workflow}', [WorkflowController::class, 'show']);
+        Route::put('{workflow?}', [WorkflowController::class, 'createOrUpdate']);
+        Route::delete('/{workflow}', [WorkflowController::class, 'destroy']);
+    });
 });
-
-Route::get('/{serviceIdentifier}/callback', [ServiceOAuthController::class, 'callback'])
-    ->name('service-oauth-callback');

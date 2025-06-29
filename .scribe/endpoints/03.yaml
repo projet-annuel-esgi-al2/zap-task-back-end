@@ -1,0 +1,145 @@
+name: Workflows
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/workflows
+    metadata:
+      groupName: Workflows
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Fetch User's Workflows"
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":"98adc52b-966d-39db-809a-55902ee7228f","name":"Justice Moore","status":"tested","saved_at":"1982-01-20T10:57:45.000000Z","deployed_at":"2012-10-21T12:55:12.000000Z"},{"id":"bf7c1d71-86ac-3553-b993-13642f61513d","name":"Freida Ryan","status":"saved","saved_at":"2007-08-03T18:47:04.000000Z","deployed_at":"2021-04-28T22:55:11.000000Z"}]}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 200
+        content: '{}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/workflows/{workflow_id}'
+    metadata:
+      groupName: Workflows
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Fetch A Workflow And Its Actions If Present'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      workflow_id:
+        name: workflow_id
+        description: 'The ID of the workflow.'
+        required: true
+        example: 1eab7742-9972-473e-95b7-cf6c2c606067
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      workflow_id: 1eab7742-9972-473e-95b7-cf6c2c606067
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","name":"Stevie Renner","status":"draft","actions":[{"id":"e1cf03bf-0aac-4381-84de-4e4fc92773d4","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","status":"tested","execution_order":1,"url":"https:\/\/wiegand.com\/nesciunt-consequatur-eligendi-blanditiis-consequatur-vitae-et.html","parameters":[{"options":["calendar-id-1","calendar-id-2"],"parameter_key":"calendarId","parameter_name":"Calendar","parameter_type":"select"},{"parameter_key":"example-key","parameter_name":"Example","parameter_type":"checkbox"}],"last_executed_at":"2018-10-13T16:12:22.000000Z"},{"id":"aa1f1667-63b1-46af-bf43-c7d6acdfed80","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","status":"draft","execution_order":2,"url":"http:\/\/www.dare.com\/","parameters":[{"options":["calendar-id-1","calendar-id-2"],"parameter_key":"calendarId","parameter_name":"Calendar","parameter_type":"select"},{"parameter_key":"example-key","parameter_name":"Example","parameter_type":"checkbox"}],"last_executed_at":"1993-10-27T16:47:06.000000Z"},{"id":"8f180fb8-5939-4a3a-8290-9a92f4011ab9","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","status":"draft","execution_order":9,"url":"https:\/\/www.muller.com\/nesciunt-voluptatem-itaque-magnam-quis-dolorem-non-harum","parameters":[],"last_executed_at":"1976-03-16T16:13:32.000000Z"}],"saved_at":"2002-02-12T04:21:32.000000Z","deployed_at":"2024-05-17T04:05:57.000000Z"}}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 200
+        content: '{}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/workflows/{workflow_id}'
+    metadata:
+      groupName: Workflows
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete A Workflow'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      workflow_id:
+        name: workflow_id
+        description: 'The ID of the workflow.'
+        required: true
+        example: 1eab7742-9972-473e-95b7-cf6c2c606067
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      workflow_id: 1eab7742-9972-473e-95b7-cf6c2c606067
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
