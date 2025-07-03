@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $user_id
  * @property string $value
  * @property string|null $refresh_token
- * @property string|null $expires_at
+ * @property \Illuminate\Support\Carbon|null $expires_at
  * @property string|null $parent_token_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -60,6 +61,18 @@ class OAuthToken extends Model
         return [
             'expires_at' => 'datetime',
         ];
+    }
+
+    public function expired(): bool
+    {
+        return $this->expires_at->isPast();
+    }
+
+    public function expiresIn(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => now()->diffInSeconds($this->expires_at),
+        );
     }
 
     public function user(): BelongsTo

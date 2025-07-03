@@ -7,6 +7,7 @@ use App\Http\Requests\StoreWorkflowRequest;
 use App\Http\Resources\Api\WorkflowResource;
 use App\Models\Workflow;
 use App\Models\WorkflowAction;
+use App\Services\ParameterResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -100,10 +101,24 @@ class WorkflowController extends Controller
         if ($workflow->actions->isEmpty()) {
             self::createWorkflowActions($workflow, $actions);
 
-            return;
+        } else {
+            self::upsertWorkflowActions($actions);
         }
 
-        self::upsertWorkflowActions($actions);
+        $workflow->load([
+            'actions.serviceAction',
+            'actions.workflow',
+        ]);
+
+        $workflow->actions->each(function (WorkflowAction $action) {
+            $parameterResolver = ParameterResolver::make($action);
+
+            $action->body_parameters = array_merge($parameterResolver->resolveBodyParameters(), $action->body_parameters);
+            $action->query_parameters = array_merge($parameterResolver->resolveQueryParameters(), $action->query_parameters);
+            $action->url_parameters = array_merge($parameterResolver->resolveUrlParameters(), $action->url_parameters);
+
+            $action->save();
+        });
     }
 
     private static function createWorkflowActions(Workflow $workflow, array $actions): void
@@ -135,7 +150,7 @@ class WorkflowController extends Controller
         WorkflowAction::upsert(
             $actions,
             uniqueBy: ['id'],
-            update: ['service_action_id', 'url', 'execution_order', 'body_parameters', 'query_parameters', 'url_parameters']
+            update: ['workflow_id', 'service_action_id', 'url', 'execution_order', 'body_parameters', 'query_parameters', 'url_parameters']
         );
     }
 

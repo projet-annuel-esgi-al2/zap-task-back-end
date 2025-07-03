@@ -107,7 +107,7 @@ class WorkflowControllerTest extends TestCase
                     'status' => $workflowAction->status->value,
                     'execution_order' => $workflowAction->execution_order,
                     'url' => $workflowAction->url,
-                    'parameters' => $workflowAction->parameters_for_api,
+                    'parameters' => $workflowAction->getParametersForApi(),
                     'last_executed_at' => $workflowAction->last_executed_at,
                 ],
             ],
