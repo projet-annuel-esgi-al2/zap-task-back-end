@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.20",
         "laravel/tinker": "^2.10.1",
+        "lorisleiva/laravel-actions": "^2.9",
         "ramsey/uuid": "^4.7",
         "saloonphp/laravel-plugin": "^3.5",
         "saloonphp/saloon": "3.13",
@@ -26,7 +27,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.5",
         "ekino/phpstan-banned-code": "^3.0",
-        "fakerphp/faker": "^1.23",
+        "fakerphp/faker": "^1.24",
         "knuckleswtf/scribe": "^5.2",
         "larastan/larastan": "^3.4",
         "laravel/pail": "^1.2.2",

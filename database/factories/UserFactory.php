@@ -46,9 +46,9 @@ class UserFactory extends Factory
         ]);
     }
 
-    public function loggedIn(): static
+    public function loggedIn(callable|bool $loggedIn = true): static
     {
-        static::$loggedIn = true;
+        static::$loggedIn = value($loggedIn);
 
         return $this->state([]);
     }

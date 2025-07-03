@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\WorkflowAction\Status;
-use App\Models\Traits\HasHttpParameters;
 use App\Models\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Uri;
 
@@ -37,10 +37,6 @@ use Illuminate\Support\Uri;
  * @property \Illuminate\Support\Carbon|null $last_executed_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read array $body_parameters_for_api
- * @property-read array $query_parameters_for_api
- * @property-read array $url_parameters_for_api
- * @property-read array $parameters_for_api
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereBodyParameters($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereCreatedAt($value)
@@ -54,13 +50,13 @@ use Illuminate\Support\Uri;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereUrlParameters($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereWorkflowId($value)
+ * @method static \Database\Factories\WorkflowActionFactory factory($count = null, $state = [])
  *
  * @mixin \Eloquent
  */
 class WorkflowAction extends Model
 {
     use HasFactory;
-    use HasHttpParameters;
     use HasUUID;
 
     protected $fillable = [
@@ -124,16 +120,24 @@ class WorkflowAction extends Model
         );
     }
 
-    private static function prepareParametersForApi(array $parameters): array
+    public function getParametersForApi(): array
     {
-        return $parameters;
+        $workflowActionParameters = collect(array_merge($this->body_parameters, $this->query_parameters, $this->url_parameters));
+
+        return collect($this->serviceAction->parameters_for_api)
+            ->map(function ($param) use ($workflowActionParameters) {
+                $param['parameter_value'] = $workflowActionParameters[$param['parameter_key']];
+
+                return $param;
+            })
+            ->toArray();
     }
 
     public static function getParametersFromRequest(array $serviceActionParameters, array $parameters): array
     {
         return collect($parameters)
             ->filter(fn ($_, $parameterKey) => collect($serviceActionParameters)
-                ->contains(fn ($param) => $parameterKey === $param['parameter_key'])
+                ->contains(fn ($param) => $parameterKey === Arr::get($param, 'parameter_key'))
             )
             ->toArray();
     }

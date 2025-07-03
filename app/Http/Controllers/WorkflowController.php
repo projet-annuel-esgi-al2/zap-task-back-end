@@ -7,7 +7,9 @@ use App\Http\Requests\StoreWorkflowRequest;
 use App\Http\Resources\Api\WorkflowResource;
 use App\Models\Workflow;
 use App\Models\WorkflowAction;
+use App\Services\ParameterResolver;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -59,6 +61,19 @@ class WorkflowController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
+        if (is_null($workflow) && $request->has('actions')) {
+            $actions = collect($request->input('actions'));
+            $anyActionHasId = $actions->contains(fn ($action) => isset($action['id']));
+
+            if ($anyActionHasId) {
+                return response()
+                    ->json(
+                        'Request missing url parameter "workflow_id" but contains action with "id"',
+                        Response::HTTP_BAD_REQUEST,
+                    );
+            }
+        }
+
         if (is_null($workflow)) {
             $workflow = $user->workflows()->create([
                 'name' => $request->input('name'),
@@ -74,7 +89,9 @@ class WorkflowController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return response()->json(WorkflowResource::make($workflow->load('actions')->refresh()));
+        $workflow->load('actions.serviceAction');
+
+        return response()->json(WorkflowResource::make($workflow));
     }
 
     private static function createOrUpdateActions(Workflow $workflow, array $actions): void
@@ -82,19 +99,42 @@ class WorkflowController extends Controller
         $actions = array_map(fn ($action) => array_merge($action, ['workflow_id' => $workflow->id]), $actions);
 
         if ($workflow->actions->isEmpty()) {
-            $actionModels = WorkflowAction::fromApiRequest($actions)
-                ->map(fn ($action) => new WorkflowAction($action));
+            self::createWorkflowActions($workflow, $actions);
 
-            $workflow->actions()->saveMany($actionModels);
-
-            return;
+        } else {
+            self::upsertWorkflowActions($actions);
         }
 
-        // Force mutators to run
+        $workflow->load([
+            'actions.serviceAction',
+            'actions.workflow',
+        ]);
+
+        $workflow->actions->each(function (WorkflowAction $action) {
+            $parameterResolver = ParameterResolver::make($action);
+
+            $action->body_parameters = array_merge($parameterResolver->resolveBodyParameters(), $action->body_parameters);
+            $action->query_parameters = array_merge($parameterResolver->resolveQueryParameters(), $action->query_parameters);
+            $action->url_parameters = array_merge($parameterResolver->resolveUrlParameters(), $action->url_parameters);
+
+            $action->save();
+        });
+    }
+
+    private static function createWorkflowActions(Workflow $workflow, array $actions): void
+    {
+        $actionModels = WorkflowAction::fromApiRequest($actions)
+            ->map(fn ($action) => new WorkflowAction($action));
+
+        $workflow->actions()->saveMany($actionModels);
+    }
+
+    private static function upsertWorkflowActions(array $actions): void
+    {
         $actions = WorkflowAction::fromApiRequest($actions)
             ->map(function ($action) {
                 /** @phpstan-ignore-next-line */
-                return collect(WorkflowAction::make($action)->getAttributes())
+                return collect(WorkflowAction::make($action)->getAttributes()) // Force mutators to run to format url with url parameters
                     ->map(fn ($attribute) => is_array($attribute) ? json_encode($attribute) : $attribute);
             })
             ->map(function (Collection $action) {
@@ -110,7 +150,7 @@ class WorkflowController extends Controller
         WorkflowAction::upsert(
             $actions,
             uniqueBy: ['id'],
-            update: ['service_action_id', 'url', 'execution_order', 'body_parameters', 'query_parameters', 'url_parameters']
+            update: ['workflow_id', 'service_action_id', 'url', 'execution_order', 'body_parameters', 'query_parameters', 'url_parameters']
         );
     }
 

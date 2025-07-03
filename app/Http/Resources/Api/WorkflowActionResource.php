@@ -22,7 +22,7 @@ class WorkflowActionResource extends JsonResource
             'status' => $this->status->value,
             'execution_order' => $this->execution_order,
             'url' => $this->url,
-            'parameters' => $this->parameters_for_api,
+            'parameters' => $this->getParametersForApi(),
             'last_executed_at' => $this->last_executed_at,
         ];
     }
