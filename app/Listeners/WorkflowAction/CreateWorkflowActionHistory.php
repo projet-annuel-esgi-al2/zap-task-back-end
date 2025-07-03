@@ -15,12 +15,12 @@ class CreateWorkflowActionHistory implements ShouldQueue, ShouldQueueAfterCommit
         $workflowAction = $event->workflowAction;
 
         WorkflowActionHistory::create([
+            'workflow_action_id' => $workflowAction->id,
+            'response_http_code' => $event->httpCode,
             'execution_status' => $event->success ? ExecutionStatus::Success : ExecutionStatus::Error,
             'execution_order' => $workflowAction->execution_order,
             'exception' => $event->exception,
-            'body_parameters' => $workflowAction->body_parameters,
-            'url_parameters' => $workflowAction->url_parameters,
-            'query_parameters' => $workflowAction->query_parameters,
+            'parameters' => $workflowAction->getParametersForApi(),
             'executed_at' => $event->executedAt,
         ]);
     }

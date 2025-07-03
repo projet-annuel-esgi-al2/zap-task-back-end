@@ -38,6 +38,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OAuthToken whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OAuthToken whereValue($value)
  *
+ * @property-read mixed $expires_in
+ *
  * @mixin \Eloquent
  */
 class OAuthToken extends Model
