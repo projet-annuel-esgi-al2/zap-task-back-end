@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', RegisterUserController::class);
 Route::post('/me', AuthenticateUserController::class);
 
-Route::get('/{serviceIdentifier}/callback', [ServiceOAuthController::class, 'callback'])
+Route::get('/oauth/callback', [ServiceOAuthController::class, 'callback'])
     ->name('service-oauth-callback');
 
 Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
