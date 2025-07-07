@@ -3,7 +3,7 @@
 return [
     'configs' => [
         [
-            'name' => 'trigger-workflow-webhook',
+            'name' => 'google-trigger-workflow-webhook',
             'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
             'signature_header_name' => 'Signature',
             'signature_validator' => \App\Http\Webhooks\SignatureValidator::class,
@@ -14,7 +14,7 @@ return [
                 'X-Goog-Channel-Token',
                 'X-Goog-Channel-Id',
             ],
-            'process_webhook_job' => \App\Http\Webhooks\Jobs\Workflow\ExecuteWorkflow::class,
+            'process_webhook_job' => \App\Http\Webhooks\Jobs\Workflow\ProcessGoogleWebhook::class,
         ],
     ],
 

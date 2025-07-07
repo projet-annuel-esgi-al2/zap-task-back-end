@@ -40,4 +40,4 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
     });
 });
 
-Route::webhooks('/workflows/trigger', 'trigger-workflow-webhook');
+Route::webhooks('/workflows/google/trigger', 'google-trigger-workflow-webhook');

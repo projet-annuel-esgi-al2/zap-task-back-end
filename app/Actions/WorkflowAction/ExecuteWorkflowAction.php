@@ -30,7 +30,6 @@ class ExecuteWorkflowAction implements ShouldQueue, ShouldQueueAfterCommit
             } else {
                 WorkflowActionExecuted::dispatch($action, (string) $response->status(), false, $response->toException()->getMessage());
             }
-            error_log('asdfasdfasfd');
         } catch (FatalRequestException|RequestException $e) {
             error_log($e->getStatus());
             WorkflowActionExecuted::dispatch($action, (string) $e->getStatus(), false, $e->getMessage());
