@@ -12,10 +12,18 @@ class WorkflowActionResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $service = $this->whenLoaded('serviceAction', function () {
+            if ($this->serviceAction->relationLoaded('service')) {
+                return $this->serviceAction->service;
+            }
+
+            return null;
+        });
+
         return [
             'id' => $this->id,
             'workflow_id' => $this->workflow_id,
-            'service' => $this->whenLoaded('serviceAction', fn () => ServiceResource::make($this->serviceAction->service)),
+            'service' => $this->whenNotNull($service),
             'identifier' => $this->whenLoaded('serviceAction', fn () => $this->serviceAction->identifier),
             'name' => $this->whenLoaded('serviceAction', fn () => $this->serviceAction->name),
             'type' => $this->whenLoaded('serviceAction', fn () => $this->serviceAction->type),

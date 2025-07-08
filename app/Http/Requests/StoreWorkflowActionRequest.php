@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\ServiceAction\Identifier;
 use App\Traits\Makeable;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,8 +22,7 @@ class StoreWorkflowActionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'identifier' => 'in:'.Identifier::implodedValues(),
-            'execution_order' => 'gte:0',
+            'execution_order' => 'required|gte:0',
             'parameters' => 'array',
         ];
     }
