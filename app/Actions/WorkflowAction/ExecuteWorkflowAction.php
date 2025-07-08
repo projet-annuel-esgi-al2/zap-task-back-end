@@ -21,6 +21,10 @@ class ExecuteWorkflowAction implements ShouldQueue, ShouldQueueAfterCommit
 
     public function handle(WorkflowAction $action): void
     {
+        $action->update([
+            'last_executed_at' => now(),
+        ]);
+
         try {
             $response = ServiceConnector::make()
                 ->send(WorkflowActionRequest::fromWorkflowAction($action));
