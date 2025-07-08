@@ -89,7 +89,7 @@ class WorkflowController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        $workflow->load('actions.serviceAction');
+        $workflow->load('actions.serviceAction.service');
 
         return response()->json(WorkflowResource::make($workflow));
     }
@@ -116,6 +116,7 @@ class WorkflowController extends Controller
             $action->body_parameters = array_merge($parameterResolver->resolveBodyParameters(), $action->body_parameters);
             $action->query_parameters = array_merge($parameterResolver->resolveQueryParameters(), $action->query_parameters);
             $action->url_parameters = array_merge($parameterResolver->resolveUrlParameters(), $action->url_parameters);
+            $action->headers = array_merge($parameterResolver->resolveHeaders(), $action->headers);
 
             $action->save();
         });

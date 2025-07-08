@@ -57,9 +57,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read array $body_parameters_for_api
  * @property-read array $query_parameters_for_api
  * @property-read array $url_parameters_for_api
+ * @property-read array $headers_for_api
  * @property-read array $parameters_for_api
  *
  * @method static \Database\Factories\ServiceActionFactory factory($count = null, $state = [])
+ *
+ * @property array $headers
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereHeaders($value)
  *
  * @mixin \Eloquent
  */
@@ -90,6 +95,7 @@ class ServiceAction extends Model
             'body_parameters' => 'array',
             'url_parameters' => 'array',
             'query_parameters' => 'array',
+            'headers' => 'array',
             'trigger_notification_type' => TriggerNotificationType::class,
         ];
     }

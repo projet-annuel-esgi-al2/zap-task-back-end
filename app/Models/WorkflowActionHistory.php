@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereParameters($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereWorkflowActionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereResponseHttpCode($value)
  *
  * @mixin \Eloquent
  */

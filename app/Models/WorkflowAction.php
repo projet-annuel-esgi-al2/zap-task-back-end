@@ -52,6 +52,10 @@ use Illuminate\Support\Uri;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereWorkflowId($value)
  * @method static \Database\Factories\WorkflowActionFactory factory($count = null, $state = [])
  *
+ * @property array $headers
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereHeaders($value)
+ *
  * @mixin \Eloquent
  */
 class WorkflowAction extends Model
@@ -79,6 +83,7 @@ class WorkflowAction extends Model
             'body_parameters' => 'array',
             'url_parameters' => 'array',
             'query_parameters' => 'array',
+            'headers' => 'array',
             'last_executed_at' => 'datetime',
         ];
     }
@@ -154,6 +159,7 @@ class WorkflowAction extends Model
                     'body_parameters' => self::getParametersFromRequest($serviceAction->body_parameters, $action['parameters']),
                     'query_parameters' => self::getParametersFromRequest($serviceAction->query_parameters, $action['parameters']),
                     'url_parameters' => self::getParametersFromRequest($serviceAction->url_parameters, $action['parameters']),
+                    'headers' => self::getParametersFromRequest($serviceAction->headers, $action['parameters']),
                     'url' => $serviceAction->url,
                 ];
 
