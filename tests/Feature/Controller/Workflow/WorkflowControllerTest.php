@@ -36,7 +36,7 @@ class WorkflowControllerTest extends TestCase
         ]);
     }
 
-    public function test_cant_create_workflow_without_a_name(): void
+    public function test_cannot_create_workflow_without_a_name(): void
     {
         $this->put(
             '/api/workflows',
@@ -60,6 +60,7 @@ class WorkflowControllerTest extends TestCase
                     [
                         'parameter_key' => 'calendarId',
                         'parameter_type' => 'select',
+                        'parameter_value' => '{{$calendarId}}',
                         'options' => [
                             'option1',
                             'option2',

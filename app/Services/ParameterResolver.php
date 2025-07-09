@@ -4,49 +4,72 @@ namespace App\Services;
 
 use App\Models\WorkflowAction;
 use App\Traits\Makeable;
-use Illuminate\Support\Arr;
-use ReflectionClass;
+use Illuminate\Support\Facades\Blade;
 
 class ParameterResolver
 {
     use Makeable;
 
-    public function __construct(protected WorkflowAction $workflowAction) {}
+    public function __construct(protected WorkflowAction $workflowAction, protected array $values) {}
+
+    public function resolve(): WorkflowAction
+    {
+        return $this->workflowAction->fill([
+            'body_parameters' => $this->resolveBodyParameters(),
+            'query_parameters' => $this->resolveQueryParameters(),
+            'url_parameters' => $this->resolveUrlParameters(),
+            'headers' => $this->resolveHeaders(),
+            'resolved_body' => $this->resolveBody(),
+        ]);
+    }
+
+    public function resolveBody(): array
+    {
+        if (empty($this->workflowAction->serviceAction->body_template)) {
+            return $this->resolveBodyParameters();
+        }
+
+        return $this->resolveTemplate($this->workflowAction->serviceAction->body_template);
+    }
 
     public function resolveBodyParameters(): array
     {
-        return $this->resolveParameters($this->workflowAction->serviceAction->body_parameters);
+        return $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('body_parameters'));
     }
 
     public function resolveQueryParameters(): array
     {
-        return $this->resolveParameters($this->workflowAction->serviceAction->query_parameters);
+        return $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('query_parameters'));
     }
 
     public function resolveUrlParameters(): array
     {
-        return $this->resolveParameters($this->workflowAction->serviceAction->url_parameters);
+        $parameters = $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('url_parameters'));
+
+        return $parameters;
     }
 
-    private function resolveParameters(array $parameters): array
+    public function resolveHeaders(): array
     {
-        $reflection = new ReflectionClass(self::class);
+        return $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('headers'));
+    }
+
+    private function resolveTemplate(string $template): array
+    {
+        $parameterValues = array_merge(
+            ['_r' => $this],
+            $this->values,
+        );
+
+        return json_decode(Blade::render($template, $parameterValues), true);
+    }
+
+    private function resolveParameters(string $parameters): array
+    {
+        $parameters = $this->resolveTemplate($parameters);
 
         return collect($parameters)
-            ->filter(fn ($parameter) => Arr::get($parameter, 'hidden') === true)
-            ->flatMap(function ($parameter) use ($reflection) {
-                $resolverMethod = Arr::get($parameter, 'parameter_value');
-                if ($reflection->hasMethod($resolverMethod)) {
-                    $parameter['parameter_value'] = $this->{$resolverMethod}();
-                }
-                $parameter[$parameter['parameter_key']] = $parameter['parameter_value'];
-
-                unset($parameter['parameter_key']);
-                unset($parameter['parameter_value']);
-                unset($parameter['hidden']);
-
-                return $parameter;
-            })
+            ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['parameter_value']])
             ->toArray();
     }
 
