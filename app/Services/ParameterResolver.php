@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
+use Illuminate\Support\Uri;
 
 class ParameterResolver
 {
@@ -131,6 +132,10 @@ class ParameterResolver
      * */
     public function webhookAddress(): string
     {
-        return app()->joinPaths(config('app.url'), '/api/workflows/trigger');
+        return Uri::of(config('app.url'))
+            ->withPath('/api/workflows/trigger')
+            ->withQuery([
+                'w' => $this->workflowAction->workflow->id,
+            ]);
     }
 }

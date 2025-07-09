@@ -19,7 +19,7 @@ class WorkflowActionController extends Controller
         ExecuteWorkflowAction::run($action);
 
         if (! empty($action->refresh()->latestExecution)) {
-            return response()->json(WorkflowActionHistoryResource::make($action->refresh()->latestExecution));
+            return response()->json(WorkflowActionHistoryResource::make($action->latestExecution));
         }
 
         return response()->json();

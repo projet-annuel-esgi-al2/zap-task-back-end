@@ -32,6 +32,7 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         Route::get('/', [WorkflowController::class, 'index']);
         Route::get('/{workflow}', [WorkflowController::class, 'show']);
         Route::put('/{workflow?}', [WorkflowController::class, 'createOrUpdate']);
+        Route::post('/deploy/{workflow}', [WorkflowController::class, 'deploy']);
         Route::delete('/{workflow}', [WorkflowController::class, 'destroy']);
     });
 
@@ -40,4 +41,4 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
     });
 });
 
-Route::webhooks('/workflows/google/trigger', 'google-trigger-workflow-webhook');
+Route::webhooks('/workflows/trigger', 'trigger-workflow-webhook');

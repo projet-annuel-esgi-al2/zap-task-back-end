@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\WorkflowAction\ExecuteWorkflowAction;
 use App\Enums\Workflow\Status;
 use App\Http\Requests\StoreWorkflowRequest;
+use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Http\Resources\Api\WorkflowResource;
 use App\Models\Workflow;
 use App\Models\WorkflowAction;
@@ -104,6 +106,19 @@ class WorkflowController extends Controller
         $actions = array_map(fn ($action) => array_merge($action, ['workflow_id' => $workflow->id]), $actions);
 
         WorkflowAction::createOrUpdateFromApiRequest($actions);
+    }
+
+    public function deploy(Workflow $workflow): JsonResponse
+    {
+        $trigger = $workflow->trigger;
+
+        ExecuteWorkflowAction::run($trigger);
+
+        if (! empty($trigger->refresh()->latestExecution)) {
+            return response()->json(WorkflowActionHistoryResource::make($trigger->latestExecution));
+        }
+
+        return response()->json();
     }
 
     /**
