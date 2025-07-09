@@ -47,7 +47,7 @@ class WorkflowActionRequest extends Request implements HasBody
         $request = self::make();
         $request->headers()->add('Authorization', 'Bearer '.$oauthTokenValue);
         $request->url = $action->url;
-        $request->body()->merge($action->body_parameters);
+        $request->body()->merge($action->resolved_body);
 
         return $request;
     }

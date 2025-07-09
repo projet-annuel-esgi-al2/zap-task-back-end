@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Enums\WorkflowAction\Status;
 use App\Models\Traits\HasUUID;
+use App\Services\ParameterResolver;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Uri;
 
@@ -21,6 +21,7 @@ use Illuminate\Support\Uri;
  * @property-read \App\Models\WorkflowActionHistory|null $latestExecution
  * @property-read \App\Models\ServiceAction|null $serviceAction
  * @property-read \App\Models\Workflow|null $workflow
+ * @property-read array<array-key, mixed> $parameters
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction newQuery()
@@ -56,6 +57,10 @@ use Illuminate\Support\Uri;
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereHeaders($value)
  *
+ * @property array $resolved_body
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereResolvedBody($value)
+ *
  * @mixin \Eloquent
  */
 class WorkflowAction extends Model
@@ -73,6 +78,8 @@ class WorkflowAction extends Model
         'body_parameters',
         'url_parameters',
         'query_parameters',
+        'headers',
+        'resolved_body',
         'last_executed_at',
     ];
 
@@ -84,6 +91,7 @@ class WorkflowAction extends Model
             'url_parameters' => 'array',
             'query_parameters' => 'array',
             'headers' => 'array',
+            'resolved_body' => 'array',
             'last_executed_at' => 'datetime',
         ];
     }
@@ -114,6 +122,10 @@ class WorkflowAction extends Model
     {
         return Attribute::make(
             set: function ($url) {
+                if (empty($this->url_parameters)) {
+                    return $url;
+                }
+
                 $url = strtr($url, collect($this->url_parameters)->mapWithKeys(fn ($val, $key) => ['{'.$key.'}' => $val])->toArray());
                 $uri = Uri::of($url);
                 if (! empty($this->query_parameters)) {
@@ -125,9 +137,16 @@ class WorkflowAction extends Model
         );
     }
 
+    public function parameters(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => array_merge($this->body_parameters, $this->query_parameters, $this->url_parameters),
+        );
+    }
+
     public function getParametersForApi(): array
     {
-        $workflowActionParameters = collect(array_merge($this->body_parameters, $this->query_parameters, $this->url_parameters));
+        $workflowActionParameters = collect($this->parameters);
 
         return collect($this->serviceAction->parameters_for_api)
             ->map(function ($param) use ($workflowActionParameters) {
@@ -138,38 +157,60 @@ class WorkflowAction extends Model
             ->toArray();
     }
 
-    public static function getParametersFromRequest(array $serviceActionParameters, array $parameters): array
-    {
-        return collect($parameters)
-            ->filter(fn ($_, $parameterKey) => collect($serviceActionParameters)
-                ->contains(fn ($param) => $parameterKey === Arr::get($param, 'parameter_key'))
-            )
-            ->toArray();
-    }
-
-    public static function fromApiRequest(array $actions): Collection
+    /**
+     * @return Collection<WorkflowAction>
+     * */
+    public static function createOrUpdateFromApiRequest(array $requestActionsData): Collection
     {
         $serviceActions = ServiceAction::all();
 
-        return collect($actions)
-            ->map(function ($action) use ($serviceActions) {
-                $serviceAction = $serviceActions->find($action['service_action_id']);
+        return collect($requestActionsData)
+            ->map(function ($actionData) use ($serviceActions) {
+                $serviceAction = $serviceActions->find($actionData['service_action_id']);
 
-                $mergeData = [
-                    'body_parameters' => self::getParametersFromRequest($serviceAction->body_parameters, $action['parameters']),
-                    'query_parameters' => self::getParametersFromRequest($serviceAction->query_parameters, $action['parameters']),
-                    'url_parameters' => self::getParametersFromRequest($serviceAction->url_parameters, $action['parameters']),
-                    'headers' => self::getParametersFromRequest($serviceAction->headers, $action['parameters']),
-                    'url' => $serviceAction->url,
-                ];
+                $id = empty($actionData['id']) ? [] : ['id' => $actionData['id']];
+                $actionModel = self::createOrUpdate(
+                    uniqueBy: $id,
+                    attributes: [
+                        'service_action_id' => $actionData['service_action_id'],
+                        'execution_order' => $actionData['execution_order'],
+                        'url' => $serviceAction->url,
+                    ],
+                    onCreateOnly: [
+                        'workflow_id' => $actionData['workflow_id'],
+                        'status' => Status::Draft,
+                    ]
+                );
 
-                if (! isset($action['status'])) {
-                    $mergeData['status'] = Status::Draft;
-                }
+                $actionModelWithResolvedParameters = ParameterResolver::make($actionModel, $actionData['parameters'])
+                    ->resolve();
 
-                unset($action['parameters']);
+                $actionModelWithResolvedParameters->fill([
+                    'url' => $actionModelWithResolvedParameters->url, // force mutator to run
+                ]);
+                $actionModelWithResolvedParameters->save();
 
-                return array_merge($action, $mergeData);
+                return $actionModelWithResolvedParameters;
             });
+    }
+
+    public static function createOrUpdate(array $uniqueBy = [], array $attributes = [], array $onCreateOnly = []): self
+    {
+        $model = empty($uniqueBy)
+            ? new self(array_merge($attributes, $onCreateOnly))
+            : self::firstOrNew($uniqueBy, $attributes);
+        $fillableAttributes = $model->only($model->getFillable());
+
+        $updatedAttributes = array_filter(array_merge(
+            $fillableAttributes,
+            $attributes,
+        ));
+        $model->fill($updatedAttributes);
+
+        if ($model->isDirty()) {
+            $model->save();
+        }
+
+        return $model;
     }
 }
