@@ -16,6 +16,7 @@ class WorkflowActionExecuted
 
     public function __construct(
         public WorkflowAction $workflowAction,
+        public readonly string $httpCode,
         public readonly bool $success = true,
         public readonly ?string $exception = null,
         ?Carbon $executedAt = null,

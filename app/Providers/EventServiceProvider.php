@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Actions\WorkflowAction\CreateWorkflowActionHistory;
 use App\Events\WorkflowAction\WorkflowActionExecuted;
-use App\Listeners\WorkflowAction\CreateWorkflowActionHistory;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider

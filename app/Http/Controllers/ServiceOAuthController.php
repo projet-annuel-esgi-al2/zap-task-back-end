@@ -55,37 +55,45 @@ class ServiceOAuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        $encodedUserId = self::encodeUserId($user);
+        $encodedData = self::encodeStateData($user, $service->id);
 
         /** @phpstan-ignore-next-line */
         $socialite = Socialite::driver($socialiteDriverIdentifier)
             ->stateless()
-            ->with(['state' => $encodedUserId])
+            ->with(['state' => $encodedData])
             ->scopes($scopes);
 
         if (! empty($service->oauth_token_options)) {
             $socialite->with([
                 ...$service->oauth_token_options,
-                'state' => $encodedUserId,
+                'state' => $encodedData,
             ]);
         }
 
         return response()->json([
-            'url' => $socialite->redirect()->getTargetUrl(),
+            'url' => $socialite
+                ->redirectUrl(route('service-oauth-callback'))
+                ->redirect()
+                ->getTargetUrl(),
         ]);
     }
 
     /**
      * @hideFromAPIDocumentation
      * */
-    public function callback(Request $request, Identifier $serviceIdentifier): View
+    public function callback(Request $request): View
     {
-        $service = Service::where('identifier', $serviceIdentifier->value)->first();
+        $data = self::decodeStateData($request->query('state'));
+
+        $service = Service::find(Arr::get($data, 'service_id'));
         /** @phpstan-ignore-next-line */
-        $oauthUser = Socialite::driver($service->socialite_driver_identifier)->stateless()->user();
+        $oauthUser = Socialite::driver($service->socialite_driver_identifier)
+            ->stateless()
+            ->redirectUrl(route('service-oauth-callback'))
+            ->user();
 
         $oauthToken = OAuthToken::create([
-            'user_id' => self::decodeUserId($request->query('state')),
+            'user_id' => Arr::get($data, 'user_id'),
             'value' => $oauthUser->token,
             'refresh_token' => $oauthUser->refreshToken,
             'expires_at' => now()->addSeconds($oauthUser->expiresIn),
@@ -99,13 +107,13 @@ class ServiceOAuthController extends Controller
         return view('close');
     }
 
-    private static function encodeUserId(User $user): string
+    private static function encodeStateData(User $user, string $serviceId): string
     {
-        return base64_encode(json_encode(['user_id' => auth()->user()->id]));
+        return base64_encode(json_encode(['user_id' => $user->id, 'service_id' => $serviceId]));
     }
 
-    private static function decodeUserId(string $userId): string
+    private static function decodeStateData(string $encodedData): array
     {
-        return Arr::get(json_decode(base64_decode($userId), true), 'user_id');
+        return json_decode(base64_decode($encodedData), true);
     }
 }

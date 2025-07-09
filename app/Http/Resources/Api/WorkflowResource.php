@@ -14,7 +14,7 @@ class WorkflowResource extends JsonResource
     {
         $areServiceActionsLoaded = $this->whenLoaded(
             'actions',
-            fn () => $this->actions->first()->relationLoaded('serviceAction'),
+            fn () => $this->actions->first()?->relationLoaded('serviceAction') ?? false,
             false
         );
 

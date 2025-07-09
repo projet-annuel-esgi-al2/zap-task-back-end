@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\WorkflowAction\ExecuteWorkflowAction;
 use App\Enums\Workflow\Status;
 use App\Http\Requests\StoreWorkflowRequest;
+use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Http\Resources\Api\WorkflowResource;
 use App\Models\Workflow;
 use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 
 class WorkflowController extends Controller
 {
@@ -64,6 +65,19 @@ class WorkflowController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
+        if (is_null($workflow) && $request->has('actions')) {
+            $actions = collect($request->input('actions'));
+            $anyActionHasId = $actions->contains(fn ($action) => isset($action['id']));
+
+            if ($anyActionHasId) {
+                return response()
+                    ->json(
+                        'Request missing url parameter "workflow_id" but contains action with "id"',
+                        Response::HTTP_BAD_REQUEST,
+                    );
+            }
+        }
+
         if (is_null($workflow)) {
             $workflow = $user->workflows()->create([
                 'name' => $request->input('name'),
@@ -71,7 +85,7 @@ class WorkflowController extends Controller
             ]);
         }
 
-        if ($request->has('actions')) {
+        if ($request->has('actions') && ! empty($request->input('actions'))) {
             self::createOrUpdateActions($workflow, $request->input('actions'));
         }
 
@@ -79,44 +93,32 @@ class WorkflowController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return response()->json(WorkflowResource::make($workflow->load('actions')->refresh()));
+        $workflow->load([
+            'actions.serviceAction.service',
+            'actions.workflow',
+        ]);
+
+        return response()->json(WorkflowResource::make($workflow));
     }
 
     private static function createOrUpdateActions(Workflow $workflow, array $actions): void
     {
         $actions = array_map(fn ($action) => array_merge($action, ['workflow_id' => $workflow->id]), $actions);
 
-        if ($workflow->actions->isEmpty()) {
-            $actionModels = WorkflowAction::fromApiRequest($actions)
-                ->map(fn ($action) => new WorkflowAction($action));
+        WorkflowAction::createOrUpdateFromApiRequest($actions);
+    }
 
-            $workflow->actions()->saveMany($actionModels);
+    public function deploy(Workflow $workflow): JsonResponse
+    {
+        $trigger = $workflow->trigger;
 
-            return;
+        ExecuteWorkflowAction::run($trigger);
+
+        if (! empty($trigger->refresh()->latestExecution)) {
+            return response()->json(WorkflowActionHistoryResource::make($trigger->latestExecution));
         }
 
-        // Force mutators to run
-        $actions = WorkflowAction::fromApiRequest($actions)
-            ->map(function ($action) {
-                /** @phpstan-ignore-next-line */
-                return collect(WorkflowAction::make($action)->getAttributes())
-                    ->map(fn ($attribute) => is_array($attribute) ? json_encode($attribute) : $attribute);
-            })
-            ->map(function (Collection $action) {
-                if (! $action->has('id')) {
-                    $action['id'] = Str::uuid()->toString();
-
-                }
-
-                return $action;
-            })
-            ->toArray();
-
-        WorkflowAction::upsert(
-            $actions,
-            uniqueBy: ['id'],
-            update: ['service_action_id', 'url', 'execution_order', 'body_parameters', 'query_parameters', 'url_parameters']
-        );
+        return response()->json();
     }
 
     /**

@@ -41,6 +41,6 @@
     <title>Laravel Backend</title>
 </head>
 <body class="font-sans antialiased">
-<h1>Laravel fonctionne sans front-end</h1>
+<h1>COUCOUUU!</h1>
 </body>
 </html>
