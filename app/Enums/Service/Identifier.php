@@ -9,4 +9,5 @@ enum Identifier: string
     use EnumTrait;
 
     case GoogleCalendar = 'google-calendar';
+    case GoogleMail = 'google-mail';
 }

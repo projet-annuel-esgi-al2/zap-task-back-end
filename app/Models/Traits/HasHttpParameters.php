@@ -43,13 +43,6 @@ trait HasHttpParameters
         );
     }
 
-    protected function headersForApi(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => self::prepareParametersForApi($this->headers), // @phpstan-ignore-line
-        );
-    }
-
     protected function parametersForApi(): Attribute
     {
         return Attribute::make(
@@ -57,7 +50,6 @@ trait HasHttpParameters
                 $this->body_parameters_for_api,
                 $this->query_parameters_for_api,
                 $this->url_parameters_for_api,
-                $this->headers_for_api,
             ), // @phpstan-ignore-line
         );
     }

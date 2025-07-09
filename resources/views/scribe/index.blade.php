@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "https://c325-193-248-38-137.ngrok-free.app";
+        var tryItOutBaseUrl = "http://localhost:8000";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -135,7 +135,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 29, 2025</li>
+        <li>Last updated: July 9, 2025</li>
     </ul>
 </div>
 
@@ -144,7 +144,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>https://c325-193-248-38-137.ngrok-free.app</code>
+    <strong>Base URL</strong>: <code>http://localhost:8000</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -170,7 +170,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://c325-193-248-38-137.ngrok-free.app/api/register" \
+    "http://localhost:8000/api/register" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -184,7 +184,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/register"
+    "http://localhost:8000/api/register"
 );
 
 const headers = {
@@ -338,7 +338,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://c325-193-248-38-137.ngrok-free.app/api/me" \
+    "http://localhost:8000/api/me" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -350,7 +350,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/me"
+    "http://localhost:8000/api/me"
 );
 
 const headers = {
@@ -484,14 +484,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "https://c325-193-248-38-137.ngrok-free.app/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
+    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"vmqeopfuudtdsufvyvddq\",
     \"actions\": [
         {
-            \"identifier\": \"google-calendar-event-created\"
+            \"identifier\": \"google-mail-send\"
         }
     ]
 }"
@@ -500,7 +500,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
+    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
 );
 
 const headers = {
@@ -512,7 +512,7 @@ let body = {
     "name": "vmqeopfuudtdsufvyvddq",
     "actions": [
         {
-            "identifier": "google-calendar-event-created"
+            "identifier": "google-mail-send"
         }
     ]
 };
@@ -635,12 +635,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="actions.0.identifier"                data-endpoint="PUTapi-workflows--workflow--"
-               value="google-calendar-event-created"
+               value="google-mail-send"
                data-component="body">
     <br>
-<p>Example: <code>google-calendar-event-created</code></p>
+<p>Example: <code>google-mail-send</code></p>
 Must be one of:
-<ul style="list-style-type: square;"><li><code>google-calendar-event-created</code></li></ul>
+<ul style="list-style-type: square;"><li><code>google-calendar-event-created</code></li> <li><code>google-mail-send</code></li></ul>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>execution_order</code></b>&nbsp;&nbsp;
@@ -686,14 +686,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://c325-193-248-38-137.ngrok-free.app/api/subscriptions/google-calendar" \
+    --get "http://localhost:8000/api/subscriptions/google-calendar" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/subscriptions/google-calendar"
+    "http://localhost:8000/api/subscriptions/google-calendar"
 );
 
 const headers = {
@@ -823,14 +823,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://c325-193-248-38-137.ngrok-free.app/api/google-calendar/redirect" \
+    --get "http://localhost:8000/api/google-calendar/redirect" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/google-calendar/redirect"
+    "http://localhost:8000/api/google-calendar/redirect"
 );
 
 const headers = {
@@ -968,14 +968,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://c325-193-248-38-137.ngrok-free.app/api/google-calendar/actions" \
+    --get "http://localhost:8000/api/google-calendar/actions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/google-calendar/actions"
+    "http://localhost:8000/api/google-calendar/actions"
 );
 
 const headers = {
@@ -1102,14 +1102,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://c325-193-248-38-137.ngrok-free.app/api/services" \
+    --get "http://localhost:8000/api/services" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/services"
+    "http://localhost:8000/api/services"
 );
 
 const headers = {
@@ -1229,14 +1229,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://c325-193-248-38-137.ngrok-free.app/api/workflows" \
+    --get "http://localhost:8000/api/workflows" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/workflows"
+    "http://localhost:8000/api/workflows"
 );
 
 const headers = {
@@ -1262,16 +1262,16 @@ fetch(url, {
         {
             &quot;id&quot;: &quot;98adc52b-966d-39db-809a-55902ee7228f&quot;,
             &quot;name&quot;: &quot;Justice Moore&quot;,
-            &quot;status&quot;: &quot;tested&quot;,
-            &quot;saved_at&quot;: &quot;1982-01-20T10:57:45.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;2012-10-21T12:55:12.000000Z&quot;
+            &quot;status&quot;: &quot;deployed&quot;,
+            &quot;saved_at&quot;: &quot;1982-01-22T14:13:58.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;2012-10-29T02:59:50.000000Z&quot;
         },
         {
             &quot;id&quot;: &quot;bf7c1d71-86ac-3553-b993-13642f61513d&quot;,
             &quot;name&quot;: &quot;Freida Ryan&quot;,
-            &quot;status&quot;: &quot;saved&quot;,
-            &quot;saved_at&quot;: &quot;2007-08-03T18:47:04.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;2021-04-28T22:55:11.000000Z&quot;
+            &quot;status&quot;: &quot;draft&quot;,
+            &quot;saved_at&quot;: &quot;2007-08-10T10:40:03.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;2021-05-08T01:13:56.000000Z&quot;
         }
     ]
 }</code>
@@ -1369,14 +1369,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://c325-193-248-38-137.ngrok-free.app/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
+    --get "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
+    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
 );
 
 const headers = {
@@ -1401,68 +1401,75 @@ fetch(url, {
     &quot;data&quot;: {
         &quot;id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
         &quot;name&quot;: &quot;Stevie Renner&quot;,
-        &quot;status&quot;: &quot;draft&quot;,
+        &quot;status&quot;: &quot;saved&quot;,
         &quot;actions&quot;: [
             {
-                &quot;id&quot;: &quot;e1cf03bf-0aac-4381-84de-4e4fc92773d4&quot;,
+                &quot;id&quot;: &quot;115d2f78-f06b-4ca4-9655-839b3b9cc570&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
-                &quot;status&quot;: &quot;tested&quot;,
+                &quot;service&quot;: {
+                    &quot;identifier&quot;: &quot;google-mail&quot;,
+                    &quot;name&quot;: &quot;Google Mail&quot;
+                },
+                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
+                &quot;name&quot;: &quot;Nicholaus Gutkowski II&quot;,
+                &quot;type&quot;: &quot;trigger&quot;,
+                &quot;status&quot;: &quot;error&quot;,
                 &quot;execution_order&quot;: 1,
                 &quot;url&quot;: &quot;https://wiegand.com/nesciunt-consequatur-eligendi-blanditiis-consequatur-vitae-et.html&quot;,
-                &quot;parameters&quot;: [
-                    {
-                        &quot;options&quot;: [
-                            &quot;calendar-id-1&quot;,
-                            &quot;calendar-id-2&quot;
-                        ],
-                        &quot;parameter_key&quot;: &quot;calendarId&quot;,
-                        &quot;parameter_name&quot;: &quot;Calendar&quot;,
-                        &quot;parameter_type&quot;: &quot;select&quot;
-                    },
-                    {
-                        &quot;parameter_key&quot;: &quot;example-key&quot;,
-                        &quot;parameter_name&quot;: &quot;Example&quot;,
-                        &quot;parameter_type&quot;: &quot;checkbox&quot;
-                    }
-                ],
-                &quot;last_executed_at&quot;: &quot;2018-10-13T16:12:22.000000Z&quot;
+                &quot;parameters&quot;: [],
+                &quot;last_executed_at&quot;: &quot;2018-10-22T07:42:29.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;aa1f1667-63b1-46af-bf43-c7d6acdfed80&quot;,
+                &quot;id&quot;: &quot;a9245c3a-9bf0-4e4f-a1ef-2c61691f61f2&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
+                &quot;service&quot;: {
+                    &quot;identifier&quot;: &quot;google-calendar&quot;,
+                    &quot;name&quot;: &quot;Google Calendar&quot;
+                },
+                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
+                &quot;name&quot;: &quot;Wayne Quigley&quot;,
+                &quot;type&quot;: &quot;trigger&quot;,
                 &quot;status&quot;: &quot;draft&quot;,
                 &quot;execution_order&quot;: 2,
                 &quot;url&quot;: &quot;http://www.dare.com/&quot;,
-                &quot;parameters&quot;: [
-                    {
-                        &quot;options&quot;: [
-                            &quot;calendar-id-1&quot;,
-                            &quot;calendar-id-2&quot;
-                        ],
-                        &quot;parameter_key&quot;: &quot;calendarId&quot;,
-                        &quot;parameter_name&quot;: &quot;Calendar&quot;,
-                        &quot;parameter_type&quot;: &quot;select&quot;
-                    },
-                    {
-                        &quot;parameter_key&quot;: &quot;example-key&quot;,
-                        &quot;parameter_name&quot;: &quot;Example&quot;,
-                        &quot;parameter_type&quot;: &quot;checkbox&quot;
-                    }
-                ],
-                &quot;last_executed_at&quot;: &quot;1993-10-27T16:47:06.000000Z&quot;
+                &quot;parameters&quot;: [],
+                &quot;last_executed_at&quot;: &quot;1993-10-31T22:06:43.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;8f180fb8-5939-4a3a-8290-9a92f4011ab9&quot;,
+                &quot;id&quot;: &quot;8c9bd22c-3b89-47e4-91ab-ebf07972625a&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
+                &quot;service&quot;: {
+                    &quot;identifier&quot;: &quot;google-mail&quot;,
+                    &quot;name&quot;: &quot;Google Mail&quot;
+                },
+                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
+                &quot;name&quot;: &quot;Trinity Mayert&quot;,
+                &quot;type&quot;: &quot;action&quot;,
+                &quot;status&quot;: &quot;error&quot;,
+                &quot;execution_order&quot;: 5,
+                &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
+                &quot;parameters&quot;: [],
+                &quot;last_executed_at&quot;: &quot;2021-04-02T13:48:20.000000Z&quot;
+            },
+            {
+                &quot;id&quot;: &quot;b967b9b8-a1e7-4b61-a3e0-86da29454ff8&quot;,
+                &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
+                &quot;service&quot;: {
+                    &quot;identifier&quot;: &quot;google-calendar&quot;,
+                    &quot;name&quot;: &quot;Google Calendar&quot;
+                },
+                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
+                &quot;name&quot;: &quot;Liliane Stark&quot;,
+                &quot;type&quot;: &quot;trigger&quot;,
                 &quot;status&quot;: &quot;draft&quot;,
                 &quot;execution_order&quot;: 9,
                 &quot;url&quot;: &quot;https://www.muller.com/nesciunt-voluptatem-itaque-magnam-quis-dolorem-non-harum&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;1976-03-16T16:13:32.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;1976-03-17T18:37:23.000000Z&quot;
             }
         ],
-        &quot;saved_at&quot;: &quot;2002-02-12T04:21:32.000000Z&quot;,
-        &quot;deployed_at&quot;: &quot;2024-05-17T04:05:57.000000Z&quot;
+        &quot;saved_at&quot;: &quot;2002-02-17T20:58:00.000000Z&quot;,
+        &quot;deployed_at&quot;: &quot;2024-05-26T19:23:15.000000Z&quot;
     }
 }</code>
  </pre>
@@ -1571,14 +1578,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://c325-193-248-38-137.ngrok-free.app/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
+    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://c325-193-248-38-137.ngrok-free.app/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
+    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
 );
 
 const headers = {

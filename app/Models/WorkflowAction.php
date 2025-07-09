@@ -40,6 +40,7 @@ use Illuminate\Support\Uri;
  * @property-read array $body_parameters_for_api
  * @property-read array $query_parameters_for_api
  * @property-read array $url_parameters_for_api
+ * @property-read array $headers_for_api
  * @property-read array $parameters_for_api
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereBodyParameters($value)
@@ -127,6 +128,19 @@ class WorkflowAction extends Model
     private static function prepareParametersForApi(array $parameters): array
     {
         return $parameters;
+    }
+
+    public function getParametersForApi(): array
+    {
+        $workflowActionParameters = collect(array_merge($this->body_parameters, $this->query_parameters, $this->url_parameters));
+
+        return collect($this->serviceAction->parameters_for_api)
+            ->map(function ($param) use ($workflowActionParameters) {
+                $param['parameter_value'] = $workflowActionParameters[$param['parameter_key']];
+
+                return $param;
+            })
+            ->toArray();
     }
 
     public static function getParametersFromRequest(array $serviceActionParameters, array $parameters): array
