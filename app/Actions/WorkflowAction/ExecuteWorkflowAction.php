@@ -30,13 +30,13 @@ class ExecuteWorkflowAction implements ShouldQueue, ShouldQueueAfterCommit
                 ->send(WorkflowActionRequest::fromWorkflowAction($action));
 
             if ($response->successful()) {
-                WorkflowActionExecuted::dispatch($action, (string) $response->status(), $response->successful());
+                CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $response->status(), $response->successful()));
             } else {
-                WorkflowActionExecuted::dispatch($action, (string) $response->status(), false, $response->toException()->getMessage());
+                CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $response->status(), false, $response->toException()->getMessage()));
             }
         } catch (FatalRequestException|RequestException $e) {
             error_log($e->getStatus());
-            WorkflowActionExecuted::dispatch($action, (string) $e->getStatus(), false, $e->getMessage());
+            CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $e->getStatus(), false, $e->getMessage()));
 
             throw $e;
         }

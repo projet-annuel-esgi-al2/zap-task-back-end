@@ -1,15 +1,20 @@
 <?php
 
-namespace App\Listeners\WorkflowAction;
+namespace App\Actions\WorkflowAction;
 
 use App\Enums\WorkflowActionHistory\ExecutionStatus;
 use App\Events\WorkflowAction\WorkflowActionExecuted;
 use App\Models\WorkflowActionHistory;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class CreateWorkflowActionHistory implements ShouldQueue, ShouldQueueAfterCommit
 {
+    use AsAction;
+    use Queueable;
+
     public function handle(WorkflowActionExecuted $event): void
     {
         $workflowAction = $event->workflowAction;
@@ -23,5 +28,10 @@ class CreateWorkflowActionHistory implements ShouldQueue, ShouldQueueAfterCommit
             'parameters' => $workflowAction->getParametersForApi(),
             'executed_at' => $event->executedAt,
         ]);
+    }
+
+    public function asListener(WorkflowActionExecuted $event): void
+    {
+        $this->handle($event);
     }
 }
