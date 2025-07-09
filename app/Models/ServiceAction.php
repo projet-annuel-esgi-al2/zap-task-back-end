@@ -8,6 +8,7 @@ use App\Enums\ServiceAction\Type;
 use App\Models\Traits\HasHttpParameters;
 use App\Models\Traits\HasUUID;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -66,6 +67,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereHeaders($value)
  *
+ * @property string|null $body_template
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereBodyTemplate($value)
+ *
  * @mixin \Eloquent
  */
 class ServiceAction extends Model
@@ -84,6 +89,8 @@ class ServiceAction extends Model
         'body_parameters',
         'url_parameters',
         'query_parameters',
+        'headers',
+        'body_template',
         'trigger_notification_type',
     ];
 
@@ -98,6 +105,13 @@ class ServiceAction extends Model
             'headers' => 'array',
             'trigger_notification_type' => TriggerNotificationType::class,
         ];
+    }
+
+    public function parameters(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => array_merge($this->body_parameters, $this->query_parameters, $this->url_parameters),
+        );
     }
 
     public function service(): BelongsTo
