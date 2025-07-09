@@ -4,7 +4,10 @@ namespace App\Services;
 
 use App\Models\WorkflowAction;
 use App\Traits\Makeable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Str;
 
 class ParameterResolver
 {
@@ -29,48 +32,81 @@ class ParameterResolver
             return $this->resolveBodyParameters();
         }
 
-        return $this->resolveTemplate($this->workflowAction->serviceAction->body_template);
+        return $this->resolveTemplate($this->workflowAction->serviceAction->body_template, self::getAfterResolutionParameters($this->workflowAction->serviceAction->body_parameters));
     }
 
     public function resolveBodyParameters(): array
     {
-        return $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('body_parameters'));
+        $parameters = $this->workflowAction->serviceAction->body_parameters;
+
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
     }
 
     public function resolveQueryParameters(): array
     {
-        return $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('query_parameters'));
+        $parameters = $this->workflowAction->serviceAction->query_parameters;
+
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
     }
 
     public function resolveUrlParameters(): array
     {
-        $parameters = $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('url_parameters'));
+        $parameters = $this->workflowAction->serviceAction->url_parameters;
 
-        return $parameters;
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
     }
 
     public function resolveHeaders(): array
     {
-        return $this->resolveParameters($this->workflowAction->serviceAction->getRawOriginal('headers'));
+        $parameters = $this->workflowAction->serviceAction->headers;
+
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
     }
 
-    private function resolveTemplate(string $template): array
+    private function resolveTemplate(string $template, Collection $afterResolution): array
     {
         $parameterValues = array_merge(
             ['_r' => $this],
             $this->values,
         );
 
-        return json_decode(Blade::render($template, $parameterValues), true);
+        $resolvedParameters = Collection::fromJson(Blade::render($template, $parameterValues));
+
+        return $resolvedParameters->mapWithKeys(function ($parameterValue, $parameterKey) use ($afterResolution) {
+            if ($afterResolution->hasAny($parameterKey)) {
+                $afterResolutionMethod = $afterResolution[$parameterKey];
+
+                return [$parameterKey => $this->{$afterResolutionMethod}($parameterValue)];
+            }
+
+            return [$parameterKey => $parameterValue];
+        })->toArray();
     }
 
-    private function resolveParameters(string $parameters): array
+    private function resolveParameters(string $parameters, Collection $afterResolution): array
     {
-        $parameters = $this->resolveTemplate($parameters);
+        $parameters = $this->resolveTemplate($parameters, $afterResolution);
 
         return collect($parameters)
+            ->filter(fn ($parameter) => ! empty($parameter['parameter_value']))
             ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['parameter_value']])
             ->toArray();
+    }
+
+    private static function getAfterResolutionParameters(array $parameters): Collection
+    {
+        return collect($parameters)
+            ->filter(fn ($parameter) => ! is_null(Arr::get($parameter, 'afterResolutionHook')))
+            ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['afterResolutionHook']]);
+    }
+
+    public function encodeBase64Url($value): string
+    {
+        return Str::of($value)
+            ->toBase64()
+            ->replace(['+', '/'], ['-', '_'])
+            ->rtrim('=')
+            ->value();
     }
 
     /*
