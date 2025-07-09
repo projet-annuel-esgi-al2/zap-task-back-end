@@ -58,10 +58,11 @@ endpoints:
         name: 'actions[].identifier'
         description: ''
         required: false
-        example: google-calendar-event-created
+        example: google-mail-send
         type: string
         enumValues:
           - google-calendar-event-created
+          - google-mail-send
         exampleWasSpecified: false
         nullable: false
         custom: []
@@ -89,7 +90,7 @@ endpoints:
       name: vmqeopfuudtdsufvyvddq
       actions:
         -
-          identifier: google-calendar-event-created
+          identifier: google-mail-send
     fileParameters: []
     responses: []
     responseFields: []

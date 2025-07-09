@@ -18,6 +18,30 @@ class WorkflowController extends Controller
     /**
      * @group Workflows
      *
+     * Fetch A Workflow And Its Actions If Present
+     *
+     * @authenticated
+     *
+     * @apiResource \App\Http\Resources\Api\WorkflowResource
+     *
+     * @apiResourceModel \App\Models\Workflow with=actions.serviceAction.service,actions.workflow
+     *
+     * @response 200
+     *
+     * */
+    public function show(Workflow $workflow): JsonResponse
+    {
+        $workflow->load([
+            'actions.serviceAction.service',
+            'actions.workflow',
+        ]);
+
+        return response()->json(WorkflowResource::make($workflow));
+    }
+
+    /**
+     * @group Workflows
+     *
      * Fetch User's Workflows
      *
      * @authenticated
@@ -35,25 +59,6 @@ class WorkflowController extends Controller
         $user = auth()->user();
 
         return response()->json(WorkflowResource::collection($user->workflows));
-    }
-
-    /**
-     * @group Workflows
-     *
-     * Fetch A Workflow And Its Actions If Present
-     *
-     * @authenticated
-     *
-     * @apiResource \App\Http\Resources\Api\WorkflowResource
-     *
-     * @apiResourceModel \App\Models\Workflow with=actions
-     *
-     * @response 200
-     *
-     * */
-    public function show(Workflow $workflow): JsonResponse
-    {
-        return response()->json(WorkflowResource::make($workflow->load(['actions'])));
     }
 
     public function createOrUpdate(StoreWorkflowRequest $request, ?Workflow $workflow = null): JsonResponse
