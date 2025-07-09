@@ -3,17 +3,21 @@
 namespace App\Models\Traits;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Arr;
 
 trait HasHttpParameters
 {
     private static function prepareParametersForApi(array $parameters): array
     {
         return collect($parameters)
-            ->filter(fn (array $parameter) => $parameter['hidden'] === false)
+            ->filter(fn (array $parameter) => is_null(Arr::get($parameter, 'hidden')) || Arr::get($parameter, 'hidden') === false)
             ->map(function (array $parameter) {
-                unset($parameter['hidden']);
 
-                return $parameter;
+                return Arr::only($parameter, [
+                    'parameter_name',
+                    'parameter_key',
+                    'parameter_type',
+                ]);
             })
             ->toArray();
     }
@@ -42,7 +46,11 @@ trait HasHttpParameters
     protected function parametersForApi(): Attribute
     {
         return Attribute::make(
-            get : fn () => array_merge($this->body_parameters_for_api, $this->query_parameters_for_api, $this->url_parameters_for_api), // @phpstan-ignore-line
+            get : fn () => array_merge(
+                $this->body_parameters_for_api,
+                $this->query_parameters_for_api,
+                $this->url_parameters_for_api,
+            ), // @phpstan-ignore-line
         );
     }
 }
