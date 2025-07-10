@@ -108,6 +108,20 @@ class WorkflowController extends Controller
         WorkflowAction::createOrUpdateFromApiRequest($actions);
     }
 
+    /**
+     * @group Workflows
+     *
+     * Deploy A Workflow
+     *
+     * @authenticated
+     *
+     * @apiResourceCollection \App\Http\Resources\Api\WorkflowActionHistoryResource
+     *
+     * @apiResourceModel \App\Models\WorkflowActionHistory
+     *
+     * @response 200
+     *
+     * */
     public function deploy(Workflow $workflow): JsonResponse
     {
         $trigger = $workflow->trigger;

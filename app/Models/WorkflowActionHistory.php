@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\WorkflowActionHistory\ExecutionStatus;
 use App\Models\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -44,6 +45,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class WorkflowActionHistory extends Model
 {
+    use HasFactory;
     use HasUUID;
 
     protected $table = 'workflow_actions_execution_history';
