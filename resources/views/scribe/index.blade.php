@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost:8000";
+        var tryItOutBaseUrl = "https://d2de4cb2b354.ngrok-free.app";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -82,6 +82,12 @@
                                                     <li class="tocify-item level-2" data-unique="endpoints-PUTapi-workflows--workflow--">
                                 <a href="#endpoints-PUTapi-workflows--workflow--">PUT api/workflows/{workflow?}</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-actions-execute--action_id-">
+                                <a href="#endpoints-POSTapi-actions-execute--action_id-">POST api/actions/execute/{action_id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-workflows-trigger">
+                                <a href="#endpoints-POSTapi-workflows-trigger">POST api/workflows/trigger</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-services-oauth" class="tocify-header">
@@ -121,6 +127,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="workflows-GETapi-workflows--workflow_id-">
                                 <a href="#workflows-GETapi-workflows--workflow_id-">Fetch A Workflow And Its Actions If Present</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="workflows-POSTapi-workflows-deploy--workflow_id-">
+                                <a href="#workflows-POSTapi-workflows-deploy--workflow_id-">Deploy A Workflow</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="workflows-DELETEapi-workflows--workflow_id-">
                                 <a href="#workflows-DELETEapi-workflows--workflow_id-">Delete A Workflow</a>
                             </li>
@@ -135,7 +144,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 9, 2025</li>
+        <li>Last updated: July 10, 2025</li>
     </ul>
 </div>
 
@@ -144,7 +153,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost:8000</code>
+    <strong>Base URL</strong>: <code>https://d2de4cb2b354.ngrok-free.app</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -170,7 +179,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/register" \
+    "https://d2de4cb2b354.ngrok-free.app/api/register" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -184,7 +193,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/register"
+    "https://d2de4cb2b354.ngrok-free.app/api/register"
 );
 
 const headers = {
@@ -338,7 +347,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/me" \
+    "https://d2de4cb2b354.ngrok-free.app/api/me" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -350,7 +359,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/me"
+    "https://d2de4cb2b354.ngrok-free.app/api/me"
 );
 
 const headers = {
@@ -484,14 +493,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"vmqeopfuudtdsufvyvddq\",
     \"actions\": [
         {
-            \"identifier\": \"google-mail-send\"
+            \"execution_order\": \"consequatur\"
         }
     ]
 }"
@@ -500,7 +509,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
 );
 
 const headers = {
@@ -512,7 +521,7 @@ let body = {
     "name": "vmqeopfuudtdsufvyvddq",
     "actions": [
         {
-            "identifier": "google-mail-send"
+            "execution_order": "consequatur"
         }
     ]
 };
@@ -603,10 +612,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="workflow"                data-endpoint="PUTapi-workflows--workflow--"
-               value="1eab7742-9972-473e-95b7-cf6c2c606067"
+               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
                data-component="url">
     <br>
-<p>Example: <code>1eab7742-9972-473e-95b7-cf6c2c606067</code></p>
+<p>Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -630,28 +639,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
             </summary>
                                                 <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>identifier</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="actions.0.identifier"                data-endpoint="PUTapi-workflows--workflow--"
-               value="google-mail-send"
-               data-component="body">
-    <br>
-<p>Example: <code>google-mail-send</code></p>
-Must be one of:
-<ul style="list-style-type: square;"><li><code>google-calendar-event-created</code></li> <li><code>google-mail-send</code></li></ul>
-                    </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>execution_order</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
-<i>optional</i> &nbsp;
+ &nbsp;
                 <input type="text" style="display: none"
                               name="actions.0.execution_order"                data-endpoint="PUTapi-workflows--workflow--"
-               value=""
+               value="consequatur"
                data-component="body">
     <br>
-
+<p>Example: <code>consequatur</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>parameters</code></b>&nbsp;&nbsp;
@@ -667,6 +663,234 @@ Must be one of:
                                     </details>
         </div>
         </form>
+
+                    <h2 id="endpoints-POSTapi-actions-execute--action_id-">POST api/actions/execute/{action_id}</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-actions-execute--action_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://d2de4cb2b354.ngrok-free.app/api/actions/execute/34117659-a5a5-465c-b32b-c501e9a099b1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://d2de4cb2b354.ngrok-free.app/api/actions/execute/34117659-a5a5-465c-b32b-c501e9a099b1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-actions-execute--action_id-">
+</span>
+<span id="execution-results-POSTapi-actions-execute--action_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-actions-execute--action_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-actions-execute--action_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-actions-execute--action_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-actions-execute--action_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-actions-execute--action_id-" data-method="POST"
+      data-path="api/actions/execute/{action_id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-actions-execute--action_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-actions-execute--action_id-"
+                    onclick="tryItOut('POSTapi-actions-execute--action_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-actions-execute--action_id-"
+                    onclick="cancelTryOut('POSTapi-actions-execute--action_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-actions-execute--action_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/actions/execute/{action_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-actions-execute--action_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-actions-execute--action_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>action_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="action_id"                data-endpoint="POSTapi-actions-execute--action_id-"
+               value="34117659-a5a5-465c-b32b-c501e9a099b1"
+               data-component="url">
+    <br>
+<p>The ID of the action. Example: <code>34117659-a5a5-465c-b32b-c501e9a099b1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-POSTapi-workflows-trigger">POST api/workflows/trigger</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-workflows-trigger">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/trigger" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/trigger"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-workflows-trigger">
+</span>
+<span id="execution-results-POSTapi-workflows-trigger" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-workflows-trigger"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-workflows-trigger"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-workflows-trigger" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-workflows-trigger">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-workflows-trigger" data-method="POST"
+      data-path="api/workflows/trigger"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-workflows-trigger', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-workflows-trigger"
+                    onclick="tryItOut('POSTapi-workflows-trigger');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-workflows-trigger"
+                    onclick="cancelTryOut('POSTapi-workflows-trigger');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-workflows-trigger"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/workflows/trigger</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-workflows-trigger"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-workflows-trigger"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
 
                 <h1 id="services-oauth">Services OAuth</h1>
 
@@ -686,14 +910,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/subscriptions/google-calendar" \
+    --get "https://d2de4cb2b354.ngrok-free.app/api/subscriptions/google-calendar" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/subscriptions/google-calendar"
+    "https://d2de4cb2b354.ngrok-free.app/api/subscriptions/google-calendar"
 );
 
 const headers = {
@@ -823,14 +1047,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/google-calendar/redirect" \
+    --get "https://d2de4cb2b354.ngrok-free.app/api/google-calendar/redirect" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/google-calendar/redirect"
+    "https://d2de4cb2b354.ngrok-free.app/api/google-calendar/redirect"
 );
 
 const headers = {
@@ -968,14 +1192,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/google-calendar/actions" \
+    --get "https://d2de4cb2b354.ngrok-free.app/api/google-calendar/actions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/google-calendar/actions"
+    "https://d2de4cb2b354.ngrok-free.app/api/google-calendar/actions"
 );
 
 const headers = {
@@ -1102,14 +1326,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/services" \
+    --get "https://d2de4cb2b354.ngrok-free.app/api/services" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/services"
+    "https://d2de4cb2b354.ngrok-free.app/api/services"
 );
 
 const headers = {
@@ -1229,14 +1453,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/workflows" \
+    --get "https://d2de4cb2b354.ngrok-free.app/api/workflows" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows"
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows"
 );
 
 const headers = {
@@ -1262,16 +1486,16 @@ fetch(url, {
         {
             &quot;id&quot;: &quot;98adc52b-966d-39db-809a-55902ee7228f&quot;,
             &quot;name&quot;: &quot;Justice Moore&quot;,
-            &quot;status&quot;: &quot;deployed&quot;,
-            &quot;saved_at&quot;: &quot;1982-01-22T14:13:58.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;2012-10-29T02:59:50.000000Z&quot;
+            &quot;status&quot;: &quot;tested&quot;,
+            &quot;saved_at&quot;: &quot;1982-01-22T19:29:49.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;2012-10-29T21:41:32.000000Z&quot;
         },
         {
             &quot;id&quot;: &quot;bf7c1d71-86ac-3553-b993-13642f61513d&quot;,
             &quot;name&quot;: &quot;Freida Ryan&quot;,
             &quot;status&quot;: &quot;draft&quot;,
-            &quot;saved_at&quot;: &quot;2007-08-10T10:40:03.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;2021-05-08T01:13:56.000000Z&quot;
+            &quot;saved_at&quot;: &quot;2007-08-11T03:05:01.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;2021-05-08T23:38:50.000000Z&quot;
         }
     ]
 }</code>
@@ -1369,14 +1593,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
+    --get "https://d2de4cb2b354.ngrok-free.app/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
 );
 
 const headers = {
@@ -1404,11 +1628,11 @@ fetch(url, {
         &quot;status&quot;: &quot;saved&quot;,
         &quot;actions&quot;: [
             {
-                &quot;id&quot;: &quot;115d2f78-f06b-4ca4-9655-839b3b9cc570&quot;,
+                &quot;id&quot;: &quot;13bbb9e8-15ef-43f0-8475-aa67b534175e&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
-                    &quot;identifier&quot;: &quot;google-mail&quot;,
-                    &quot;name&quot;: &quot;Google Mail&quot;
+                    &quot;identifier&quot;: &quot;google-calendar&quot;,
+                    &quot;name&quot;: &quot;Google Calendar&quot;
                 },
                 &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
                 &quot;name&quot;: &quot;Nicholaus Gutkowski II&quot;,
@@ -1417,59 +1641,59 @@ fetch(url, {
                 &quot;execution_order&quot;: 1,
                 &quot;url&quot;: &quot;https://wiegand.com/nesciunt-consequatur-eligendi-blanditiis-consequatur-vitae-et.html&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;2018-10-22T07:42:29.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;2018-10-23T05:00:47.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;a9245c3a-9bf0-4e4f-a1ef-2c61691f61f2&quot;,
-                &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
-                &quot;service&quot;: {
-                    &quot;identifier&quot;: &quot;google-calendar&quot;,
-                    &quot;name&quot;: &quot;Google Calendar&quot;
-                },
-                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
-                &quot;name&quot;: &quot;Wayne Quigley&quot;,
-                &quot;type&quot;: &quot;trigger&quot;,
-                &quot;status&quot;: &quot;draft&quot;,
-                &quot;execution_order&quot;: 2,
-                &quot;url&quot;: &quot;http://www.dare.com/&quot;,
-                &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;1993-10-31T22:06:43.000000Z&quot;
-            },
-            {
-                &quot;id&quot;: &quot;8c9bd22c-3b89-47e4-91ab-ebf07972625a&quot;,
+                &quot;id&quot;: &quot;9a0037fb-2e60-4f14-9923-644347523679&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-mail&quot;,
                     &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
-                &quot;name&quot;: &quot;Trinity Mayert&quot;,
+                &quot;identifier&quot;: &quot;google-mail-send&quot;,
+                &quot;name&quot;: &quot;Wayne Quigley&quot;,
                 &quot;type&quot;: &quot;action&quot;,
                 &quot;status&quot;: &quot;error&quot;,
-                &quot;execution_order&quot;: 5,
-                &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
+                &quot;execution_order&quot;: 2,
+                &quot;url&quot;: &quot;http://www.dare.com/&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;2021-04-02T13:48:20.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;1993-11-01T08:30:56.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;b967b9b8-a1e7-4b61-a3e0-86da29454ff8&quot;,
+                &quot;id&quot;: &quot;59e2f98e-cca9-4e5d-acfd-70576e799bf8&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-calendar&quot;,
                     &quot;name&quot;: &quot;Google Calendar&quot;
                 },
-                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
-                &quot;name&quot;: &quot;Liliane Stark&quot;,
+                &quot;identifier&quot;: &quot;google-calendar-event-updated&quot;,
+                &quot;name&quot;: &quot;Trinity Mayert&quot;,
                 &quot;type&quot;: &quot;trigger&quot;,
                 &quot;status&quot;: &quot;draft&quot;,
+                &quot;execution_order&quot;: 5,
+                &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
+                &quot;parameters&quot;: [],
+                &quot;last_executed_at&quot;: &quot;2021-04-03T12:10:42.000000Z&quot;
+            },
+            {
+                &quot;id&quot;: &quot;373907ec-540f-4447-8f05-86f0f4cf4a7f&quot;,
+                &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
+                &quot;service&quot;: {
+                    &quot;identifier&quot;: &quot;google-calendar&quot;,
+                    &quot;name&quot;: &quot;Google Calendar&quot;
+                },
+                &quot;identifier&quot;: &quot;google-calendar-event-updated&quot;,
+                &quot;name&quot;: &quot;Liliane Stark&quot;,
+                &quot;type&quot;: &quot;action&quot;,
+                &quot;status&quot;: &quot;tested&quot;,
                 &quot;execution_order&quot;: 9,
                 &quot;url&quot;: &quot;https://www.muller.com/nesciunt-voluptatem-itaque-magnam-quis-dolorem-non-harum&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;1976-03-17T18:37:23.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;1976-03-17T21:20:00.000000Z&quot;
             }
         ],
-        &quot;saved_at&quot;: &quot;2002-02-17T20:58:00.000000Z&quot;,
-        &quot;deployed_at&quot;: &quot;2024-05-26T19:23:15.000000Z&quot;
+        &quot;saved_at&quot;: &quot;2002-02-18T10:59:34.000000Z&quot;,
+        &quot;deployed_at&quot;: &quot;2024-05-27T19:08:06.000000Z&quot;
     }
 }</code>
  </pre>
@@ -1557,10 +1781,168 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="GETapi-workflows--workflow_id-"
-               value="1eab7742-9972-473e-95b7-cf6c2c606067"
+               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>1eab7742-9972-473e-95b7-cf6c2c606067</code></p>
+<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="workflows-POSTapi-workflows-deploy--workflow_id-">Deploy A Workflow</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-workflows-deploy--workflow_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/deploy/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/deploy/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-workflows-deploy--workflow_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;fa010f60-df29-3f05-8bc7-bed48f550d13&quot;,
+            &quot;execution_status&quot;: &quot;success&quot;,
+            &quot;response_http_code&quot;: &quot;200&quot;,
+            &quot;execution_order&quot;: 5,
+            &quot;exception&quot;: &quot;Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.&quot;,
+            &quot;url&quot;: &quot;http://kemmer.com/et-a-qui-ducimus.html&quot;,
+            &quot;parameters&quot;: [],
+            &quot;executed_at&quot;: &quot;2009-02-07T03:51:56.000000Z&quot;
+        },
+        {
+            &quot;id&quot;: &quot;78a1a612-d608-314f-a2e1-57df62570232&quot;,
+            &quot;execution_status&quot;: &quot;error&quot;,
+            &quot;response_http_code&quot;: &quot;404&quot;,
+            &quot;execution_order&quot;: 8,
+            &quot;exception&quot;: &quot;Non velit ab accusantium deleniti et quas numquam. Ut sit numquam inventore dolor suscipit molestiae. Aut impedit a quibusdam sint. Nesciunt delectus inventore ratione voluptas doloremque illo.&quot;,
+            &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
+            &quot;parameters&quot;: [],
+            &quot;executed_at&quot;: &quot;2021-04-03T12:10:42.000000Z&quot;
+        }
+    ]
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-workflows-deploy--workflow_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-workflows-deploy--workflow_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-workflows-deploy--workflow_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-workflows-deploy--workflow_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-workflows-deploy--workflow_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-workflows-deploy--workflow_id-" data-method="POST"
+      data-path="api/workflows/deploy/{workflow_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-workflows-deploy--workflow_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-workflows-deploy--workflow_id-"
+                    onclick="tryItOut('POSTapi-workflows-deploy--workflow_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-workflows-deploy--workflow_id-"
+                    onclick="cancelTryOut('POSTapi-workflows-deploy--workflow_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-workflows-deploy--workflow_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/workflows/deploy/{workflow_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-workflows-deploy--workflow_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-workflows-deploy--workflow_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>workflow_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="workflow_id"                data-endpoint="POSTapi-workflows-deploy--workflow_id-"
+               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+               data-component="url">
+    <br>
+<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
             </div>
                     </form>
 
@@ -1578,14 +1960,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067" \
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/1eab7742-9972-473e-95b7-cf6c2c606067"
+    "https://d2de4cb2b354.ngrok-free.app/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
 );
 
 const headers = {
@@ -1685,10 +2067,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="DELETEapi-workflows--workflow_id-"
-               value="1eab7742-9972-473e-95b7-cf6c2c606067"
+               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>1eab7742-9972-473e-95b7-cf6c2c606067</code></p>
+<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
             </div>
                     </form>
 
