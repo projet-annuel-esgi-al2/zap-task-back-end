@@ -24,6 +24,7 @@ class WorkflowActionResource extends JsonResource
             'id' => $this->id,
             'workflow_id' => $this->workflow_id,
             'service' => $this->when(! is_null($service), fn () => ServiceResource::make($service)),
+            'service_action_id' => $this->whenLoaded('serviceAction', fn () => $this->serviceAction->id),
             'identifier' => $this->whenLoaded('serviceAction', fn () => $this->serviceAction->identifier),
             'name' => $this->whenLoaded('serviceAction', fn () => $this->serviceAction->name),
             'type' => $this->whenLoaded('serviceAction', fn () => $this->serviceAction->type),
