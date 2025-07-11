@@ -34,21 +34,19 @@ RUN chown -R www-data:www-data /var/www/html \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy Apache configuration
-COPY <<EOF /etc/apache2/sites-available/000-default.conf
-<VirtualHost *:8080>
-    ServerName localhost
-    DocumentRoot /var/www/html/public
-
-    <Directory /var/www/html/public>
-        AllowOverride All
-        Require all granted
-    </Directory>
-
-    ErrorLog \${APACHE_LOG_DIR}/error.log
-    CustomLog \${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-EOF
+# Create Apache configuration
+RUN echo '<VirtualHost *:8080>\n\
+    ServerName localhost\n\
+    DocumentRoot /var/www/html/public\n\
+    \n\
+    <Directory /var/www/html/public>\n\
+        AllowOverride All\n\
+        Require all granted\n\
+    </Directory>\n\
+\n\
+    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
+    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
 # Configure Apache to listen on port 8080 (required for Cloud Run)
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
@@ -60,7 +58,7 @@ if [ -z "$APP_KEY" ]; then\n\
     php artisan key:generate --force\n\
 fi\n\
 \n\
-# Run migrations (optional - remove if you handle this separately)\n\
+# Run migrations\n\
 php artisan migrate --force\n\
 \n\
 # Cache configuration\n\
