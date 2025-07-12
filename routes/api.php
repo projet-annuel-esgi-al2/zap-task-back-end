@@ -66,10 +66,11 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
     Route::prefix('/actions')->group(function () {
         Route::post('/execute/{action}', [WorkflowActionController::class, 'execute']);
     });
-});
-
     Route::prefix('/logs')->group(function () {
         Route::get('/{workflow}', [WorkflowActionHistoryController::class, 'show']);
     });
+});
+
+
 
 Route::webhooks('/workflows/trigger', 'trigger-workflow-webhook');
