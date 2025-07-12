@@ -1,0 +1,14 @@
+[
+    {
+        "identifier": "google-calendar",
+        "name": "Google Calendar",
+        "socialite_driver_identifier": "google",
+        "oauth_token_options": {"prompt": "select_account", "access_type": "offline"}
+    },
+    {
+        "identifier": "google-mail",
+        "name": "Gmail",
+        "socialite_driver_identifier": "google",
+        "oauth_token_options": {"prompt": "select_account", "access_type": "offline"}
+    }
+]

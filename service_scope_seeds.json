@@ -1,0 +1,26 @@
+[
+    {
+        "identifier": "google-calendar",
+        "scope_value": "https://www.googleapis.com/auth/calendar.events"
+    },
+    {
+        "identifier": "google-calendar",
+        "scope_value": "https://www.googleapis.com/auth/calendar.readonly"
+    },
+    {
+        "identifier": "google-calendar",
+        "scope_value": "https://www.googleapis.com/auth/calendar.events.readonly"
+    },
+    {
+        "identifier": "google-calendar",
+        "scope_value": "https://www.googleapis.com/auth/calendar.settings.readonly"
+    },
+    {
+        "identifier": "google-calendar",
+        "scope_value": "https://www.googleapis.com/auth/calendar"
+    },
+    {
+        "identifier": "google-mail",
+        "scope_value": "https://www.googleapis.com/auth/gmail.send"
+    }
+]

@@ -24,14 +24,14 @@ endpoints:
         name: workflow
         description: ''
         required: false
-        example: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
+        example: ec0d9ad0-8ab5-4c2f-a6bd-5972979a3c79
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
+      workflow: ec0d9ad0-8ab5-4c2f-a6bd-5972979a3c79
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -39,7 +39,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: vmqeopfuudtdsufvyvddq
+        example: b
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -60,7 +60,7 @@ endpoints:
         name: 'actions[].execution_order'
         description: ''
         required: true
-        example: consequatur
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -77,10 +77,10 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: vmqeopfuudtdsufvyvddq
+      name: b
       actions:
         -
-          execution_order: consequatur
+          execution_order: architecto
     fileParameters: []
     responses: []
     responseFields: []
@@ -110,14 +110,14 @@ endpoints:
         name: action_id
         description: 'The ID of the action.'
         required: true
-        example: 34117659-a5a5-465c-b32b-c501e9a099b1
+        example: 66dcff0c-77df-472a-92a8-a67b8474b7ed
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      action_id: 34117659-a5a5-465c-b32b-c501e9a099b1
+      action_id: 66dcff0c-77df-472a-92a8-a67b8474b7ed
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
