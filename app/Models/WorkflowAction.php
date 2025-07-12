@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Uri;
 
 /**
  * @property Status $status
@@ -118,25 +117,6 @@ class WorkflowAction extends Model
             ->one();
     }
 
-    public function url(): Attribute
-    {
-        return Attribute::make(
-            set: function ($url) {
-                if (empty($this->url_parameters)) {
-                    return $url;
-                }
-
-                $url = strtr($url, collect($this->url_parameters)->mapWithKeys(fn ($val, $key) => ['{'.$key.'}' => $val])->toArray());
-                $uri = Uri::of($url);
-                if (! empty($this->query_parameters)) {
-                    $uri->withQuery($this->query_parameters);
-                }
-
-                return $uri->value();
-            }
-        );
-    }
-
     public function parameters(): Attribute
     {
         return Attribute::make(
@@ -165,16 +145,13 @@ class WorkflowAction extends Model
         $serviceActions = ServiceAction::all();
 
         return collect($requestActionsData)
-            ->map(function ($actionData) use ($serviceActions) {
-                $serviceAction = $serviceActions->find($actionData['service_action_id']);
-
+            ->map(function ($actionData) {
                 $id = empty($actionData['id']) ? [] : ['id' => $actionData['id']];
                 $actionModel = self::createOrUpdate(
                     uniqueBy: $id,
                     attributes: [
                         'service_action_id' => $actionData['service_action_id'],
                         'execution_order' => $actionData['execution_order'],
-                        'url' => $serviceAction->url,
                     ],
                     onCreateOnly: [
                         'workflow_id' => $actionData['workflow_id'],
@@ -185,9 +162,6 @@ class WorkflowAction extends Model
                 $actionModelWithResolvedParameters = ParameterResolver::make($actionModel, $actionData['parameters'])
                     ->resolve();
 
-                $actionModelWithResolvedParameters->fill([
-                    'url' => $actionModelWithResolvedParameters->url, // force mutator to run
-                ]);
                 $actionModelWithResolvedParameters->save();
 
                 return $actionModelWithResolvedParameters;

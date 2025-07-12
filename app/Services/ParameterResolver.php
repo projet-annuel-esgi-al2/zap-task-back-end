@@ -18,12 +18,16 @@ class ParameterResolver
 
     public function resolve(): WorkflowAction
     {
+        $resolvedQueryParameters = $this->resolveQueryParameters();
+        $resolvedUrlParameters = $this->resolveUrlParameters();
+
         return $this->workflowAction->fill([
             'body_parameters' => $this->resolveBodyParameters(),
-            'query_parameters' => $this->resolveQueryParameters(),
-            'url_parameters' => $this->resolveUrlParameters(),
+            'query_parameters' => $resolvedQueryParameters,
+            'url_parameters' => $resolvedUrlParameters,
             'headers' => $this->resolveHeaders(),
             'resolved_body' => $this->resolveBody(),
+            'url' => $this->resolveUrl($resolvedUrlParameters, $resolvedQueryParameters),
         ]);
     }
 
@@ -62,6 +66,23 @@ class ParameterResolver
         $parameters = $this->workflowAction->serviceAction->headers;
 
         return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
+    }
+
+    public function resolveUrl(array $urlParameters, array $queryParameters): string
+    {
+        $url = $this->workflowAction->serviceAction->url;
+
+        if (empty($urlParameters)) {
+            return $url;
+        }
+
+        $url = strtr($url, collect($urlParameters)->mapWithKeys(fn ($val, $key) => ['{'.$key.'}' => $val])->toArray());
+        $uri = Uri::of($url);
+        if (! empty($queryParameters)) {
+            $uri->withQuery($queryParameters);
+        }
+
+        return $uri->value();
     }
 
     private function resolveTemplate(string $template, Collection $afterResolution): array
