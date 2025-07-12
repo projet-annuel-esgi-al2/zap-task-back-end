@@ -23,6 +23,7 @@
         "saloonphp/laravel-plugin": "^3.5",
         "saloonphp/saloon": "3.13",
         "spatie/laravel-webhook-client": "^3.4",
+        "stackkit/laravel-google-cloud-tasks-queue": "^5.0",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
