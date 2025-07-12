@@ -3,7 +3,7 @@
 
 
 <aside>
-    <strong>Base URL</strong>: <code>https://d2de4cb2b354.ngrok-free.app</code>
+    <strong>Base URL</strong>: <code>https://e3be6436e560.ngrok-free.app</code>
 </aside>
 
     This documentation aims to provide all the information you need to work with our API.

@@ -26,7 +26,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: vmqeopfuudtdsufvyvddq
+        example: b
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -36,7 +36,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: qkunze@example.com
+        example: gbailey@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -46,7 +46,7 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: consequatur
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -56,17 +56,17 @@ endpoints:
         name: password_confirmation
         description: ''
         required: true
-        example: consequatur
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: vmqeopfuudtdsufvyvddq
-      email: qkunze@example.com
-      password: consequatur
-      password_confirmation: consequatur
+      name: b
+      email: gbailey@example.net
+      password: architecto
+      password_confirmation: architecto
     fileParameters: []
     responses: []
     responseFields: []
@@ -100,7 +100,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: qkunze@example.com
+        example: gbailey@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -110,15 +110,15 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: consequatur
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: qkunze@example.com
-      password: consequatur
+      email: gbailey@example.net
+      password: architecto
     fileParameters: []
     responses: []
     responseFields: []

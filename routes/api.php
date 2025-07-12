@@ -11,6 +11,7 @@ use App\Http\Middleware\VerifyPersonalAccessToken;
 use App\Models\Workflow;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WorkflowActionHistoryController;
 
 Route::get('/redis-test', function () {
     try {
@@ -66,5 +67,9 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         Route::post('/execute/{action}', [WorkflowActionController::class, 'execute']);
     });
 });
+
+    Route::prefix('/logs')->group(function () {
+        Route::get('/{workflow}', [WorkflowActionHistoryController::class, 'show']);
+    });
 
 Route::webhooks('/workflows/trigger', 'trigger-workflow-webhook');

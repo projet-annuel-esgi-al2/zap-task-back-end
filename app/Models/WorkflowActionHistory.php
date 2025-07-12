@@ -73,4 +73,5 @@ class WorkflowActionHistory extends Model
     {
         return $this->belongsTo(WorkflowAction::class);
     }
+
 }
