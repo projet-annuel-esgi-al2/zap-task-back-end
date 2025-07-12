@@ -6,32 +6,11 @@ use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceOAuthController;
 use App\Http\Controllers\WorkflowActionController;
+use App\Http\Controllers\WorkflowActionHistoryController;
 use App\Http\Controllers\WorkflowController;
 use App\Http\Middleware\VerifyPersonalAccessToken;
 use App\Models\Workflow;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WorkflowActionHistoryController;
-
-Route::get('/redis-test', function () {
-    try {
-        // Write a value
-        Redis::set('redis_test_key', 'Redis is connected!');
-
-        // Read it back
-        $value = Redis::get('redis_test_key');
-
-        return response()->json([
-            'status' => 'success',
-            'message' => $value,
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $e->getMessage(),
-        ], 500);
-    }
-});
 
 Route::post('/register', RegisterUserController::class);
 Route::post('/me', AuthenticateUserController::class);
@@ -70,7 +49,5 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         Route::get('/{workflow}', [WorkflowActionHistoryController::class, 'show']);
     });
 });
-
-
 
 Route::webhooks('/workflows/trigger', 'trigger-workflow-webhook');

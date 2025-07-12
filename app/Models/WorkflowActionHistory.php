@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereParameters($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereWorkflowActionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereResponseHttpCode($value)
+ * @method static \Database\Factories\WorkflowActionHistoryFactory factory($count = null, $state = [])
  *
  * @mixin \Eloquent
  */
@@ -73,5 +74,4 @@ class WorkflowActionHistory extends Model
     {
         return $this->belongsTo(WorkflowAction::class);
     }
-
 }

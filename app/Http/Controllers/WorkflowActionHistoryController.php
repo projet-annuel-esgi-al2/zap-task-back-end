@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Models\Workflow;
+use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;
 
 class WorkflowActionHistoryController extends Controller
@@ -12,10 +13,10 @@ class WorkflowActionHistoryController extends Controller
     {
         $logs = $workflow->actions()
             ->with([
-                'history.workflowAction.serviceAction.service'
+                'history.workflowAction.serviceAction.service',
             ])
             ->get()
-            ->flatMap(fn ($action) => $action->history)
+            ->flatMap(fn (WorkflowAction $action) => $action->history)
             ->sortBy('executed_at')
             ->values();
 
