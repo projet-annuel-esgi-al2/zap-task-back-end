@@ -34,4 +34,31 @@ class ServiceController extends Controller
             ->toResource(ServiceResource::class)
             ->toResponse($request);
     }
+
+    /**
+     * @group Services and Actions
+     *
+     * Fetch Service Subscriptions
+     *
+     * @authenticated
+     *
+     * @apiResourceCollection \App\Http\Resources\Api\ServiceResource
+     *
+     * @apiResourceModel \App\Models\Service
+     *
+     * @response 200
+     */
+    public function subscriptions(Request $request): JsonResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        return $user
+            ->serviceSubscriptions()
+            ->with('service')
+            ->get()
+            ->pluck('service')
+            ->toResourceCollection(ServiceResource::class)
+            ->toResponse($request);
+    }
 }

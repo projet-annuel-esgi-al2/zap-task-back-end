@@ -20,6 +20,7 @@ Route::get('/oauth/callback', [ServiceOAuthController::class, 'callback'])
 
 Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
 
+    Route::get('/subscriptions', [ServiceController::class, 'subscriptions']);
     Route::get('/subscriptions/{serviceIdentifier}', [ServiceOAuthController::class, 'get']);
 
     Route::prefix('{serviceIdentifier}/')->group(function () {
