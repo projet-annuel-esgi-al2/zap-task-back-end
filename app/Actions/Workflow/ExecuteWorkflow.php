@@ -18,6 +18,10 @@ class ExecuteWorkflow implements ShouldQueue, ShouldQueueAfterCommit
     public function handle(Workflow $workflow): void
     {
         $executableActions = $workflow->executableActions()
+            ->with([
+                'workflow',
+                'serviceAction',
+            ])
             ->orderBy('execution_order');
 
         $executableActions->each(fn (WorkflowAction $action) => ExecuteWorkflowAction::run($action));
