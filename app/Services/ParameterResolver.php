@@ -136,7 +136,7 @@ class ParameterResolver
      * */
     public function channelId(): string
     {
-        return $this->workflowAction->id;
+        return \Str::uuid()->toString();
     }
 
     /*
