@@ -8,7 +8,11 @@ EOF;
 return (new PhpCsFixer\Config)
     ->setRules([
         '@PSR12' => true,
-        'header_comment' => ['header' => $header, 'location' => 'after_open'],
+        'header_comment' => [
+            'header' => $header,
+            'location' => 'after_open',
+            'comment_type' => 'PHPDoc',
+        ],
     ])
     ->setFinder(PhpCsFixer\Finder::create()->in([
         __DIR__ . '/app',
