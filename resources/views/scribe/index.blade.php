@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost:8000";
+        var tryItOutBaseUrl = "https://7b9a3779a263.ngrok-free.app";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -85,9 +85,6 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-workflows-execute--workflow_id-">
                                 <a href="#endpoints-POSTapi-workflows-execute--workflow_id-">POST api/workflows/execute/{workflow_id}</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-actions-execute--action_id-">
-                                <a href="#endpoints-POSTapi-actions-execute--action_id-">POST api/actions/execute/{action_id}</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-logs--workflow_id-">
                                 <a href="#endpoints-GETapi-logs--workflow_id-">GET api/logs/{workflow_id}</a>
                             </li>
@@ -103,6 +100,9 @@
                                     <ul id="tocify-subheader-services-oauth" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="services-oauth-GETapi-subscriptions--serviceIdentifier-">
                                 <a href="#services-oauth-GETapi-subscriptions--serviceIdentifier-">Check If User Is Subscribed To Service</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="services-oauth-DELETEapi-subscriptions--serviceIdentifier-">
+                                <a href="#services-oauth-DELETEapi-subscriptions--serviceIdentifier-">Unsubscribe A User From A Service</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="services-oauth-GETapi--serviceIdentifier--redirect">
                                 <a href="#services-oauth-GETapi--serviceIdentifier--redirect">Fetch Service's OAuth Consent Screen</a>
@@ -122,6 +122,12 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="services-and-actions-GETapi-services">
                                 <a href="#services-and-actions-GETapi-services">Fetch all available services</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="services-and-actions-POSTapi-actions-execute--action_id-">
+                                <a href="#services-and-actions-POSTapi-actions-execute--action_id-">Test An Action</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="services-and-actions-DELETEapi-actions--action_id-">
+                                <a href="#services-and-actions-DELETEapi-actions--action_id-">Delete an action</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -153,7 +159,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 12, 2025</li>
+        <li>Last updated: July 13, 2025</li>
     </ul>
 </div>
 
@@ -162,7 +168,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost:8000</code>
+    <strong>Base URL</strong>: <code>https://7b9a3779a263.ngrok-free.app</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -188,7 +194,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/register" \
+    "https://7b9a3779a263.ngrok-free.app/api/register" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -202,7 +208,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/register"
+    "https://7b9a3779a263.ngrok-free.app/api/register"
 );
 
 const headers = {
@@ -356,7 +362,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/me" \
+    "https://7b9a3779a263.ngrok-free.app/api/me" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -368,7 +374,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/me"
+    "https://7b9a3779a263.ngrok-free.app/api/me"
 );
 
 const headers = {
@@ -502,7 +508,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -518,7 +524,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
 );
 
 const headers = {
@@ -621,10 +627,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="workflow"                data-endpoint="PUTapi-workflows--workflow--"
-               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
                data-component="url">
     <br>
-<p>Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
+<p>Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -686,14 +692,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/workflows/execute/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/execute/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/execute/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/execute/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
 );
 
 const headers = {
@@ -786,130 +792,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="POSTapi-workflows-execute--workflow_id-"
-               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
-            </div>
-                    </form>
-
-                    <h2 id="endpoints-POSTapi-actions-execute--action_id-">POST api/actions/execute/{action_id}</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-actions-execute--action_id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/actions/execute/2bc0f6e6-88c8-478e-910a-f611432d23d8" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/actions/execute/2bc0f6e6-88c8-478e-910a-f611432d23d8"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-actions-execute--action_id-">
-</span>
-<span id="execution-results-POSTapi-actions-execute--action_id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-actions-execute--action_id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-actions-execute--action_id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-actions-execute--action_id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-actions-execute--action_id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-actions-execute--action_id-" data-method="POST"
-      data-path="api/actions/execute/{action_id}"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-actions-execute--action_id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-actions-execute--action_id-"
-                    onclick="tryItOut('POSTapi-actions-execute--action_id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-actions-execute--action_id-"
-                    onclick="cancelTryOut('POSTapi-actions-execute--action_id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-actions-execute--action_id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/actions/execute/{action_id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-actions-execute--action_id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-actions-execute--action_id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>action_id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="action_id"                data-endpoint="POSTapi-actions-execute--action_id-"
-               value="2bc0f6e6-88c8-478e-910a-f611432d23d8"
-               data-component="url">
-    <br>
-<p>The ID of the action. Example: <code>2bc0f6e6-88c8-478e-910a-f611432d23d8</code></p>
+<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
             </div>
                     </form>
 
@@ -926,14 +812,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/logs/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/logs/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/logs/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+    "https://7b9a3779a263.ngrok-free.app/api/logs/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
 );
 
 const headers = {
@@ -1040,10 +926,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="GETapi-logs--workflow_id-"
-               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
+<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
             </div>
                     </form>
 
@@ -1060,14 +946,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/workflows/trigger" \
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/trigger" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/trigger"
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/trigger"
 );
 
 const headers = {
@@ -1173,14 +1059,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/subscriptions/google-calendar" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/subscriptions/google-calendar"
+    "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar"
 );
 
 const headers = {
@@ -1202,6 +1088,15 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Invalid Service Identifier.&quot;
+}</code>
  </pre>
             <blockquote>
             <p>Example response (404):</p>
@@ -1296,6 +1191,152 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                    <h2 id="services-oauth-DELETEapi-subscriptions--serviceIdentifier-">Unsubscribe A User From A Service</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-subscriptions--serviceIdentifier-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-subscriptions--serviceIdentifier-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Invalid Service Identifier.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;User is not subscribed to this service.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-subscriptions--serviceIdentifier-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-subscriptions--serviceIdentifier-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-subscriptions--serviceIdentifier-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-subscriptions--serviceIdentifier-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-subscriptions--serviceIdentifier-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-subscriptions--serviceIdentifier-" data-method="DELETE"
+      data-path="api/subscriptions/{serviceIdentifier}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-subscriptions--serviceIdentifier-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-subscriptions--serviceIdentifier-"
+                    onclick="tryItOut('DELETEapi-subscriptions--serviceIdentifier-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-subscriptions--serviceIdentifier-"
+                    onclick="cancelTryOut('DELETEapi-subscriptions--serviceIdentifier-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-subscriptions--serviceIdentifier-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/subscriptions/{serviceIdentifier}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-subscriptions--serviceIdentifier-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-subscriptions--serviceIdentifier-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>serviceIdentifier</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="serviceIdentifier"                data-endpoint="DELETEapi-subscriptions--serviceIdentifier-"
+               value="google-calendar"
+               data-component="url">
+    <br>
+<p>Example: <code>google-calendar</code></p>
+            </div>
+                    </form>
+
                     <h2 id="services-oauth-GETapi--serviceIdentifier--redirect">Fetch Service&#039;s OAuth Consent Screen</h2>
 
 <p>
@@ -1310,14 +1351,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/google-calendar/redirect" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/google-calendar/redirect" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/google-calendar/redirect"
+    "https://7b9a3779a263.ngrok-free.app/api/google-calendar/redirect"
 );
 
 const headers = {
@@ -1456,14 +1497,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/subscriptions" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/subscriptions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/subscriptions"
+    "https://7b9a3779a263.ngrok-free.app/api/subscriptions"
 );
 
 const headers = {
@@ -1491,8 +1532,8 @@ fetch(url, {
             &quot;name&quot;: &quot;Google Mail&quot;
         },
         {
-            &quot;identifier&quot;: &quot;google-calendar&quot;,
-            &quot;name&quot;: &quot;Google Calendar&quot;
+            &quot;identifier&quot;: &quot;google-mail&quot;,
+            &quot;name&quot;: &quot;Google Mail&quot;
         }
     ]
 }</code>
@@ -1589,14 +1630,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/google-calendar/actions" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/google-calendar/actions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/google-calendar/actions"
+    "https://7b9a3779a263.ngrok-free.app/api/google-calendar/actions"
 );
 
 const headers = {
@@ -1723,14 +1764,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/services" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/services" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/services"
+    "https://7b9a3779a263.ngrok-free.app/api/services"
 );
 
 const headers = {
@@ -1832,6 +1873,284 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
+                    <h2 id="services-and-actions-POSTapi-actions-execute--action_id-">Test An Action</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-actions-execute--action_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://7b9a3779a263.ngrok-free.app/api/actions/execute/consequatur" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://7b9a3779a263.ngrok-free.app/api/actions/execute/consequatur"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-actions-execute--action_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: &quot;fa010f60-df29-3f05-8bc7-bed48f550d13&quot;,
+        &quot;action_id&quot;: &quot;87138e75-5dae-45ea-8238-c31a6a14ae73&quot;,
+        &quot;action_name&quot;: &quot;Kennedi VonRueden IV&quot;,
+        &quot;service_name&quot;: &quot;Google Calendar&quot;,
+        &quot;type&quot;: &quot;action&quot;,
+        &quot;execution_status&quot;: &quot;error&quot;,
+        &quot;response_http_code&quot;: &quot;404&quot;,
+        &quot;execution_order&quot;: 5,
+        &quot;exception&quot;: &quot;Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.&quot;,
+        &quot;url&quot;: &quot;http://kemmer.com/et-a-qui-ducimus.html&quot;,
+        &quot;parameters&quot;: [],
+        &quot;executed_at&quot;: &quot;2009-02-09T08:23:18.000000Z&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-actions-execute--action_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-actions-execute--action_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-actions-execute--action_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-actions-execute--action_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-actions-execute--action_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-actions-execute--action_id-" data-method="POST"
+      data-path="api/actions/execute/{action_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-actions-execute--action_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-actions-execute--action_id-"
+                    onclick="tryItOut('POSTapi-actions-execute--action_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-actions-execute--action_id-"
+                    onclick="cancelTryOut('POSTapi-actions-execute--action_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-actions-execute--action_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/actions/execute/{action_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-actions-execute--action_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-actions-execute--action_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>action_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="action_id"                data-endpoint="POSTapi-actions-execute--action_id-"
+               value="consequatur"
+               data-component="url">
+    <br>
+<p>The ID of the action. Example: <code>consequatur</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="services-and-actions-DELETEapi-actions--action_id-">Delete an action</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-actions--action_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "https://7b9a3779a263.ngrok-free.app/api/actions/consequatur" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://7b9a3779a263.ngrok-free.app/api/actions/consequatur"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-actions--action_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-actions--action_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-actions--action_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-actions--action_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-actions--action_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-actions--action_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-actions--action_id-" data-method="DELETE"
+      data-path="api/actions/{action_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-actions--action_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-actions--action_id-"
+                    onclick="tryItOut('DELETEapi-actions--action_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-actions--action_id-"
+                    onclick="cancelTryOut('DELETEapi-actions--action_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-actions--action_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/actions/{action_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-actions--action_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-actions--action_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>action_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="action_id"                data-endpoint="DELETEapi-actions--action_id-"
+               value="consequatur"
+               data-component="url">
+    <br>
+<p>The ID of the action. Example: <code>consequatur</code></p>
+            </div>
+                    </form>
+
                 <h1 id="workflows">Workflows</h1>
 
     
@@ -1850,14 +2169,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/workflows" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/workflows" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows"
+    "https://7b9a3779a263.ngrok-free.app/api/workflows"
 );
 
 const headers = {
@@ -1884,15 +2203,15 @@ fetch(url, {
             &quot;id&quot;: &quot;c2cdda66-81e5-3060-a4eb-049b4a810d76&quot;,
             &quot;name&quot;: &quot;Bert Reynolds&quot;,
             &quot;status&quot;: &quot;saved&quot;,
-            &quot;saved_at&quot;: &quot;1978-05-14T04:51:06.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;2009-12-24T21:29:46.000000Z&quot;
+            &quot;saved_at&quot;: &quot;1978-05-14T07:58:03.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;2009-12-25T12:23:22.000000Z&quot;
         },
         {
             &quot;id&quot;: &quot;936fdd5d-2b5e-37e2-9409-234f3d6f1036&quot;,
             &quot;name&quot;: &quot;Alize Ward&quot;,
-            &quot;status&quot;: &quot;deployed&quot;,
-            &quot;saved_at&quot;: &quot;1987-11-10T06:07:33.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;1974-09-09T17:31:00.000000Z&quot;
+            &quot;status&quot;: &quot;tested&quot;,
+            &quot;saved_at&quot;: &quot;1987-11-10T12:46:40.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;1974-09-09T19:15:48.000000Z&quot;
         }
     ]
 }</code>
@@ -1990,14 +2309,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
+    --get "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
 );
 
 const headers = {
@@ -2025,76 +2344,76 @@ fetch(url, {
         &quot;status&quot;: &quot;saved&quot;,
         &quot;actions&quot;: [
             {
-                &quot;id&quot;: &quot;45932b9e-513f-4b25-8ac8-af172b9abd94&quot;,
+                &quot;id&quot;: &quot;856c7271-b5eb-4584-9bb5-05ffdcc2a38d&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-mail&quot;,
                     &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;service_action_id&quot;: &quot;254b883a-1cb4-4de6-8551-fd41aef5a418&quot;,
-                &quot;identifier&quot;: &quot;google-calendar-event-updated&quot;,
+                &quot;service_action_id&quot;: &quot;27b44008-6b68-440b-abfe-bad5ae0b257e&quot;,
+                &quot;identifier&quot;: &quot;google-calendar-create-event&quot;,
                 &quot;name&quot;: &quot;Nicholaus Gutkowski II&quot;,
-                &quot;type&quot;: &quot;trigger&quot;,
+                &quot;type&quot;: &quot;action&quot;,
                 &quot;status&quot;: &quot;draft&quot;,
                 &quot;execution_order&quot;: 1,
                 &quot;url&quot;: &quot;https://wiegand.com/nesciunt-consequatur-eligendi-blanditiis-consequatur-vitae-et.html&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;2018-10-25T04:23:22.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;2018-10-25T22:34:22.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;21f3445c-4a5d-478f-a927-d1107f0b7016&quot;,
+                &quot;id&quot;: &quot;e26f5493-3ac5-41ae-9830-7ac69e012461&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-mail&quot;,
                     &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;service_action_id&quot;: &quot;d479bab0-ef06-4938-8eb1-55f70622332a&quot;,
-                &quot;identifier&quot;: &quot;google-mail-send&quot;,
+                &quot;service_action_id&quot;: &quot;35da537c-eb0e-4848-a396-b8e63db273e1&quot;,
+                &quot;identifier&quot;: &quot;google-calendar-event-updated&quot;,
                 &quot;name&quot;: &quot;Wayne Quigley&quot;,
                 &quot;type&quot;: &quot;action&quot;,
-                &quot;status&quot;: &quot;draft&quot;,
+                &quot;status&quot;: &quot;tested&quot;,
                 &quot;execution_order&quot;: 2,
                 &quot;url&quot;: &quot;http://www.dare.com/&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;1993-11-02T07:39:01.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;1993-11-02T16:31:47.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;e8d5a046-5595-42f8-8274-edb5f2263122&quot;,
+                &quot;id&quot;: &quot;e62ea1b9-70bf-44c0-b6a9-de63d558f5dd&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-mail&quot;,
                     &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;service_action_id&quot;: &quot;d2ebdc1b-0218-4545-9079-f40a2806d3b1&quot;,
+                &quot;service_action_id&quot;: &quot;ba795a15-0da5-46f9-aa46-21d3197aa372&quot;,
                 &quot;identifier&quot;: &quot;google-calendar-create-event&quot;,
                 &quot;name&quot;: &quot;Trinity Mayert&quot;,
-                &quot;type&quot;: &quot;trigger&quot;,
-                &quot;status&quot;: &quot;draft&quot;,
+                &quot;type&quot;: &quot;action&quot;,
+                &quot;status&quot;: &quot;error&quot;,
                 &quot;execution_order&quot;: 5,
                 &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;2021-04-05T13:55:43.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;2021-04-06T09:01:24.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;b60934b2-418c-4005-82e1-6c26510acf0e&quot;,
+                &quot;id&quot;: &quot;795bb94a-652d-4b9f-89cc-1348cc69e672&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
-                    &quot;identifier&quot;: &quot;google-calendar&quot;,
-                    &quot;name&quot;: &quot;Google Calendar&quot;
+                    &quot;identifier&quot;: &quot;google-mail&quot;,
+                    &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;service_action_id&quot;: &quot;38c12b66-afbb-4ecc-b41e-8b12797dadd7&quot;,
-                &quot;identifier&quot;: &quot;google-calendar-event-created&quot;,
+                &quot;service_action_id&quot;: &quot;b75f450b-e4d0-496e-b804-e0f1ae5d93a9&quot;,
+                &quot;identifier&quot;: &quot;google-mail-send&quot;,
                 &quot;name&quot;: &quot;Liliane Stark&quot;,
-                &quot;type&quot;: &quot;trigger&quot;,
+                &quot;type&quot;: &quot;action&quot;,
                 &quot;status&quot;: &quot;error&quot;,
                 &quot;execution_order&quot;: 9,
                 &quot;url&quot;: &quot;https://www.muller.com/nesciunt-voluptatem-itaque-magnam-quis-dolorem-non-harum&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;1976-03-18T03:21:37.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;1976-03-18T05:40:25.000000Z&quot;
             }
         ],
-        &quot;saved_at&quot;: &quot;2002-02-19T18:10:58.000000Z&quot;,
-        &quot;deployed_at&quot;: &quot;2024-05-29T23:56:32.000000Z&quot;
+        &quot;saved_at&quot;: &quot;2002-02-20T06:09:14.000000Z&quot;,
+        &quot;deployed_at&quot;: &quot;2024-05-30T20:12:37.000000Z&quot;
     }
 }</code>
  </pre>
@@ -2182,10 +2501,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="GETapi-workflows--workflow_id-"
-               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
+<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
             </div>
                     </form>
 
@@ -2203,14 +2522,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/workflows/deploy/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/deploy/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/deploy/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/deploy/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
 );
 
 const headers = {
@@ -2241,17 +2560,17 @@ fetch(url, {
             &quot;exception&quot;: &quot;Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.&quot;,
             &quot;url&quot;: &quot;http://kemmer.com/et-a-qui-ducimus.html&quot;,
             &quot;parameters&quot;: [],
-            &quot;executed_at&quot;: &quot;2009-02-08T17:49:14.000000Z&quot;
+            &quot;executed_at&quot;: &quot;2009-02-09T08:23:18.000000Z&quot;
         },
         {
             &quot;id&quot;: &quot;78a1a612-d608-314f-a2e1-57df62570232&quot;,
-            &quot;execution_status&quot;: &quot;success&quot;,
-            &quot;response_http_code&quot;: &quot;302&quot;,
+            &quot;execution_status&quot;: &quot;error&quot;,
+            &quot;response_http_code&quot;: &quot;404&quot;,
             &quot;execution_order&quot;: 8,
             &quot;exception&quot;: &quot;Non velit ab accusantium deleniti et quas numquam. Ut sit numquam inventore dolor suscipit molestiae. Aut impedit a quibusdam sint. Nesciunt delectus inventore ratione voluptas doloremque illo.&quot;,
             &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
             &quot;parameters&quot;: [],
-            &quot;executed_at&quot;: &quot;2021-04-05T13:55:43.000000Z&quot;
+            &quot;executed_at&quot;: &quot;2021-04-06T09:01:24.000000Z&quot;
         }
     ]
 }</code>
@@ -2340,10 +2659,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="POSTapi-workflows-deploy--workflow_id-"
-               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
+<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
             </div>
                     </form>
 
@@ -2361,14 +2680,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900" \
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/workflows/dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
 );
 
 const headers = {
@@ -2468,10 +2787,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="DELETEapi-workflows--workflow_id-"
-               value="dcdcb0a7-6728-4ada-9fa9-0b8af5e18900"
+               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>dcdcb0a7-6728-4ada-9fa9-0b8af5e18900</code></p>
+<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
             </div>
                     </form>
 
