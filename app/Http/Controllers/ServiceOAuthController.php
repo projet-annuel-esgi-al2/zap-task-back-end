@@ -29,11 +29,20 @@ class ServiceOAuthController extends Controller
      * @authenticated
      *
      * @response 404 { "message": "User is not subscribed to this service."}
+     * @response 400 { "message": "Invalid Service Identifier."}
      * @response 200
      */
     public function get(Identifier $serviceIdentifier): JsonResponse
     {
-        if (! auth()->user()?->subscribedToService($serviceIdentifier)) {
+        /** @var ?Service $service */
+        $service = Service::where('identifier', $serviceIdentifier)->first();
+
+        if (is_null($service)) {
+            return response()
+                ->json('Invalid Service Identifier', Response::HTTP_BAD_REQUEST);
+        }
+
+        if (! auth()->user()?->subscribedToService($service)) {
             return response()
                 ->json('User is not subscribed to this service', Response::HTTP_NOT_FOUND)
                 ->withHeaders(['Location' => route('service-oauth-redirect', ['serviceIdentifier' => $serviceIdentifier])]);
@@ -104,10 +113,14 @@ class ServiceOAuthController extends Controller
             'expires_at' => now()->addSeconds($oauthUser->expiresIn),
         ]);
 
-        ServiceSubscription::create([
+        ServiceSubscription::firstOrCreate([
             'service_id' => $service->id,
             'oauth_token_id' => $oauthToken->id,
-        ]);
+        ],
+            [
+                'service_id' => $service->id,
+                'oauth_token_id' => $oauthToken->id,
+            ]);
 
         return view('close');
     }

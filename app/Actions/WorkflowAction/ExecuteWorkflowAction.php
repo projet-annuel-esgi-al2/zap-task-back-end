@@ -8,21 +8,20 @@
 namespace App\Actions\WorkflowAction;
 
 use App\Events\WorkflowAction\WorkflowActionExecuted;
+use App\Events\WorkflowActionTriggered;
 use App\Http\Integrations\Workflow\Requests\WorkflowActionRequest;
 use App\Http\Integrations\Workflow\ServiceConnector;
 use App\Models\WorkflowAction;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Http\Request;
+use Illuminate\Queue\SerializesModels;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 
-class ExecuteWorkflowAction implements ShouldQueue, ShouldQueueAfterCommit
+class ExecuteWorkflowAction
 {
     use AsAction;
-    use Queueable;
+    use SerializesModels;
 
     public function handle(WorkflowAction $action): void
     {
@@ -50,6 +49,11 @@ class ExecuteWorkflowAction implements ShouldQueue, ShouldQueueAfterCommit
     public function asJob(WorkflowAction $action): void
     {
         $this->handle($action);
+    }
+
+    public function asListener(WorkflowActionTriggered $actionTriggered): void
+    {
+        $this->handle($actionTriggered->action);
     }
 
     public function asController(Request $request): void

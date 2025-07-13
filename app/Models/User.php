@@ -8,7 +8,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\Service\Identifier;
 use App\Models\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -113,11 +112,16 @@ class User extends Authenticatable
         return $this->hasManyThrough(ServiceSubscription::class, OAuthToken::class, 'user_id', 'oauth_token_id');
     }
 
-    public function subscribedToService(Identifier $serviceIdentifier): bool
+    public function subscribedToService(Service $service, $includeExpiredTokens = false): bool
     {
-        return $this->serviceSubscriptions()
-            ->whereHas('service', fn ($q) => $q->where('identifier', $serviceIdentifier))
-            ->exists();
+        $query = $this->serviceSubscriptions()
+            ->whereHas('service', fn ($q) => $q->where('id', $service->id));
+
+        if ($includeExpiredTokens === false) {
+            $query->whereDoesntHave('oauthToken', fn ($q) => $q->where('expires_at', '<', now()->toDateTimeString()));
+        }
+
+        return $query->exists();
     }
 
     public function workflows(): HasMany

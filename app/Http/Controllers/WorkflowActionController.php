@@ -7,7 +7,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\WorkflowAction\ExecuteWorkflowAction;
+use App\Events\WorkflowActionTriggered;
 use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +21,7 @@ class WorkflowActionController extends Controller
 
     public function execute(WorkflowAction $action): JsonResponse
     {
-        ExecuteWorkflowAction::run($action);
+        WorkflowActionTriggered::dispatch($action);
 
         if (! empty($action->refresh()->latestExecution)) {
             return response()->json(WorkflowActionHistoryResource::make($action->latestExecution));

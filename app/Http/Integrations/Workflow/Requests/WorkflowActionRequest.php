@@ -7,6 +7,7 @@
 
 namespace App\Http\Integrations\Workflow\Requests;
 
+use App\Http\Integrations\Workflow\Exceptions\OAuthTokenExpiredException;
 use App\Models\WorkflowAction;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -39,6 +40,9 @@ class WorkflowActionRequest extends Request implements HasBody
         return [];
     }
 
+    /**
+     * @throws OAuthTokenExpiredException
+     * */
     public static function fromWorkflowAction(WorkflowAction $action): self
     {
         /** @var \App\Models\User $user */
@@ -47,7 +51,13 @@ class WorkflowActionRequest extends Request implements HasBody
         $serviceSubscription = $user->serviceSubscriptions()
             ->where('service_id', $action->serviceAction->service->id)
             ->first();
-        $oauthTokenValue = $serviceSubscription->oauthToken->value;
+        $oauthToken = $serviceSubscription->oauthToken;
+
+        if ($oauthToken->expired()) {
+            throw new OAuthTokenExpiredException;
+        }
+
+        $oauthTokenValue = $oauthToken->value;
 
         $request = self::make();
         $request->headers()->add('Authorization', 'Bearer '.$oauthTokenValue);

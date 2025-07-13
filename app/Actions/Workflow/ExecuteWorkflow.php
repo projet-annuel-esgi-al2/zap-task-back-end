@@ -7,18 +7,20 @@
 
 namespace App\Actions\Workflow;
 
-use App\Actions\WorkflowAction\ExecuteWorkflowAction;
+use App\Events\WorkflowActionTriggered;
 use App\Models\Workflow;
 use App\Models\WorkflowAction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
+use Illuminate\Queue\SerializesModels;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ExecuteWorkflow implements ShouldQueue, ShouldQueueAfterCommit
 {
     use AsAction;
     use Queueable;
+    use SerializesModels;
 
     public function handle(Workflow $workflow): void
     {
@@ -29,6 +31,6 @@ class ExecuteWorkflow implements ShouldQueue, ShouldQueueAfterCommit
             ])
             ->orderBy('execution_order');
 
-        $executableActions->each(fn (WorkflowAction $action) => ExecuteWorkflowAction::run($action));
+        $executableActions->each(fn (WorkflowAction $action) => WorkflowActionTriggered::dispatch($action));
     }
 }
