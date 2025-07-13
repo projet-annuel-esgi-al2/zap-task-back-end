@@ -42,6 +42,14 @@ return [
     'google' => [
         'auth_url' => 'https://accounts.google.com/o/oauth2/v2/auth',
         'token_url' => 'https://oauth2.googleapis.com/token',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
+        'token_refresher' => \App\Http\Integrations\OAuthToken\Connectors\GoogleOAuthConnector::class,
+        'refresh_token_response_data' => [
+            'access_token' => 'access_token',
+            'expires_in' => 'expires_in',
+        ],
         'calendar' => [
             'base_url' => 'https://www.googleapis.com/calendar/v3',
             'user_info_url' => 'https://openidconnect.googleapis.com/v1/userinfo',
@@ -54,9 +62,6 @@ return [
                 'https://www.googleapis.com/auth/calendar.events',
             ],
         ],
-        'client_id' => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
 ];

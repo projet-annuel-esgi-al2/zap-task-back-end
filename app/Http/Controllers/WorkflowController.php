@@ -7,8 +7,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\WorkflowAction\ExecuteWorkflowAction;
 use App\Enums\Workflow\Status;
+use App\Events\WorkflowActionTriggered;
 use App\Http\Requests\StoreWorkflowRequest;
 use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Http\Resources\Api\WorkflowResource;
@@ -131,7 +131,7 @@ class WorkflowController extends Controller
     {
         $trigger = $workflow->trigger;
 
-        ExecuteWorkflowAction::run($trigger);
+        WorkflowActionTriggered::dispatch($trigger);
 
         if (! empty($trigger->refresh()->latestExecution)) {
             return response()->json(WorkflowActionHistoryResource::make($trigger->latestExecution));
