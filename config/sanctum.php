@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 use Laravel\Sanctum\Sanctum;
 
 return [

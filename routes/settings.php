@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;

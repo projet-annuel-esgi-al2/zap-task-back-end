@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Http\Integrations\Workflow;
 
 use Saloon\Http\Connector;

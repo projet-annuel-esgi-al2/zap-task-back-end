@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;

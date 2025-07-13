@@ -24,3 +24,4 @@ yarn-error.log
 /.zed
 tmp/
 .DS_Store
+.php-cs-fixer.cache

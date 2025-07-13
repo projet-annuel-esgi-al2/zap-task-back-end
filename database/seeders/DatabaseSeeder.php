@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;

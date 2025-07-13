@@ -1,12 +1,17 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 return [
     'configs' => [
         [
             'name' => 'trigger-workflow-webhook',
             'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
             'signature_header_name' => 'Signature',
-            'signature_validator' => \App\Http\Webhooks\SignatureValidator::class,
+            'signature_validator' => \App\Webhooks\SignatureValidator::class,
             'webhook_profile' => \Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile::class,
             'webhook_response' => \Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo::class,
             'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
@@ -14,7 +19,7 @@ return [
                 'X-Goog-Channel-Token',
                 'X-Goog-Channel-Id',
             ],
-            'process_webhook_job' => \App\Http\Webhooks\Jobs\Workflow\ProcessTriggerWebhook::class,
+            'process_webhook_job' => \App\Webhooks\Jobs\Workflow\ProcessTriggerWebhook::class,
         ],
     ],
 

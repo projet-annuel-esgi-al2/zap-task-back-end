@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Http\Requests\Google\Calendar;
 
 use Saloon\Helpers\OAuth2\OAuthConfig;

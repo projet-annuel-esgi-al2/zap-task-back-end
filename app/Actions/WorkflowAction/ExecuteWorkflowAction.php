@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Actions\WorkflowAction;
 
 use App\Events\WorkflowAction\WorkflowActionExecuted;
@@ -49,7 +54,7 @@ class ExecuteWorkflowAction implements ShouldQueue, ShouldQueueAfterCommit
 
     public function asController(Request $request): void
     {
-        $action = new WorkflowAction;
+        $action = new WorkflowAction();
         $action->forceFill([
 
         ]);

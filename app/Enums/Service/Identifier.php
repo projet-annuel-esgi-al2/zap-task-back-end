@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Enums\Service;
 
 use App\Enums\Traits\EnumTrait;

@@ -1,10 +1,15 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Models;
 
 use App\Enums\WorkflowAction\Status;
 use App\Models\Traits\HasUUID;
-use App\Services\ParameterResolver;
+use App\Services\WorkflowAction\ParameterResolver;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

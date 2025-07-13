@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Events\WorkflowAction;
 
 use App\Models\WorkflowAction;
@@ -10,7 +15,9 @@ use Illuminate\Support\Carbon;
 
 class WorkflowActionExecuted
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public Carbon $executedAt;
 

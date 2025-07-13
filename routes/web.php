@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 use App\Http\Webhooks\GoogleCalendarWebhookController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,9 +18,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 });
-
-// Webhook Google Calendar
-Route::post('/webhooks/google/calendar', [GoogleCalendarWebhookController::class, '__invoke']);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

@@ -30,6 +30,7 @@
         "barryvdh/laravel-ide-helper": "^3.5",
         "ekino/phpstan-banned-code": "^3.0",
         "fakerphp/faker": "^1.24",
+        "friendsofphp/php-cs-fixer": "^3.82",
         "larastan/larastan": "^3.4",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.18",

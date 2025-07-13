@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Models\Traits;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;

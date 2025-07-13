@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 return [
 
     /*
@@ -35,10 +40,10 @@ return [
         ],
     ],
     'google' => [
+        'auth_url' => 'https://accounts.google.com/o/oauth2/v2/auth',
+        'token_url' => 'https://oauth2.googleapis.com/token',
         'calendar' => [
             'base_url' => 'https://www.googleapis.com/calendar/v3',
-            'auth_url' => 'https://accounts.google.com/o/oauth2/v2/auth',
-            'token_url' => 'https://oauth2.googleapis.com/token',
             'user_info_url' => 'https://openidconnect.googleapis.com/v1/userinfo',
             'default_scopes' => [
                 'https://www.googleapis.com/auth/calendar',

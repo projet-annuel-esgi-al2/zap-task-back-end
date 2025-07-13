@@ -1,6 +1,11 @@
 <?php
 
-namespace App\Http\Webhooks;
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
+namespace App\Webhooks;
 
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator as SpatieSignatureValidator;

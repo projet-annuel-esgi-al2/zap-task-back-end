@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 if (! function_exists('with_locale')) {
     function with_locale($locale, \Closure $callback)
     {

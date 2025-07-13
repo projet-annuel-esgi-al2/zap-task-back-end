@@ -1,6 +1,11 @@
 <?php
 
-namespace App\Services;
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
+namespace App\Services\WorkflowAction;
 
 use App\Models\WorkflowAction;
 use App\Traits\Makeable;
@@ -14,7 +19,9 @@ class ParameterResolver
 {
     use Makeable;
 
-    public function __construct(protected WorkflowAction $workflowAction, protected array $values) {}
+    public function __construct(protected WorkflowAction $workflowAction, protected array $values)
+    {
+    }
 
     public function resolve(): WorkflowAction
     {

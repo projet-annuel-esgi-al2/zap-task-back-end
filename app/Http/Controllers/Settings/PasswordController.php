@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Author: Marc Malha
+ * Version: 1.0
+ */
+
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
