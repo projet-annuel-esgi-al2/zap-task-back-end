@@ -27,6 +27,7 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
 
     Route::get('/subscriptions', [ServiceController::class, 'subscriptions']);
     Route::get('/subscriptions/{serviceIdentifier}', [ServiceOAuthController::class, 'get']);
+    Route::delete('/subscriptions/{serviceIdentifier}', [ServiceOAuthController::class, 'unsubscribe']);
 
     Route::prefix('{serviceIdentifier}/')->group(function () {
         Route::get('redirect', [ServiceOAuthController::class, 'redirect'])
@@ -50,6 +51,7 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
 
     Route::prefix('/actions')->group(function () {
         Route::post('/execute/{action}', [WorkflowActionController::class, 'execute']);
+        Route::delete('/{action}', [WorkflowActionController::class, 'delete']);
     });
     Route::prefix('/logs')->group(function () {
         Route::get('/{workflow}', [WorkflowActionHistoryController::class, 'show']);

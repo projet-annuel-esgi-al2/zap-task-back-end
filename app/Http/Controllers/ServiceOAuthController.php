@@ -24,6 +24,47 @@ class ServiceOAuthController extends Controller
     /**
      * @group Services OAuth
      *
+     * Unsubscribe A User From A Service
+     *
+     * @authenticated
+     *
+     * @response 404 { "message": "User is not subscribed to this service."}
+     * @response 400 { "message": "Invalid Service Identifier."}
+     * @response 200
+     */
+    public function unsubscribe(Identifier $serviceIdentifier): JsonResponse
+    {
+        /** @var ?Service $service */
+        $service = Service::where('identifier', $serviceIdentifier)->first();
+
+        if (is_null($service)) {
+            return response()
+                ->json('Invalid Service Identifier', Response::HTTP_BAD_REQUEST);
+        }
+
+        /** @var User $user */
+        $user = auth()->user();
+        /** @var ?ServiceSubscription $subscription */
+        $subscription = $user->serviceSubscriptions()
+            ->whereHas('service', fn ($q) => $q->where('id', $service->id))
+            ->first();
+
+        if (empty($subscription)) {
+            return response()
+                ->json('User is not subscribed to this service', Response::HTTP_NOT_FOUND)
+                ->withHeaders(['Location' => route('service-oauth-redirect', ['serviceIdentifier' => $serviceIdentifier])]);
+        }
+
+        $oauthToken = $subscription->oauthToken;
+        $subscription->delete();
+        $oauthToken->delete();
+
+        return response()->json();
+    }
+
+    /**
+     * @group Services OAuth
+     *
      * Check If User Is Subscribed To Service
      *
      * @authenticated

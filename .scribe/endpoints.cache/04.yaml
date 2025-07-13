@@ -24,14 +24,14 @@ endpoints:
         name: workflow
         description: ''
         required: false
-        example: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
+        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
+      workflow: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -110,55 +110,14 @@ endpoints:
         name: workflow_id
         description: 'The ID of the workflow.'
         required: true
-        example: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
+        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow_id: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: 'api/actions/execute/{action_id}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      action_id:
-        name: action_id
-        description: 'The ID of the action.'
-        required: true
-        example: 2bc0f6e6-88c8-478e-910a-f611432d23d8
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-    cleanUrlParameters:
-      action_id: 2bc0f6e6-88c8-478e-910a-f611432d23d8
+      workflow_id: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -192,14 +151,14 @@ endpoints:
         name: workflow_id
         description: 'The ID of the workflow.'
         required: true
-        example: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
+        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow_id: dcdcb0a7-6728-4ada-9fa9-0b8af5e18900
+      workflow_id: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

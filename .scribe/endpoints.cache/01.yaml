@@ -29,7 +29,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"identifier":"google-mail","name":"Google Mail"},{"identifier":"google-calendar","name":"Google Calendar"}]}'
+        content: '{"data":[{"identifier":"google-mail","name":"Google Mail"},{"identifier":"google-mail","name":"Google Mail"}]}'
         headers: []
         description: ''
         custom: []
@@ -127,6 +127,106 @@ endpoints:
           content-type: application/json
           vary: Origin
         description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/actions/execute/{action_id}'
+    metadata:
+      groupName: 'Services and Actions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Test An Action'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      action_id:
+        name: action_id
+        description: 'The ID of the action.'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      action_id: consequatur
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":"fa010f60-df29-3f05-8bc7-bed48f550d13","action_id":"87138e75-5dae-45ea-8238-c31a6a14ae73","action_name":"Kennedi VonRueden IV","service_name":"Google Calendar","type":"action","execution_status":"error","response_http_code":"404","execution_order":5,"exception":"Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.","url":"http:\/\/kemmer.com\/et-a-qui-ducimus.html","parameters":[],"executed_at":"2009-02-09T08:23:18.000000Z"}}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 200
+        content: '{}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/actions/{action_id}'
+    metadata:
+      groupName: 'Services and Actions'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete an action'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      action_id:
+        name: action_id
+        description: 'The ID of the action.'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      action_id: consequatur
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{}'
+        headers: []
+        description: ''
         custom: []
     responseFields: []
     auth: []
