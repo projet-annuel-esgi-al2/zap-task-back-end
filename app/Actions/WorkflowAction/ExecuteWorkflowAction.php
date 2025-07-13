@@ -54,7 +54,7 @@ class ExecuteWorkflowAction implements ShouldQueue, ShouldQueueAfterCommit
 
     public function asController(Request $request): void
     {
-        $action = new WorkflowAction();
+        $action = new WorkflowAction;
         $action->forceFill([
 
         ]);

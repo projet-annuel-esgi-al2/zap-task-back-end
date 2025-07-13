@@ -19,9 +19,7 @@ class ParameterResolver
 {
     use Makeable;
 
-    public function __construct(protected WorkflowAction $workflowAction, protected array $values)
-    {
-    }
+    public function __construct(protected WorkflowAction $workflowAction, protected array $values) {}
 
     public function resolve(): WorkflowAction
     {

@@ -17,8 +17,7 @@ class WatchCalendar extends Request
     public function __construct(
         protected string $calendarId,
         protected array $channel
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -5,7 +5,6 @@
  * Version: 1.0
  */
 
-use App\Http\Webhooks\GoogleCalendarWebhookController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
