@@ -9,6 +9,7 @@ namespace App\Actions\WorkflowAction;
 
 use App\Events\WorkflowAction\WorkflowActionExecuted;
 use App\Events\WorkflowActionTriggered;
+use App\Http\Integrations\Workflow\Exceptions\OAuthTokenExpiredException;
 use App\Http\Integrations\Workflow\Requests\WorkflowActionRequest;
 use App\Http\Integrations\Workflow\ServiceConnector;
 use App\Models\WorkflowAction;
@@ -38,6 +39,8 @@ class ExecuteWorkflowAction
             } else {
                 CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $response->status(), false, $response->toException()->getMessage()));
             }
+        } catch (OAuthTokenExpiredException $exception) {
+            CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, '500', false, $exception->getMessage()));
         } catch (FatalRequestException|RequestException $e) {
             error_log($e->getStatus());
             CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $e->getStatus(), false, $e->getMessage()));
