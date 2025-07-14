@@ -8,7 +8,7 @@
 namespace App\Actions\WorkflowAction;
 
 use App\Events\WorkflowAction\WorkflowActionExecuted;
-use App\Events\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Http\Integrations\Workflow\Exceptions\OAuthTokenExpiredException;
 use App\Http\Integrations\Workflow\Requests\WorkflowActionRequest;
 use App\Http\Integrations\Workflow\ServiceConnector;

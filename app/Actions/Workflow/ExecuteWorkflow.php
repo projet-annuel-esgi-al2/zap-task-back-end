@@ -7,7 +7,7 @@
 
 namespace App\Actions\Workflow;
 
-use App\Events\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Models\Workflow;
 use App\Models\WorkflowAction;
 use Illuminate\Bus\Queueable;
