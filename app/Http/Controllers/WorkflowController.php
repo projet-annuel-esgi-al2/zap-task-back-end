@@ -8,7 +8,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Workflow\Status;
-use App\Events\WorkflowActionTriggered;
+use App\Events\Workflow\WorkflowDeploymentTriggered;
 use App\Http\Requests\StoreWorkflowRequest;
 use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Http\Resources\Api\WorkflowResource;
@@ -103,6 +103,8 @@ class WorkflowController extends Controller
             'actions.workflow',
         ]);
 
+        $workflow->setAsSaved();
+
         return response()->json(WorkflowResource::make($workflow));
     }
 
@@ -129,10 +131,9 @@ class WorkflowController extends Controller
      * */
     public function deploy(Workflow $workflow): JsonResponse
     {
+        WorkflowDeploymentTriggered::dispatch($workflow);
+
         $trigger = $workflow->trigger;
-
-        WorkflowActionTriggered::dispatch($trigger);
-
         if (! empty($trigger->refresh()->latestExecution)) {
             return response()->json(WorkflowActionHistoryResource::make($trigger->latestExecution));
         }
