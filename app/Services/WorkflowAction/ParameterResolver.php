@@ -8,18 +8,26 @@
 namespace App\Services\WorkflowAction;
 
 use App\Models\WorkflowAction;
+use App\Services\WorkflowAction\Traits\HasGMailDynamicParameters;
+use App\Services\WorkflowAction\Traits\HasGoogleDynamicParameters;
 use App\Traits\Makeable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Str;
 use Illuminate\Support\Uri;
 
 class ParameterResolver
 {
+    use HasGMailDynamicParameters;
+    use HasGoogleDynamicParameters;
     use Makeable;
 
     public function __construct(protected WorkflowAction $workflowAction, protected array $values) {}
+
+    public function workflowAction(): WorkflowAction
+    {
+        return $this->workflowAction;
+    }
 
     public function resolve(): WorkflowAction
     {
@@ -127,32 +135,6 @@ class ParameterResolver
             ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['afterResolutionHook']]);
     }
 
-    public function encodeBase64Url($value): string
-    {
-        return Str::of($value)
-            ->toBase64()
-            ->replace(['+', '/'], ['-', '_'])
-            ->rtrim('=')
-            ->value();
-    }
-
-    /*
-     * Used when webhook subscription is done via a "channel" that the service requires to be identified
-     * */
-    public function channelId(): string
-    {
-        return \Str::uuid()->toString();
-    }
-
-    /*
-     * Used when service sends an ID with each webhook call
-     * This token will be used to identify the workflow to be executed upon webhook call reception
-     * */
-    public function webhookToken(): string
-    {
-        return $this->workflowAction->workflow->id;
-    }
-
     /*
      * Specifies a webhook address for the service to send a request to
      * */
@@ -162,6 +144,7 @@ class ParameterResolver
             ->withPath('/api/workflows/trigger')
             ->withQuery([
                 'w' => $this->workflowAction->workflow->id,
+                'd' => $this->workflowAction->workflow->deployment_id,
             ]);
     }
 }
