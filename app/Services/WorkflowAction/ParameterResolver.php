@@ -14,6 +14,7 @@ use App\Traits\Makeable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Uri;
 
 class ParameterResolver
@@ -22,7 +23,7 @@ class ParameterResolver
     use HasGoogleDynamicParameters;
     use Makeable;
 
-    public function __construct(protected WorkflowAction $workflowAction, protected array $values) {}
+    public function __construct(protected WorkflowAction $workflowAction, protected array $values = []) {}
 
     public function workflowAction(): WorkflowAction
     {
@@ -138,13 +139,14 @@ class ParameterResolver
     /*
      * Specifies a webhook address for the service to send a request to
      * */
-    public function webhookAddress(): string
+    public function webhookAddress(): HtmlString
     {
-        return Uri::of(config('app.url'))
+        return new HtmlString(Uri::of(config('app.url'))
             ->withPath('/api/workflows/trigger')
             ->withQuery([
                 'w' => $this->workflowAction->workflow->id,
                 'd' => $this->workflowAction->workflow->deployment_id,
-            ]);
+            ])
+            ->value());
     }
 }

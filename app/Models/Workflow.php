@@ -66,6 +66,7 @@ class Workflow extends Model
         'status',
         'saved_at',
         'deployed_at',
+        'deployment_id',
     ];
 
     protected function casts(): array
