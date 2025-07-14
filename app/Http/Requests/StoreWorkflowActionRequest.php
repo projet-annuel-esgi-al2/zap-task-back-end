@@ -27,6 +27,7 @@ class StoreWorkflowActionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'service_action_id' => 'sometimes|filled',
             'execution_order' => 'required|gte:0',
             'parameters' => 'array',
         ];
