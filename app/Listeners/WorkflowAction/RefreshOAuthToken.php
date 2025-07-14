@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Listeners\WorkflowAction;
 
-use App\Events\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowActionTriggered;
 
 class RefreshOAuthToken
 {

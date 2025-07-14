@@ -19,8 +19,13 @@ class ProcessTriggerWebhook extends ProcessWebhookJob
         $workflowId = Uri::of($this->webhookCall->url)
             ->query()
             ->get('w');
+        $deploymentId = Uri::of($this->webhookCall->url)
+            ->query()
+            ->get('d');
 
-        $workflow = Workflow::findOrFail($workflowId);
+        $workflow = Workflow::where('id', $workflowId)
+            ->where('deployment_id', $deploymentId)
+            ->firstOrFail();
 
         ExecuteWorkflow::dispatch($workflow);
     }

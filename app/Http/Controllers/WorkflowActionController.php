@@ -7,7 +7,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;

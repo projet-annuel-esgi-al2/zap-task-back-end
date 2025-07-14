@@ -49,6 +49,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @method static \Database\Factories\WorkflowFactory factory($count = null, $state = [])
  *
+ * @property string|null $deployment_id
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workflow whereDeploymentId($value)
+ *
  * @mixin \Eloquent
  */
 class Workflow extends Model
@@ -62,6 +66,7 @@ class Workflow extends Model
         'status',
         'saved_at',
         'deployed_at',
+        'deployment_id',
     ];
 
     protected function casts(): array
@@ -95,5 +100,32 @@ class Workflow extends Model
     {
         return $this->hasMany(WorkflowAction::class)
             ->whereHas('serviceAction', fn ($q) => $q->where('type', Type::Action));
+    }
+
+    public function refreshDeploymentId(): self
+    {
+        $this->update([
+            'deployment_id' => \Str::uuid()->toString(),
+        ]);
+
+        return $this;
+    }
+
+    public function setAsDeployed(): self
+    {
+        $this->update([
+            'deployed_at' => now(),
+        ]);
+
+        return $this;
+    }
+
+    public function setAsSaved(): self
+    {
+        $this->update([
+            'saved_at' => now(),
+        ]);
+
+        return $this;
     }
 }
