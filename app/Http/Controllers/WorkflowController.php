@@ -103,6 +103,7 @@ class WorkflowController extends Controller
             'actions.workflow',
         ]);
 
+        /** @var Workflow $workflow */
         $workflow->setAsSaved();
 
         return response()->json(WorkflowResource::make($workflow));

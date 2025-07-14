@@ -31,7 +31,7 @@ class WorkflowControllerTest extends TestCase
             'id' => $createdWorkflow->id,
             'name' => $createdWorkflow->name,
             'status' => $createdWorkflow->status->value,
-            'saved_at' => $createdWorkflow->saved_at,
+            'saved_at' => $createdWorkflow->saved_at->toIsoString(),
             'deployed_at' => $createdWorkflow->deployed_at,
         ]);
     }
