@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 use App\Enums\Service\Identifier;
 use App\Http\Resources\Api\ServiceResource;
 use App\Models\Service;
+use App\Services\ParameterResolver\ServiceAction\ParameterResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,19 @@ class ServiceController extends Controller
      * */
     public function get(Request $request, Identifier $serviceIdentifier): JsonResponse
     {
-        return Service::with('actions')
+        $service = Service::with('actions')
             ->where('identifier', $serviceIdentifier)
-            ->first()
+            ->first();
+        $user = auth()->user();
+        /** @var \App\Models\ServiceSubscription $serviceSubscription */
+        $serviceSubscription = $user->serviceSubscriptions()
+            ->where('service_id', $service->id)
+            ->first();
+        $oauthToken = $serviceSubscription->oauthToken;
+        $service->actions = $service->actions
+            ->map(fn ($serviceAction) => ParameterResolver::make($serviceAction, oauthToken: $oauthToken)->resolve());
+
+        return $service
             ->toResource(ServiceResource::class)
             ->toResponse($request);
     }

@@ -9,7 +9,8 @@ namespace App\Models;
 
 use App\Enums\WorkflowAction\Status;
 use App\Models\Traits\HasUUID;
-use App\Services\WorkflowAction\ParameterResolver;
+use App\Services\ParameterResolver\ServiceAction\ParameterResolver as ServiceActionParameterResolver;
+use App\Services\ParameterResolver\WorkflowAction\ParameterResolver as WorkflowActionParameterResolver;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -132,9 +133,21 @@ class WorkflowAction extends Model
     public function getParametersForApi(): array
     {
         $workflowActionParameters = collect($this->parameters);
+        $user = $this->workflow->user;
+        /** @var \App\Models\ServiceSubscription $serviceSubscription */
+        $serviceSubscription = $user->serviceSubscriptions()
+            ->where('service_id', $this->serviceAction->service->id)
+            ->first();
+        $oauthToken = $serviceSubscription->oauthToken;
+        $resolvedServiceAction = ServiceActionParameterResolver::make($this->serviceAction, oauthToken: $oauthToken)
+            ->resolve();
 
-        return collect($this->serviceAction->parameters_for_api)
+        return collect($resolvedServiceAction->parameters_for_api)
             ->map(function ($param) use ($workflowActionParameters) {
+                if (isset($param['options'])) {
+                    $workflowActionParameters['options'] = $param['options'];
+                }
+
                 $param['parameter_value'] = $workflowActionParameters[$param['parameter_key']];
 
                 return $param;
@@ -164,7 +177,7 @@ class WorkflowAction extends Model
                     ]
                 );
 
-                $actionModelWithResolvedParameters = ParameterResolver::make($actionModel, $actionData['parameters'])
+                $actionModelWithResolvedParameters = WorkflowActionParameterResolver::make($actionModel, $actionData['parameters'])
                     ->resolve();
 
                 $actionModelWithResolvedParameters->save();

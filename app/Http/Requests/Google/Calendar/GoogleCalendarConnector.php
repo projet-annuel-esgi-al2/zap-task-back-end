@@ -7,15 +7,14 @@
 
 namespace App\Http\Requests\Google\Calendar;
 
-use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Connector;
-use Saloon\Traits\OAuth2\AuthorizationCodeGrant;
 use Saloon\Traits\Plugins\AcceptsJson;
 
 class GoogleCalendarConnector extends Connector
 {
     use AcceptsJson;
-    use AuthorizationCodeGrant;
+
+    public function __construct(protected string $oauthToken) {}
 
     public function resolveBaseUrl(): string
     {
@@ -26,18 +25,7 @@ class GoogleCalendarConnector extends Connector
     {
         return [
             'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$this->oauthToken,
         ];
-    }
-
-    protected function defaultOauthConfig(): OAuthConfig
-    {
-        return OAuthConfig::make()
-            ->setClientId(config('services.google.client_id'))
-            ->setClientSecret(config('services.google.client_secret'))
-            ->setRedirectUri(config('services.google.redirect_uri'))
-            ->setDefaultScopes(config('services.google.calendar.default_scopes'))
-            ->setAuthorizeEndpoint(config('services.google.calendar.auth_url'))
-            ->setTokenEndpoint(config('services.google.calendar.token_url'))
-            ->setUserEndpoint(config('services.google.calendar.user_info_url'));
     }
 }

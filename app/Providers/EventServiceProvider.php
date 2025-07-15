@@ -9,12 +9,12 @@ namespace App\Providers;
 
 use App\Actions\WorkflowAction\CreateWorkflowActionHistory;
 use App\Actions\WorkflowAction\ExecuteWorkflowAction;
+use App\Actions\WorkflowAction\RefreshOAuthToken;
 use App\Events\Workflow\WorkflowDeploymentTriggered;
 use App\Events\WorkflowAction\WorkflowActionExecuted;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Listeners\Workflow\DeployWorkflow;
 use App\Listeners\Workflow\RefreshDeploymentId;
-use App\Listeners\WorkflowAction\RefreshOAuthToken;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
