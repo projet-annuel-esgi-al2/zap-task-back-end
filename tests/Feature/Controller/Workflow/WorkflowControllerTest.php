@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Controller\Workflow;
 
+use App\Models\OAuthToken;
 use App\Models\ServiceAction;
+use App\Models\ServiceSubscription;
 use App\Models\Workflow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -77,6 +79,12 @@ class WorkflowControllerTest extends TestCase
                 'execution_order' => 0,
             ],
         ];
+        ServiceSubscription::factory()->createOne([
+            'service_id' => $serviceAction->service->id,
+            'oauth_token_id' => OAuthToken::factory()->createOne([
+                'user_id' => $this->user->id,
+            ]),
+        ]);
 
         $updateWorkflowResponse = $this->put(
             '/api/workflows/'.$response->json('id'),
