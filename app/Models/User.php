@@ -112,13 +112,17 @@ class User extends Authenticatable
         return $this->hasManyThrough(ServiceSubscription::class, OAuthToken::class, 'user_id', 'oauth_token_id');
     }
 
-    public function subscribedToService(Service $service, $includeExpiredTokens = false): bool
+    public function subscribedToService(Service $service, bool $excludeExpiredTokens = true): bool
     {
         $query = $this->serviceSubscriptions()
             ->whereHas('service', fn ($q) => $q->where('id', $service->id));
 
-        if ($includeExpiredTokens === false) {
-            $query->whereDoesntHave('oauthToken', fn ($q) => $q->where('expires_at', '<', now()->toDateTimeString()));
+        if ($excludeExpiredTokens) {
+            $query->whereDoesntHave(
+                'oauthToken',
+                fn ($q) => $q->where('expires_at', '<', now()->toDateTimeString())
+                    ->where(fn ($query) => $query->whereNull('refresh_token')->orWhere('refresh_token', ''))
+            );
         }
 
         return $query->exists();
