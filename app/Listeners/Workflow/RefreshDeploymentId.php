@@ -3,7 +3,7 @@
 namespace App\Listeners\Workflow;
 
 use App\Events\Workflow\WorkflowDeploymentTriggered;
-use App\Services\WorkflowAction\ParameterResolver;
+use App\Services\ParameterResolver\WorkflowAction\ParameterResolver;
 
 class RefreshDeploymentId
 {
