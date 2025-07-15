@@ -160,8 +160,6 @@ class WorkflowAction extends Model
      * */
     public static function createOrUpdateFromApiRequest(array $requestActionsData): Collection
     {
-        $serviceActions = ServiceAction::all();
-
         return collect($requestActionsData)
             ->map(function ($actionData) {
                 $id = empty($actionData['id']) ? [] : ['id' => $actionData['id']];
