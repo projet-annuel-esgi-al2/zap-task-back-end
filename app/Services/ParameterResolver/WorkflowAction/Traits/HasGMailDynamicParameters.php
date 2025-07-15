@@ -5,7 +5,7 @@
  * Version: 1.0
  */
 
-namespace App\Services\WorkflowAction\Traits;
+namespace App\Services\ParameterResolver\WorkflowAction\Traits;
 
 use Illuminate\Support\Str;
 

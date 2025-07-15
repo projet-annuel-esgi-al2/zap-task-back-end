@@ -22,6 +22,7 @@ trait HasHttpParameters
                     'parameter_name',
                     'parameter_key',
                     'parameter_type',
+                    'options',
                 ]);
             })
             ->toArray();
