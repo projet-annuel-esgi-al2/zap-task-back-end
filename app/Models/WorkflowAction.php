@@ -203,4 +203,22 @@ class WorkflowAction extends Model
 
         return $model;
     }
+
+    public function setAsTested(): self
+    {
+        $this->update([
+            'status' => Status::Tested,
+        ]);
+
+        return $this;
+    }
+
+    public function setAsError(): self
+    {
+        $this->update([
+            'status' => Status::Error,
+        ]);
+
+        return $this;
+    }
 }

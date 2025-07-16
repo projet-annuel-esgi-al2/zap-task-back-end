@@ -7,6 +7,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Workflow\SetWorkflowAsTestedIfPossible;
 use App\Enums\Workflow\Status;
 use App\Events\Workflow\WorkflowDeploymentTriggered;
 use App\Http\Requests\StoreWorkflowRequest;
@@ -105,6 +106,8 @@ class WorkflowController extends Controller
 
         /** @var Workflow $workflow */
         $workflow->setAsSaved();
+
+        SetWorkflowAsTestedIfPossible::run($workflow);
 
         return response()->json(WorkflowResource::make($workflow));
     }
