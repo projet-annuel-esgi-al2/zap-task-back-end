@@ -33,7 +33,6 @@ trait HasGoogleCalendarDynamicParameters
             ->filter(fn ($calendar) => Arr::get($calendar, 'accessRole') === 'owner')
             ->pluck('id')
             ->toArray();
-        $calendarIds = ['marcmalha@gmail.com', 'badis.tighlit@gmail.com'];
 
         return new HtmlString(json_encode($calendarIds));
     }
