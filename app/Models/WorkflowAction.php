@@ -134,7 +134,7 @@ class WorkflowAction extends Model
     {
         $workflowActionParameters = collect($this->parameters);
         $user = $this->workflow->user;
-        /** @var \App\Models\ServiceSubscription $serviceSubscription */
+        /** @var ?\App\Models\ServiceSubscription $serviceSubscription */
         $serviceSubscription = $user->serviceSubscriptions()
             ->where('service_id', $this->serviceAction->service->id)
             ->first();
