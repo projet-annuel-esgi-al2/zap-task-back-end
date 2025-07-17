@@ -87,7 +87,7 @@ class WorkflowController extends Controller
         if (is_null($workflow)) {
             $workflow = $user->workflows()->create([
                 'name' => $request->input('name'),
-                'status' => Status::Draft,
+                'status' => Status::Saved,
             ]);
         }
 
@@ -157,6 +157,8 @@ class WorkflowController extends Controller
      * */
     public function destroy(Workflow $workflow): JsonResponse
     {
+        $workflow->actions->each(fn (WorkflowAction $action) => $action->history()->delete());
+        $workflow->actions->each->delete();
         $workflow->delete();
 
         return response()->json(null);
