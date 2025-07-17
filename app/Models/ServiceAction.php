@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Saloon\Enums\Method;
 
 /**
  * @property string $id
@@ -76,6 +77,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereBodyTemplate($value)
  *
+ * @property Method $http_method
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ServiceAction whereHttpMethod($value)
+ *
  * @mixin \Eloquent
  */
 class ServiceAction extends Model
@@ -96,6 +101,7 @@ class ServiceAction extends Model
         'query_parameters',
         'headers',
         'body_template',
+        'http_method',
         'trigger_notification_type',
     ];
 
@@ -108,6 +114,7 @@ class ServiceAction extends Model
             'url_parameters' => 'array',
             'query_parameters' => 'array',
             'headers' => 'array',
+            'http_method' => Method::class,
             'trigger_notification_type' => TriggerNotificationType::class,
         ];
     }

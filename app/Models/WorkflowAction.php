@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
+use Saloon\Enums\Method;
 
 /**
  * @property Status $status
@@ -66,6 +67,10 @@ use Illuminate\Support\Collection;
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereResolvedBody($value)
  *
+ * @property Method $http_method
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereHttpMethod($value)
+ *
  * @mixin \Eloquent
  */
 class WorkflowAction extends Model
@@ -85,6 +90,7 @@ class WorkflowAction extends Model
         'query_parameters',
         'headers',
         'resolved_body',
+        'http_method',
         'last_executed_at',
     ];
 
@@ -97,6 +103,7 @@ class WorkflowAction extends Model
             'query_parameters' => 'array',
             'headers' => 'array',
             'resolved_body' => 'array',
+            'http_method' => Method::class,
             'last_executed_at' => 'datetime',
         ];
     }
@@ -166,6 +173,8 @@ class WorkflowAction extends Model
     {
         return collect($requestActionsData)
             ->map(function ($actionData) {
+                $serviceAction = ServiceAction::find($actionData['service_action_id']);
+
                 $id = empty($actionData['id']) ? [] : ['id' => $actionData['id']];
                 $actionModel = self::createOrUpdate(
                     uniqueBy: $id,
@@ -175,6 +184,7 @@ class WorkflowAction extends Model
                     ],
                     onCreateOnly: [
                         'workflow_id' => $actionData['workflow_id'],
+                        'http_method' => $serviceAction->http_method,
                         'status' => Status::Draft,
                     ]
                 );

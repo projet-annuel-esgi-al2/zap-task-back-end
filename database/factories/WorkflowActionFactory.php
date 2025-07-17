@@ -11,6 +11,7 @@ use App\Enums\WorkflowAction\Status;
 use App\Models\ServiceAction;
 use App\Models\Workflow;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Saloon\Enums\Method;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WorkflowAction>
@@ -28,6 +29,7 @@ class WorkflowActionFactory extends Factory
             'body_parameters' => [],
             'url_parameters' => [],
             'query_parameters' => [],
+            'http_method' => Method::POST,
             'last_executed_at' => $this->faker->dateTime(),
         ];
     }

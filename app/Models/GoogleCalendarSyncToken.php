@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GoogleCalendarSyncToken whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GoogleCalendarSyncToken whereUserId($value)
  *
+ * @property-read \App\Models\User|null $user
+ *
  * @mixin \Eloquent
  */
 class GoogleCalendarSyncToken extends Model
