@@ -27,7 +27,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":"c2cdda66-81e5-3060-a4eb-049b4a810d76","name":"Bert Reynolds","status":"saved","saved_at":"1978-05-14T07:58:03.000000Z","deployed_at":"2009-12-25T12:23:22.000000Z"},{"id":"936fdd5d-2b5e-37e2-9409-234f3d6f1036","name":"Alize Ward","status":"tested","saved_at":"1987-11-10T12:46:40.000000Z","deployed_at":"1974-09-09T19:15:48.000000Z"}]}'
+        content: '{"data":[{"id":"c2cdda66-81e5-3060-a4eb-049b4a810d76","name":"Bert Reynolds","status":"deployed","saved_at":"1978-05-14T22:37:19.000000Z","deployed_at":"2009-12-28T10:25:58.000000Z"},{"id":"936fdd5d-2b5e-37e2-9409-234f3d6f1036","name":"Alize Ward","status":"deployed","saved_at":"1987-11-11T20:03:43.000000Z","deployed_at":"1974-09-10T03:28:43.000000Z"}]}'
         headers: []
         description: ''
         custom: []
@@ -64,14 +64,14 @@ endpoints:
         name: workflow_id
         description: 'The ID of the workflow.'
         required: true
-        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+        example: a3425558-3c10-4bb0-9dcf-616897de749a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow_id: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+      workflow_id: a3425558-3c10-4bb0-9dcf-616897de749a
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -80,7 +80,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":{"id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","name":"Stevie Renner","status":"saved","actions":[{"id":"856c7271-b5eb-4584-9bb5-05ffdcc2a38d","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-mail","name":"Google Mail"},"service_action_id":"27b44008-6b68-440b-abfe-bad5ae0b257e","identifier":"google-calendar-create-event","name":"Nicholaus Gutkowski II","type":"action","status":"draft","execution_order":1,"url":"https:\/\/wiegand.com\/nesciunt-consequatur-eligendi-blanditiis-consequatur-vitae-et.html","parameters":[],"last_executed_at":"2018-10-25T22:34:22.000000Z"},{"id":"e26f5493-3ac5-41ae-9830-7ac69e012461","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-mail","name":"Google Mail"},"service_action_id":"35da537c-eb0e-4848-a396-b8e63db273e1","identifier":"google-calendar-event-updated","name":"Wayne Quigley","type":"action","status":"tested","execution_order":2,"url":"http:\/\/www.dare.com\/","parameters":[],"last_executed_at":"1993-11-02T16:31:47.000000Z"},{"id":"e62ea1b9-70bf-44c0-b6a9-de63d558f5dd","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-mail","name":"Google Mail"},"service_action_id":"ba795a15-0da5-46f9-aa46-21d3197aa372","identifier":"google-calendar-create-event","name":"Trinity Mayert","type":"action","status":"error","execution_order":5,"url":"http:\/\/prosacco.org\/quam-suscipit-ut-laboriosam-sunt","parameters":[],"last_executed_at":"2021-04-06T09:01:24.000000Z"},{"id":"795bb94a-652d-4b9f-89cc-1348cc69e672","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-mail","name":"Google Mail"},"service_action_id":"b75f450b-e4d0-496e-b804-e0f1ae5d93a9","identifier":"google-mail-send","name":"Liliane Stark","type":"action","status":"error","execution_order":9,"url":"https:\/\/www.muller.com\/nesciunt-voluptatem-itaque-magnam-quis-dolorem-non-harum","parameters":[],"last_executed_at":"1976-03-18T05:40:25.000000Z"}],"saved_at":"2002-02-20T06:09:14.000000Z","deployed_at":"2024-05-30T20:12:37.000000Z"}}'
+        content: '{"data":{"id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","name":"Stevie Renner","status":"saved","actions":[{"id":"81dff168-cc0a-4503-b7ea-1e719f09c583","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-mail","name":"Google Mail"},"service_action_id":"3d7e2202-d599-4ba3-b613-8acf7ff832e2","identifier":"google-mail-send","name":"Nicholaus Gutkowski II","type":"trigger","status":"draft","execution_order":1,"url":"https:\/\/wiegand.com\/nesciunt-consequatur-eligendi-blanditiis-consequatur-vitae-et.html","parameters":[],"last_executed_at":"2018-10-29T12:05:28.000000Z"},{"id":"041f1513-795c-4ee4-b5d0-30fd46702d82","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-mail","name":"Google Mail"},"service_action_id":"9c157987-69fc-4331-934c-702ef50c539d","identifier":"google-mail-send","name":"Wayne Quigley","type":"trigger","status":"draft","execution_order":2,"url":"http:\/\/www.dare.com\/","parameters":[],"last_executed_at":"1993-11-04T10:17:23.000000Z"},{"id":"fd9e6b96-3ae4-487a-8380-64c25a6b2d58","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-mail","name":"Google Mail"},"service_action_id":"60feef7e-0f0c-4f90-a0f9-13e02f2d1827","identifier":"google-calendar-create-event","name":"Trinity Mayert","type":"action","status":"tested","execution_order":5,"url":"http:\/\/prosacco.org\/quam-suscipit-ut-laboriosam-sunt","parameters":[],"last_executed_at":"2021-04-10T02:49:36.000000Z"},{"id":"714d09b7-04fa-46e9-8491-ccc8ad9028d5","workflow_id":"56e603b7-7f00-3c8d-b91d-e837dfb819ef","service":{"identifier":"google-calendar","name":"Google Calendar"},"service_action_id":"9309208d-bfb0-48da-846a-6b18f7349886","identifier":"google-mail-send","name":"Liliane Stark","type":"trigger","status":"draft","execution_order":9,"url":"https:\/\/www.muller.com\/nesciunt-voluptatem-itaque-magnam-quis-dolorem-non-harum","parameters":[],"last_executed_at":"1976-03-18T16:33:10.000000Z"}],"saved_at":"2002-02-22T14:27:16.000000Z","deployed_at":"2024-06-03T19:31:54.000000Z"}}'
         headers: []
         description: ''
         custom: []
@@ -117,14 +117,14 @@ endpoints:
         name: workflow_id
         description: 'The ID of the workflow.'
         required: true
-        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+        example: a3425558-3c10-4bb0-9dcf-616897de749a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow_id: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+      workflow_id: a3425558-3c10-4bb0-9dcf-616897de749a
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -133,10 +133,57 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":"fa010f60-df29-3f05-8bc7-bed48f550d13","execution_status":"error","response_http_code":"404","execution_order":5,"exception":"Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.","url":"http:\/\/kemmer.com\/et-a-qui-ducimus.html","parameters":[],"executed_at":"2009-02-09T08:23:18.000000Z"},{"id":"78a1a612-d608-314f-a2e1-57df62570232","execution_status":"error","response_http_code":"404","execution_order":8,"exception":"Non velit ab accusantium deleniti et quas numquam. Ut sit numquam inventore dolor suscipit molestiae. Aut impedit a quibusdam sint. Nesciunt delectus inventore ratione voluptas doloremque illo.","url":"http:\/\/prosacco.org\/quam-suscipit-ut-laboriosam-sunt","parameters":[],"executed_at":"2021-04-06T09:01:24.000000Z"}]}'
+        content: '{"data":[{"id":"fa010f60-df29-3f05-8bc7-bed48f550d13","execution_status":"success","response_http_code":"200","execution_order":5,"exception":"Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.","url":"http:\/\/kemmer.com\/et-a-qui-ducimus.html","parameters":[],"executed_at":"2009-02-12T04:54:03.000000Z"},{"id":"78a1a612-d608-314f-a2e1-57df62570232","execution_status":"success","response_http_code":"302","execution_order":8,"exception":"Non velit ab accusantium deleniti et quas numquam. Ut sit numquam inventore dolor suscipit molestiae. Aut impedit a quibusdam sint. Nesciunt delectus inventore ratione voluptas doloremque illo.","url":"http:\/\/prosacco.org\/quam-suscipit-ut-laboriosam-sunt","parameters":[],"executed_at":"2021-04-10T02:49:36.000000Z"}]}'
         headers: []
         description: ''
         custom: []
+      -
+        status: 200
+        content: '{}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/workflows/undeploy/{workflow_id}'
+    metadata:
+      groupName: Workflows
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Undeploy A Workflow'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      workflow_id:
+        name: workflow_id
+        description: 'The ID of the workflow.'
+        required: true
+        example: a3425558-3c10-4bb0-9dcf-616897de749a
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      workflow_id: a3425558-3c10-4bb0-9dcf-616897de749a
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
       -
         status: 200
         content: '{}'
@@ -170,14 +217,14 @@ endpoints:
         name: workflow_id
         description: 'The ID of the workflow.'
         required: true
-        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+        example: a3425558-3c10-4bb0-9dcf-616897de749a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow_id: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+      workflow_id: a3425558-3c10-4bb0-9dcf-616897de749a
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

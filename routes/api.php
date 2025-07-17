@@ -46,6 +46,7 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
             ExecuteWorkflow::dispatch($workflow);
         });
         Route::post('/deploy/{workflow}', [WorkflowController::class, 'deploy']);
+        Route::post('/undeploy/{workflow}', [WorkflowController::class, 'undeploy']);
         Route::delete('/{workflow}', [WorkflowController::class, 'destroy']);
     });
 

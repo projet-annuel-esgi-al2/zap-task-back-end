@@ -22,14 +22,14 @@ endpoints:
         name: workflow
         description: ''
         required: false
-        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+        example: a3425558-3c10-4bb0-9dcf-616897de749a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+      workflow: a3425558-3c10-4bb0-9dcf-616897de749a
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -50,6 +50,16 @@ endpoints:
         example:
           - []
         type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'actions[].service_action_id':
+        name: 'actions[].service_action_id'
+        description: ''
+        required: false
+        example: null
+        type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
@@ -108,14 +118,14 @@ endpoints:
         name: workflow_id
         description: 'The ID of the workflow.'
         required: true
-        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+        example: a3425558-3c10-4bb0-9dcf-616897de749a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow_id: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+      workflow_id: a3425558-3c10-4bb0-9dcf-616897de749a
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -149,14 +159,14 @@ endpoints:
         name: workflow_id
         description: 'The ID of the workflow.'
         required: true
-        example: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+        example: a3425558-3c10-4bb0-9dcf-616897de749a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      workflow_id: 3bd1045f-6de6-41a1-bcba-d7a5aa9297bf
+      workflow_id: a3425558-3c10-4bb0-9dcf-616897de749a
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

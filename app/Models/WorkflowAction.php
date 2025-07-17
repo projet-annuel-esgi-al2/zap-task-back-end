@@ -138,9 +138,13 @@ class WorkflowAction extends Model
         $serviceSubscription = $user->serviceSubscriptions()
             ->where('service_id', $this->serviceAction->service->id)
             ->first();
-        $oauthToken = $serviceSubscription->oauthToken;
-        $resolvedServiceAction = ServiceActionParameterResolver::make($this->serviceAction, oauthToken: $oauthToken)
-            ->resolve();
+        $oauthToken = $serviceSubscription?->oauthToken;
+
+        $resolvedServiceAction = $this->serviceAction;
+        if (! is_null($oauthToken)) {
+            $resolvedServiceAction = ServiceActionParameterResolver::make($resolvedServiceAction, oauthToken: $oauthToken)
+                ->resolve();
+        }
 
         return collect($resolvedServiceAction->parameters_for_api)
             ->map(function ($param) use ($workflowActionParameters) {

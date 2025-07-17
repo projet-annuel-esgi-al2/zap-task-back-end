@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "https://7b9a3779a263.ngrok-free.app";
+        var tryItOutBaseUrl = "https://c00678bc704c.ngrok-free.app";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -145,6 +145,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="workflows-POSTapi-workflows-deploy--workflow_id-">
                                 <a href="#workflows-POSTapi-workflows-deploy--workflow_id-">Deploy A Workflow</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="workflows-POSTapi-workflows-undeploy--workflow_id-">
+                                <a href="#workflows-POSTapi-workflows-undeploy--workflow_id-">Undeploy A Workflow</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="workflows-DELETEapi-workflows--workflow_id-">
                                 <a href="#workflows-DELETEapi-workflows--workflow_id-">Delete A Workflow</a>
                             </li>
@@ -159,7 +162,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 13, 2025</li>
+        <li>Last updated: July 17, 2025</li>
     </ul>
 </div>
 
@@ -168,7 +171,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>https://7b9a3779a263.ngrok-free.app</code>
+    <strong>Base URL</strong>: <code>https://c00678bc704c.ngrok-free.app</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -194,7 +197,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://7b9a3779a263.ngrok-free.app/api/register" \
+    "https://c00678bc704c.ngrok-free.app/api/register" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -208,7 +211,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/register"
+    "https://c00678bc704c.ngrok-free.app/api/register"
 );
 
 const headers = {
@@ -362,7 +365,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://7b9a3779a263.ngrok-free.app/api/me" \
+    "https://c00678bc704c.ngrok-free.app/api/me" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -374,7 +377,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/me"
+    "https://c00678bc704c.ngrok-free.app/api/me"
 );
 
 const headers = {
@@ -508,7 +511,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
+    "https://c00678bc704c.ngrok-free.app/api/workflows/a3425558-3c10-4bb0-9dcf-616897de749a" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -524,7 +527,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+    "https://c00678bc704c.ngrok-free.app/api/workflows/a3425558-3c10-4bb0-9dcf-616897de749a"
 );
 
 const headers = {
@@ -627,10 +630,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="workflow"                data-endpoint="PUTapi-workflows--workflow--"
-               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+               value="a3425558-3c10-4bb0-9dcf-616897de749a"
                data-component="url">
     <br>
-<p>Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
+<p>Example: <code>a3425558-3c10-4bb0-9dcf-616897de749a</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -654,6 +657,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
             </summary>
                                                 <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>service_action_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="actions.0.service_action_id"                data-endpoint="PUTapi-workflows--workflow--"
+               value=""
+               data-component="body">
+    <br>
+
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>execution_order</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -692,14 +706,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/execute/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
+    "https://c00678bc704c.ngrok-free.app/api/workflows/execute/a3425558-3c10-4bb0-9dcf-616897de749a" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/execute/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+    "https://c00678bc704c.ngrok-free.app/api/workflows/execute/a3425558-3c10-4bb0-9dcf-616897de749a"
 );
 
 const headers = {
@@ -792,10 +806,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="POSTapi-workflows-execute--workflow_id-"
-               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+               value="a3425558-3c10-4bb0-9dcf-616897de749a"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
+<p>The ID of the workflow. Example: <code>a3425558-3c10-4bb0-9dcf-616897de749a</code></p>
             </div>
                     </form>
 
@@ -812,14 +826,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/logs/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
+    --get "https://c00678bc704c.ngrok-free.app/api/logs/a3425558-3c10-4bb0-9dcf-616897de749a" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/logs/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+    "https://c00678bc704c.ngrok-free.app/api/logs/a3425558-3c10-4bb0-9dcf-616897de749a"
 );
 
 const headers = {
@@ -926,10 +940,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="GETapi-logs--workflow_id-"
-               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+               value="a3425558-3c10-4bb0-9dcf-616897de749a"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
+<p>The ID of the workflow. Example: <code>a3425558-3c10-4bb0-9dcf-616897de749a</code></p>
             </div>
                     </form>
 
@@ -946,14 +960,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/trigger" \
+    "https://c00678bc704c.ngrok-free.app/api/workflows/trigger" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/trigger"
+    "https://c00678bc704c.ngrok-free.app/api/workflows/trigger"
 );
 
 const headers = {
@@ -1059,14 +1073,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar" \
+    --get "https://c00678bc704c.ngrok-free.app/api/subscriptions/google-calendar" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar"
+    "https://c00678bc704c.ngrok-free.app/api/subscriptions/google-calendar"
 );
 
 const headers = {
@@ -1205,14 +1219,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar" \
+    "https://c00678bc704c.ngrok-free.app/api/subscriptions/google-calendar" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/subscriptions/google-calendar"
+    "https://c00678bc704c.ngrok-free.app/api/subscriptions/google-calendar"
 );
 
 const headers = {
@@ -1351,14 +1365,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/google-calendar/redirect" \
+    --get "https://c00678bc704c.ngrok-free.app/api/google-calendar/redirect" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/google-calendar/redirect"
+    "https://c00678bc704c.ngrok-free.app/api/google-calendar/redirect"
 );
 
 const headers = {
@@ -1497,14 +1511,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/subscriptions" \
+    --get "https://c00678bc704c.ngrok-free.app/api/subscriptions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/subscriptions"
+    "https://c00678bc704c.ngrok-free.app/api/subscriptions"
 );
 
 const headers = {
@@ -1630,14 +1644,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/google-calendar/actions" \
+    --get "https://c00678bc704c.ngrok-free.app/api/google-calendar/actions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/google-calendar/actions"
+    "https://c00678bc704c.ngrok-free.app/api/google-calendar/actions"
 );
 
 const headers = {
@@ -1764,14 +1778,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/services" \
+    --get "https://c00678bc704c.ngrok-free.app/api/services" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/services"
+    "https://c00678bc704c.ngrok-free.app/api/services"
 );
 
 const headers = {
@@ -1887,14 +1901,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://7b9a3779a263.ngrok-free.app/api/actions/execute/consequatur" \
+    "https://c00678bc704c.ngrok-free.app/api/actions/execute/12a2e695-d399-418d-a6fe-171c40944b61" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/actions/execute/consequatur"
+    "https://c00678bc704c.ngrok-free.app/api/actions/execute/12a2e695-d399-418d-a6fe-171c40944b61"
 );
 
 const headers = {
@@ -1917,18 +1931,18 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: &quot;fa010f60-df29-3f05-8bc7-bed48f550d13&quot;,
-        &quot;action_id&quot;: &quot;87138e75-5dae-45ea-8238-c31a6a14ae73&quot;,
-        &quot;action_name&quot;: &quot;Kennedi VonRueden IV&quot;,
-        &quot;service_name&quot;: &quot;Google Calendar&quot;,
-        &quot;type&quot;: &quot;action&quot;,
+        &quot;id&quot;: &quot;7020f96b-15ea-3720-8847-36cca4a47fe6&quot;,
+        &quot;action_id&quot;: &quot;4e5aa2b4-a5e0-4ace-9545-c661d6792cc7&quot;,
+        &quot;action_name&quot;: &quot;Mrs. Georgianna VonRueden&quot;,
+        &quot;service_name&quot;: &quot;Google Mail&quot;,
+        &quot;type&quot;: &quot;trigger&quot;,
         &quot;execution_status&quot;: &quot;error&quot;,
         &quot;response_http_code&quot;: &quot;404&quot;,
-        &quot;execution_order&quot;: 5,
-        &quot;exception&quot;: &quot;Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.&quot;,
-        &quot;url&quot;: &quot;http://kemmer.com/et-a-qui-ducimus.html&quot;,
+        &quot;execution_order&quot;: 2,
+        &quot;exception&quot;: &quot;Eius et rem numquam modi cumque. Fuga quas quos et neque voluptate. Nihil natus quasi aut unde. Sit qui aliquid voluptatum ab nisi dolor.&quot;,
+        &quot;url&quot;: &quot;http://www.bauch.com/quidem-veniam-molestiae-libero-ipsum-vitae-aut.html&quot;,
         &quot;parameters&quot;: [],
-        &quot;executed_at&quot;: &quot;2009-02-09T08:23:18.000000Z&quot;
+        &quot;executed_at&quot;: &quot;1983-02-01T18:21:38.000000Z&quot;
     }
 }</code>
  </pre>
@@ -2016,10 +2030,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="action_id"                data-endpoint="POSTapi-actions-execute--action_id-"
-               value="consequatur"
+               value="12a2e695-d399-418d-a6fe-171c40944b61"
                data-component="url">
     <br>
-<p>The ID of the action. Example: <code>consequatur</code></p>
+<p>The ID of the action. Example: <code>12a2e695-d399-418d-a6fe-171c40944b61</code></p>
             </div>
                     </form>
 
@@ -2037,14 +2051,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://7b9a3779a263.ngrok-free.app/api/actions/consequatur" \
+    "https://c00678bc704c.ngrok-free.app/api/actions/12a2e695-d399-418d-a6fe-171c40944b61" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/actions/consequatur"
+    "https://c00678bc704c.ngrok-free.app/api/actions/12a2e695-d399-418d-a6fe-171c40944b61"
 );
 
 const headers = {
@@ -2144,10 +2158,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="action_id"                data-endpoint="DELETEapi-actions--action_id-"
-               value="consequatur"
+               value="12a2e695-d399-418d-a6fe-171c40944b61"
                data-component="url">
     <br>
-<p>The ID of the action. Example: <code>consequatur</code></p>
+<p>The ID of the action. Example: <code>12a2e695-d399-418d-a6fe-171c40944b61</code></p>
             </div>
                     </form>
 
@@ -2169,14 +2183,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/workflows" \
+    --get "https://c00678bc704c.ngrok-free.app/api/workflows" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/workflows"
+    "https://c00678bc704c.ngrok-free.app/api/workflows"
 );
 
 const headers = {
@@ -2202,16 +2216,16 @@ fetch(url, {
         {
             &quot;id&quot;: &quot;c2cdda66-81e5-3060-a4eb-049b4a810d76&quot;,
             &quot;name&quot;: &quot;Bert Reynolds&quot;,
-            &quot;status&quot;: &quot;saved&quot;,
-            &quot;saved_at&quot;: &quot;1978-05-14T07:58:03.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;2009-12-25T12:23:22.000000Z&quot;
+            &quot;status&quot;: &quot;deployed&quot;,
+            &quot;saved_at&quot;: &quot;1978-05-14T22:37:19.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;2009-12-28T10:25:58.000000Z&quot;
         },
         {
             &quot;id&quot;: &quot;936fdd5d-2b5e-37e2-9409-234f3d6f1036&quot;,
             &quot;name&quot;: &quot;Alize Ward&quot;,
-            &quot;status&quot;: &quot;tested&quot;,
-            &quot;saved_at&quot;: &quot;1987-11-10T12:46:40.000000Z&quot;,
-            &quot;deployed_at&quot;: &quot;1974-09-09T19:15:48.000000Z&quot;
+            &quot;status&quot;: &quot;deployed&quot;,
+            &quot;saved_at&quot;: &quot;1987-11-11T20:03:43.000000Z&quot;,
+            &quot;deployed_at&quot;: &quot;1974-09-10T03:28:43.000000Z&quot;
         }
     ]
 }</code>
@@ -2309,14 +2323,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
+    --get "https://c00678bc704c.ngrok-free.app/api/workflows/a3425558-3c10-4bb0-9dcf-616897de749a" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+    "https://c00678bc704c.ngrok-free.app/api/workflows/a3425558-3c10-4bb0-9dcf-616897de749a"
 );
 
 const headers = {
@@ -2344,76 +2358,76 @@ fetch(url, {
         &quot;status&quot;: &quot;saved&quot;,
         &quot;actions&quot;: [
             {
-                &quot;id&quot;: &quot;856c7271-b5eb-4584-9bb5-05ffdcc2a38d&quot;,
+                &quot;id&quot;: &quot;81dff168-cc0a-4503-b7ea-1e719f09c583&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-mail&quot;,
                     &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;service_action_id&quot;: &quot;27b44008-6b68-440b-abfe-bad5ae0b257e&quot;,
-                &quot;identifier&quot;: &quot;google-calendar-create-event&quot;,
+                &quot;service_action_id&quot;: &quot;3d7e2202-d599-4ba3-b613-8acf7ff832e2&quot;,
+                &quot;identifier&quot;: &quot;google-mail-send&quot;,
                 &quot;name&quot;: &quot;Nicholaus Gutkowski II&quot;,
-                &quot;type&quot;: &quot;action&quot;,
+                &quot;type&quot;: &quot;trigger&quot;,
                 &quot;status&quot;: &quot;draft&quot;,
                 &quot;execution_order&quot;: 1,
                 &quot;url&quot;: &quot;https://wiegand.com/nesciunt-consequatur-eligendi-blanditiis-consequatur-vitae-et.html&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;2018-10-25T22:34:22.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;2018-10-29T12:05:28.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;e26f5493-3ac5-41ae-9830-7ac69e012461&quot;,
+                &quot;id&quot;: &quot;041f1513-795c-4ee4-b5d0-30fd46702d82&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-mail&quot;,
                     &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;service_action_id&quot;: &quot;35da537c-eb0e-4848-a396-b8e63db273e1&quot;,
-                &quot;identifier&quot;: &quot;google-calendar-event-updated&quot;,
+                &quot;service_action_id&quot;: &quot;9c157987-69fc-4331-934c-702ef50c539d&quot;,
+                &quot;identifier&quot;: &quot;google-mail-send&quot;,
                 &quot;name&quot;: &quot;Wayne Quigley&quot;,
-                &quot;type&quot;: &quot;action&quot;,
-                &quot;status&quot;: &quot;tested&quot;,
+                &quot;type&quot;: &quot;trigger&quot;,
+                &quot;status&quot;: &quot;draft&quot;,
                 &quot;execution_order&quot;: 2,
                 &quot;url&quot;: &quot;http://www.dare.com/&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;1993-11-02T16:31:47.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;1993-11-04T10:17:23.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;e62ea1b9-70bf-44c0-b6a9-de63d558f5dd&quot;,
+                &quot;id&quot;: &quot;fd9e6b96-3ae4-487a-8380-64c25a6b2d58&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
                     &quot;identifier&quot;: &quot;google-mail&quot;,
                     &quot;name&quot;: &quot;Google Mail&quot;
                 },
-                &quot;service_action_id&quot;: &quot;ba795a15-0da5-46f9-aa46-21d3197aa372&quot;,
+                &quot;service_action_id&quot;: &quot;60feef7e-0f0c-4f90-a0f9-13e02f2d1827&quot;,
                 &quot;identifier&quot;: &quot;google-calendar-create-event&quot;,
                 &quot;name&quot;: &quot;Trinity Mayert&quot;,
                 &quot;type&quot;: &quot;action&quot;,
-                &quot;status&quot;: &quot;error&quot;,
+                &quot;status&quot;: &quot;tested&quot;,
                 &quot;execution_order&quot;: 5,
                 &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;2021-04-06T09:01:24.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;2021-04-10T02:49:36.000000Z&quot;
             },
             {
-                &quot;id&quot;: &quot;795bb94a-652d-4b9f-89cc-1348cc69e672&quot;,
+                &quot;id&quot;: &quot;714d09b7-04fa-46e9-8491-ccc8ad9028d5&quot;,
                 &quot;workflow_id&quot;: &quot;56e603b7-7f00-3c8d-b91d-e837dfb819ef&quot;,
                 &quot;service&quot;: {
-                    &quot;identifier&quot;: &quot;google-mail&quot;,
-                    &quot;name&quot;: &quot;Google Mail&quot;
+                    &quot;identifier&quot;: &quot;google-calendar&quot;,
+                    &quot;name&quot;: &quot;Google Calendar&quot;
                 },
-                &quot;service_action_id&quot;: &quot;b75f450b-e4d0-496e-b804-e0f1ae5d93a9&quot;,
+                &quot;service_action_id&quot;: &quot;9309208d-bfb0-48da-846a-6b18f7349886&quot;,
                 &quot;identifier&quot;: &quot;google-mail-send&quot;,
                 &quot;name&quot;: &quot;Liliane Stark&quot;,
-                &quot;type&quot;: &quot;action&quot;,
-                &quot;status&quot;: &quot;error&quot;,
+                &quot;type&quot;: &quot;trigger&quot;,
+                &quot;status&quot;: &quot;draft&quot;,
                 &quot;execution_order&quot;: 9,
                 &quot;url&quot;: &quot;https://www.muller.com/nesciunt-voluptatem-itaque-magnam-quis-dolorem-non-harum&quot;,
                 &quot;parameters&quot;: [],
-                &quot;last_executed_at&quot;: &quot;1976-03-18T05:40:25.000000Z&quot;
+                &quot;last_executed_at&quot;: &quot;1976-03-18T16:33:10.000000Z&quot;
             }
         ],
-        &quot;saved_at&quot;: &quot;2002-02-20T06:09:14.000000Z&quot;,
-        &quot;deployed_at&quot;: &quot;2024-05-30T20:12:37.000000Z&quot;
+        &quot;saved_at&quot;: &quot;2002-02-22T14:27:16.000000Z&quot;,
+        &quot;deployed_at&quot;: &quot;2024-06-03T19:31:54.000000Z&quot;
     }
 }</code>
  </pre>
@@ -2501,10 +2515,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="GETapi-workflows--workflow_id-"
-               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+               value="a3425558-3c10-4bb0-9dcf-616897de749a"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
+<p>The ID of the workflow. Example: <code>a3425558-3c10-4bb0-9dcf-616897de749a</code></p>
             </div>
                     </form>
 
@@ -2522,14 +2536,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/deploy/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
+    "https://c00678bc704c.ngrok-free.app/api/workflows/deploy/a3425558-3c10-4bb0-9dcf-616897de749a" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/deploy/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+    "https://c00678bc704c.ngrok-free.app/api/workflows/deploy/a3425558-3c10-4bb0-9dcf-616897de749a"
 );
 
 const headers = {
@@ -2554,23 +2568,23 @@ fetch(url, {
     &quot;data&quot;: [
         {
             &quot;id&quot;: &quot;fa010f60-df29-3f05-8bc7-bed48f550d13&quot;,
-            &quot;execution_status&quot;: &quot;error&quot;,
-            &quot;response_http_code&quot;: &quot;404&quot;,
+            &quot;execution_status&quot;: &quot;success&quot;,
+            &quot;response_http_code&quot;: &quot;200&quot;,
             &quot;execution_order&quot;: 5,
             &quot;exception&quot;: &quot;Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.&quot;,
             &quot;url&quot;: &quot;http://kemmer.com/et-a-qui-ducimus.html&quot;,
             &quot;parameters&quot;: [],
-            &quot;executed_at&quot;: &quot;2009-02-09T08:23:18.000000Z&quot;
+            &quot;executed_at&quot;: &quot;2009-02-12T04:54:03.000000Z&quot;
         },
         {
             &quot;id&quot;: &quot;78a1a612-d608-314f-a2e1-57df62570232&quot;,
-            &quot;execution_status&quot;: &quot;error&quot;,
-            &quot;response_http_code&quot;: &quot;404&quot;,
+            &quot;execution_status&quot;: &quot;success&quot;,
+            &quot;response_http_code&quot;: &quot;302&quot;,
             &quot;execution_order&quot;: 8,
             &quot;exception&quot;: &quot;Non velit ab accusantium deleniti et quas numquam. Ut sit numquam inventore dolor suscipit molestiae. Aut impedit a quibusdam sint. Nesciunt delectus inventore ratione voluptas doloremque illo.&quot;,
             &quot;url&quot;: &quot;http://prosacco.org/quam-suscipit-ut-laboriosam-sunt&quot;,
             &quot;parameters&quot;: [],
-            &quot;executed_at&quot;: &quot;2021-04-06T09:01:24.000000Z&quot;
+            &quot;executed_at&quot;: &quot;2021-04-10T02:49:36.000000Z&quot;
         }
     ]
 }</code>
@@ -2659,10 +2673,138 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="POSTapi-workflows-deploy--workflow_id-"
-               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+               value="a3425558-3c10-4bb0-9dcf-616897de749a"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
+<p>The ID of the workflow. Example: <code>a3425558-3c10-4bb0-9dcf-616897de749a</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="workflows-POSTapi-workflows-undeploy--workflow_id-">Undeploy A Workflow</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-workflows-undeploy--workflow_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://c00678bc704c.ngrok-free.app/api/workflows/undeploy/a3425558-3c10-4bb0-9dcf-616897de749a" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://c00678bc704c.ngrok-free.app/api/workflows/undeploy/a3425558-3c10-4bb0-9dcf-616897de749a"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-workflows-undeploy--workflow_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-workflows-undeploy--workflow_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-workflows-undeploy--workflow_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-workflows-undeploy--workflow_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-workflows-undeploy--workflow_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-workflows-undeploy--workflow_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-workflows-undeploy--workflow_id-" data-method="POST"
+      data-path="api/workflows/undeploy/{workflow_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-workflows-undeploy--workflow_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-workflows-undeploy--workflow_id-"
+                    onclick="tryItOut('POSTapi-workflows-undeploy--workflow_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-workflows-undeploy--workflow_id-"
+                    onclick="cancelTryOut('POSTapi-workflows-undeploy--workflow_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-workflows-undeploy--workflow_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/workflows/undeploy/{workflow_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-workflows-undeploy--workflow_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-workflows-undeploy--workflow_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>workflow_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="workflow_id"                data-endpoint="POSTapi-workflows-undeploy--workflow_id-"
+               value="a3425558-3c10-4bb0-9dcf-616897de749a"
+               data-component="url">
+    <br>
+<p>The ID of the workflow. Example: <code>a3425558-3c10-4bb0-9dcf-616897de749a</code></p>
             </div>
                     </form>
 
@@ -2680,14 +2822,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf" \
+    "https://c00678bc704c.ngrok-free.app/api/workflows/a3425558-3c10-4bb0-9dcf-616897de749a" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://7b9a3779a263.ngrok-free.app/api/workflows/3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+    "https://c00678bc704c.ngrok-free.app/api/workflows/a3425558-3c10-4bb0-9dcf-616897de749a"
 );
 
 const headers = {
@@ -2787,10 +2929,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="workflow_id"                data-endpoint="DELETEapi-workflows--workflow_id-"
-               value="3bd1045f-6de6-41a1-bcba-d7a5aa9297bf"
+               value="a3425558-3c10-4bb0-9dcf-616897de749a"
                data-component="url">
     <br>
-<p>The ID of the workflow. Example: <code>3bd1045f-6de6-41a1-bcba-d7a5aa9297bf</code></p>
+<p>The ID of the workflow. Example: <code>a3425558-3c10-4bb0-9dcf-616897de749a</code></p>
             </div>
                     </form>
 
