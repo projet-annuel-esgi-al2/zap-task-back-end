@@ -172,6 +172,15 @@ trait EnumTrait
         return Arr::random(self::cases());
     }
 
+    public static function randomCaseExcept(array $cases)
+    {
+        return Arr::random(
+            collect(self::cases())
+                ->filter(fn (self $case) => collect($cases)->map->value->doesntContain($case->value))
+                ->toArray()
+        );
+    }
+
     public static function optionsWithPrefixedTranslations(?string $locale = null)
     {
         return self::toCollection()->flatMap(fn ($item) => [$item->value => Str::headline(

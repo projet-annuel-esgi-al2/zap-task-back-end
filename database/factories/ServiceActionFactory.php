@@ -23,7 +23,7 @@ class ServiceActionFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'identifier' => Identifier::randomCase(),
+            'identifier' => Identifier::randomCaseExcept([Identifier::GoogleCalendarEventUpdated, Identifier::GoogleCalendarEventCreated]),
             'service_id' => Service::factory(),
             'type' => Type::randomCase(),
             'url' => $this->faker->url(),

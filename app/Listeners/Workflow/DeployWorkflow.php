@@ -20,7 +20,7 @@ class DeployWorkflow
 
         $trigger = $workflow->trigger;
 
-        if ($trigger->serviceAction->identifier === Identifier::GoogleCalendarEventCreated) {
+        if (Identifier::isGoogleTrigger($trigger->serviceAction->identifier)) {
             $user = $workflow->user;
             /** @var \App\Models\ServiceSubscription $serviceSubscription */
             $serviceSubscription = $user->serviceSubscriptions()
