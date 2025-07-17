@@ -13,7 +13,7 @@ enum Status: string
 {
     use EnumTrait;
 
-    case Saved = 'saved';
+    case Draft = 'draft';
     case Tested = 'tested';
     case Deployed = 'deployed';
 }

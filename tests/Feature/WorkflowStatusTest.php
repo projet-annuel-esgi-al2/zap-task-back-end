@@ -34,7 +34,7 @@ class WorkflowStatusTest extends TestCase
         /** @var Workflow $workflow */
         $workflow = tap(Workflow::factory()->makeOne([
             'user_id' => $this->user->id,
-            'status' => WorkflowStatus::Saved,
+            'status' => WorkflowStatus::Draft,
         ]), fn (Workflow $workflow) => $workflow->save());
 
         $trigger = WorkflowAction::factory()->createOne([

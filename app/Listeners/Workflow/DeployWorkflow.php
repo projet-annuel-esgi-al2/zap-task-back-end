@@ -2,8 +2,8 @@
 
 namespace App\Listeners\Workflow;
 
-use App\Enums\Workflow\Status;
 use App\Enums\ServiceAction\Identifier;
+use App\Enums\Workflow\Status;
 use App\Events\Workflow\WorkflowDeploymentTriggered;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Services\GoogleCalendar\CalendarEventObserver;

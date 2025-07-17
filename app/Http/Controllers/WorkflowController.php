@@ -17,6 +17,7 @@ use App\Models\Workflow;
 use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class WorkflowController extends Controller
 {
@@ -87,7 +88,7 @@ class WorkflowController extends Controller
         if (is_null($workflow)) {
             $workflow = $user->workflows()->create([
                 'name' => $request->input('name'),
-                'status' => Status::Saved,
+                'status' => Status::Draft,
             ]);
         }
 
@@ -131,6 +132,7 @@ class WorkflowController extends Controller
      * @apiResourceModel \App\Models\WorkflowActionHistory
      *
      * @response 200
+     * @response 418
      *
      * */
     public function deploy(Workflow $workflow): JsonResponse
@@ -139,7 +141,11 @@ class WorkflowController extends Controller
 
         $trigger = $workflow->trigger;
         if (! empty($trigger->refresh()->latestExecution)) {
-            return response()->json(WorkflowActionHistoryResource::make($trigger->latestExecution));
+            if (Str::of($trigger->latestExecution->response_http_code)->startsWith('2')) {
+                return response()->json(WorkflowActionHistoryResource::make($trigger->latestExecution));
+            } else {
+                return response()->json(WorkflowActionHistoryResource::make($trigger->latestExecution), Response::HTTP_I_AM_A_TEAPOT);
+            }
         }
 
         return response()->json();
@@ -161,11 +167,7 @@ class WorkflowController extends Controller
             return response()->json('Cannot undeploy a workflow with status = '.$workflow->status->value, Response::HTTP_BAD_REQUEST);
         }
 
-        $workflow->update([
-            'status' => Status::Saved,
-            'deployment_id' => null,
-            'deployed_at' => null,
-        ]);
+        $workflow->setAsUndeployed();
 
         return response()->json();
     }

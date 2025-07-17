@@ -115,7 +115,6 @@ class Workflow extends Model
     {
         $this->update([
             'saved_at' => now(),
-            'status' => Status::Saved,
         ]);
 
         return $this;
@@ -135,6 +134,17 @@ class Workflow extends Model
         $this->update([
             'deployed_at' => now(),
             'status' => Status::Deployed,
+        ]);
+
+        return $this;
+    }
+
+    public function setAsUndeployed(): self
+    {
+        $this->update([
+            'status' => Status::Draft,
+            'deployment_id' => \Str::uuid()->toString(),
+            'deployed_at' => null,
         ]);
 
         return $this;
