@@ -148,6 +148,31 @@ class WorkflowController extends Controller
     /**
      * @group Workflows
      *
+     * Undeploy A Workflow
+     *
+     * @authenticated
+     *
+     * @response 200
+     *
+     * */
+    public function undeploy(Workflow $workflow): JsonResponse
+    {
+        if ($workflow->status !== Status::Deployed) {
+            return response()->json('Cannot undeploy a workflow with status = '.$workflow->status->value, Response::HTTP_BAD_REQUEST);
+        }
+
+        $workflow->update([
+            'status' => Status::Saved,
+            'deployment_id' => null,
+            'deployed_at' => null,
+        ]);
+
+        return response()->json();
+    }
+
+    /**
+     * @group Workflows
+     *
      * Delete A Workflow
      *
      * @authenticated
