@@ -24,6 +24,7 @@ class ServiceScopeSeeder extends Seeder
         $serviceIdentifiers = Service::pluck('id', 'identifier');
 
         $seedData = $seedData
+            ->filter(fn ($record) => ServiceScope::where('scope_value', $record['scope_value'])->doesntExist())
             ->map(function ($record) use ($serviceIdentifiers) {
                 $serviceId = Arr::get($serviceIdentifiers, $record['identifier']);
 

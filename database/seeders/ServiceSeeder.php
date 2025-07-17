@@ -20,6 +20,7 @@ class ServiceSeeder extends Seeder
         $seedData = self::readDataFromFile();
 
         $seedData = collect($seedData)
+            ->filter(fn ($record) => Service::where('identifier', $record['identifier'])->doesntExist())
             ->map(fn ($record) => array_merge($record, [
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -12,6 +12,8 @@ use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class WorkflowActionController extends Controller
 {
@@ -41,7 +43,11 @@ class WorkflowActionController extends Controller
         SetWorkflowAsTestedIfPossible::run($action->workflow);
 
         if (! empty($action->refresh()->latestExecution)) {
-            return response()->json(WorkflowActionHistoryResource::make($action->latestExecution));
+            if (Str::of($action->latestExecution->response_http_code)->startsWith('2')) {
+                return response()->json(WorkflowActionHistoryResource::make($action->latestExecution));
+            } else {
+                return response()->json(WorkflowActionHistoryResource::make($action->latestExecution), Response::HTTP_I_AM_A_TEAPOT);
+            }
         }
 
         return response()->json();

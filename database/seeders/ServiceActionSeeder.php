@@ -26,15 +26,29 @@ class ServiceActionSeeder extends Seeder
 
         $serviceIdentifiers = Service::pluck('id', 'identifier');
         $seedData = $seedData
-            ->map(function ($record) use ($serviceIdentifiers) {
+            ->map(function ($record) {
+                $record['body_template'] = json_encode($record['body_template']);
+
+                return $record;
+            })
+            ->filter(fn ($record) => ServiceAction::where('identifier', $record['identifier'])->doesntExist())
+            ->filter(function ($record) use ($serviceIdentifiers) {
                 $serviceId = Arr::get($serviceIdentifiers, $record['service_identifier']);
                 $areEnumValuesInvalid = is_null(Identifier::tryFrom($record['identifier']))
-                    || is_null(Type::tryFrom($record['type']))
-                    || is_null(TriggerNotificationType::tryFrom($record['trigger_notification_type']));
+                    || is_null(Type::tryFrom($record['type']));
+
+                $areEnumValuesInvalid = $areEnumValuesInvalid
+                    && (empty($record['trigger_notification_type'])
+                    || is_null(TriggerNotificationType::tryFrom($record['trigger_notification_type'])));
 
                 if (is_null($serviceId) || $areEnumValuesInvalid) {
-                    return [];
+                    return false;
                 }
+
+                return true;
+            })
+            ->map(function ($record) use ($serviceIdentifiers) {
+                $serviceId = Arr::get($serviceIdentifiers, $record['service_identifier']);
 
                 unset($record['service_identifier']);
 

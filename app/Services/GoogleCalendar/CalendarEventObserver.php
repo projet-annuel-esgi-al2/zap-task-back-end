@@ -108,9 +108,7 @@ class CalendarEventObserver
 
     public function hasUpdatedEvent(): bool
     {
-        $events = $this->getEvents();
-
-        return $events
+        return $this->getEvents()
             ->filter(fn (Event $event) => ! Carbon::parse($event->getCreated())->isSameAs('Y-m-d\TH:i:s', Carbon::parse($event->getUpdated())))
             ->filter(fn (Event $event) => $event->getStatus() != 'cancelled')
             ->count() !== 0;
