@@ -86,7 +86,7 @@ class WorkflowController extends Controller
         if (is_null($workflow)) {
             $workflow = $user->workflows()->create([
                 'name' => $request->input('name'),
-                'status' => Status::Draft,
+                'status' => Status::Saved,
             ]);
         }
 

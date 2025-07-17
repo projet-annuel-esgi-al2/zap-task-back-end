@@ -17,4 +17,12 @@ enum Identifier: string
     case GoogleCalendarEventUpdated = 'google-calendar-event-updated';
     case GoogleCalendarCreateEvent = 'google-calendar-create-event';
     case GoogleMailSend = 'google-mail-send';
+
+    public static function isGoogleTrigger(Identifier $identifier): bool
+    {
+        return collect(self::valuesOnly([
+            Identifier::GoogleCalendarEventCreated,
+            Identifier::GoogleCalendarEventUpdated,
+        ]))->contains($identifier->value);
+    }
 }
