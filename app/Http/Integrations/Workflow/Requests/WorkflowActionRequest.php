@@ -18,7 +18,7 @@ class WorkflowActionRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
-    protected Method $method = Method::POST;
+    protected Method $method;
 
     protected ?string $url;
 
@@ -60,6 +60,7 @@ class WorkflowActionRequest extends Request implements HasBody
         $oauthTokenValue = $oauthToken->value;
 
         $request = self::make();
+        $request->method = $action->http_method;
         $request->headers()->add('Authorization', 'Bearer '.$oauthTokenValue);
         $request->url = $action->url;
         $request->body()->merge($action->resolved_body);

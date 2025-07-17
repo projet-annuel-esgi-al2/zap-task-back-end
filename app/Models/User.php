@@ -54,6 +54,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read int|null $service_subscriptions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Workflow> $workflows
  * @property-read int|null $workflows_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GoogleCalendarSyncToken> $googleSyncTokens
+ * @property-read int|null $google_sync_tokens_count
  *
  * @mixin \Eloquent
  */
