@@ -132,4 +132,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Workflow::class);
     }
+
+    public function googleSyncTokens(): HasMany
+    {
+        return $this->hasMany(GoogleCalendarSyncToken::class);
+    }
 }
