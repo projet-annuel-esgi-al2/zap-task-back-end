@@ -153,14 +153,14 @@ endpoints:
         name: action_id
         description: 'The ID of the action.'
         required: true
-        example: consequatur
+        example: 12a2e695-d399-418d-a6fe-171c40944b61
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      action_id: consequatur
+      action_id: 12a2e695-d399-418d-a6fe-171c40944b61
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -169,7 +169,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":{"id":"fa010f60-df29-3f05-8bc7-bed48f550d13","action_id":"87138e75-5dae-45ea-8238-c31a6a14ae73","action_name":"Kennedi VonRueden IV","service_name":"Google Calendar","type":"action","execution_status":"error","response_http_code":"404","execution_order":5,"exception":"Est dolor dolores minus voluptatem. Quibusdam sed vel a quo sed fugit facilis. Dolores molestias ipsam sit. Sed fuga aspernatur natus earum.","url":"http:\/\/kemmer.com\/et-a-qui-ducimus.html","parameters":[],"executed_at":"2009-02-09T08:23:18.000000Z"}}'
+        content: '{"data":{"id":"7020f96b-15ea-3720-8847-36cca4a47fe6","action_id":"4e5aa2b4-a5e0-4ace-9545-c661d6792cc7","action_name":"Mrs. Georgianna VonRueden","service_name":"Google Mail","type":"trigger","execution_status":"error","response_http_code":"404","execution_order":2,"exception":"Eius et rem numquam modi cumque. Fuga quas quos et neque voluptate. Nihil natus quasi aut unde. Sit qui aliquid voluptatum ab nisi dolor.","url":"http:\/\/www.bauch.com\/quidem-veniam-molestiae-libero-ipsum-vitae-aut.html","parameters":[],"executed_at":"1983-02-01T18:21:38.000000Z"}}'
         headers: []
         description: ''
         custom: []
@@ -206,14 +206,14 @@ endpoints:
         name: action_id
         description: 'The ID of the action.'
         required: true
-        example: consequatur
+        example: 12a2e695-d399-418d-a6fe-171c40944b61
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      action_id: consequatur
+      action_id: 12a2e695-d399-418d-a6fe-171c40944b61
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
