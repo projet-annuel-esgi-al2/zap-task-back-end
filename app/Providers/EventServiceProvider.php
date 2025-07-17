@@ -7,6 +7,7 @@
 
 namespace App\Providers;
 
+use App\Actions\Workflow\SetWorkflowAsTestedIfPossible;
 use App\Actions\WorkflowAction\CreateWorkflowActionHistory;
 use App\Actions\WorkflowAction\ExecuteWorkflowAction;
 use App\Actions\WorkflowAction\RefreshOAuthToken;
@@ -28,6 +29,7 @@ class EventServiceProvider extends ServiceProvider
             CreateWorkflowActionHistory::class,
         ],
         WorkflowDeploymentTriggered::class => [
+            SetWorkflowAsTestedIfPossible::class,
             RefreshDeploymentId::class,
             DeployWorkflow::class,
         ],

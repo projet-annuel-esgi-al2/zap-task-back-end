@@ -7,6 +7,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Workflow\SetWorkflowAsTestedIfPossible;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Http\Resources\Api\WorkflowActionHistoryResource;
 use App\Models\WorkflowAction;
@@ -36,6 +37,8 @@ class WorkflowActionController extends Controller
     public function execute(WorkflowAction $action): JsonResponse
     {
         WorkflowActionTriggered::dispatch($action);
+
+        SetWorkflowAsTestedIfPossible::run($action->workflow);
 
         if (! empty($action->refresh()->latestExecution)) {
             return response()->json(WorkflowActionHistoryResource::make($action->latestExecution));

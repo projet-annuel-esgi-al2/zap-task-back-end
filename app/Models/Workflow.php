@@ -111,19 +111,40 @@ class Workflow extends Model
         return $this;
     }
 
-    public function setAsDeployed(): self
+    public function setAsSaved(): self
     {
         $this->update([
-            'deployed_at' => now(),
+            'saved_at' => now(),
         ]);
 
         return $this;
     }
 
-    public function setAsSaved(): self
+    public function setAsTested(): self
     {
         $this->update([
-            'saved_at' => now(),
+            'status' => Status::Tested,
+        ]);
+
+        return $this;
+    }
+
+    public function setAsDeployed(): self
+    {
+        $this->update([
+            'deployed_at' => now(),
+            'status' => Status::Deployed,
+        ]);
+
+        return $this;
+    }
+
+    public function setAsUndeployed(): self
+    {
+        $this->update([
+            'status' => Status::Draft,
+            'deployment_id' => \Str::uuid()->toString(),
+            'deployed_at' => null,
         ]);
 
         return $this;

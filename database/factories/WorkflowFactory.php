@@ -24,7 +24,7 @@ class WorkflowFactory extends Factory
 
         return [
             'id' => $id,
-            'user_id' => User::factory(),
+            'user_id' => User::factory()->loggedIn(),
             'name' => $this->faker->name(),
             'status' => Status::randomCase(),
             'saved_at' => $this->faker->dateTime(),

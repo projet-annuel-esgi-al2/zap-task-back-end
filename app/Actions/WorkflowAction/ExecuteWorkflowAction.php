@@ -35,14 +35,17 @@ class ExecuteWorkflowAction
                 ->send(WorkflowActionRequest::fromWorkflowAction($action));
 
             if ($response->successful()) {
+                $action->setAsTested();
                 CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $response->status(), $response->successful()));
             } else {
+                $action->setAsError();
                 CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $response->status(), false, $response->toException()->getMessage()));
             }
         } catch (OAuthTokenExpiredException $exception) {
+            $action->setAsError();
             CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, '500', false, $exception->getMessage()));
         } catch (FatalRequestException|RequestException $e) {
-            error_log($e->getStatus());
+            $action->setAsError();
             CreateWorkflowActionHistory::run(new WorkflowActionExecuted($action, (string) $e->getStatus(), false, $e->getMessage()));
 
             throw $e;

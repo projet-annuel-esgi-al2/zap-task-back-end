@@ -5,7 +5,6 @@
  * Version: 1.0
  */
 
-use App\Actions\Workflow\ExecuteWorkflow;
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\ServiceController;
@@ -14,7 +13,6 @@ use App\Http\Controllers\WorkflowActionController;
 use App\Http\Controllers\WorkflowActionHistoryController;
 use App\Http\Controllers\WorkflowController;
 use App\Http\Middleware\VerifyPersonalAccessToken;
-use App\Models\Workflow;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', RegisterUserController::class);
@@ -42,9 +40,6 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
         Route::get('/', [WorkflowController::class, 'index']);
         Route::get('/{workflow}', [WorkflowController::class, 'show']);
         Route::put('/{workflow?}', [WorkflowController::class, 'createOrUpdate']);
-        Route::post('/execute/{workflow}', function (Workflow $workflow) {
-            ExecuteWorkflow::dispatch($workflow);
-        });
         Route::post('/deploy/{workflow}', [WorkflowController::class, 'deploy']);
         Route::post('/undeploy/{workflow}', [WorkflowController::class, 'undeploy']);
         Route::delete('/{workflow}', [WorkflowController::class, 'destroy']);
