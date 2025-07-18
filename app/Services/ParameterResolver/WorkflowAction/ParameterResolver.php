@@ -11,6 +11,7 @@ use App\Models\WorkflowAction;
 use App\Services\ParameterResolver\AbstractParameterResolver;
 use App\Services\ParameterResolver\WorkflowAction\Traits\HasGMailDynamicParameters;
 use App\Services\ParameterResolver\WorkflowAction\Traits\HasGoogleDynamicParameters;
+use App\Services\ParameterResolver\WorkflowAction\Traits\HasGoogleSheetsDynamicParameters;
 use App\Traits\Makeable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -21,6 +22,7 @@ class ParameterResolver extends AbstractParameterResolver
 {
     use HasGMailDynamicParameters;
     use HasGoogleDynamicParameters;
+    use HasGoogleSheetsDynamicParameters;
     use Makeable;
 
     public function __construct(protected WorkflowAction $workflowAction, protected array $values = []) {}
@@ -90,11 +92,11 @@ class ParameterResolver extends AbstractParameterResolver
 
     protected function resolveParameters(string $parameters, Collection $afterResolution): array
     {
-        $parameters = parent::resolveParameters($parameters, $afterResolution);
-
-        return collect($parameters)
+        $resolvedParameters = collect(parent::resolveParameters($parameters, $afterResolution))
             ->filter(fn ($parameter) => ! empty($parameter['parameter_value']))
-            ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['parameter_value']])
+            ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['parameter_value']]);
+
+        return $this->fireAfterResolutionHooks($resolvedParameters, $afterResolution)
             ->toArray();
     }
 

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Uri;
 
 abstract class AbstractParameterResolver
@@ -87,16 +88,23 @@ abstract class AbstractParameterResolver
 
     protected function resolveTemplate(string $template, Collection $afterResolution): array
     {
-        $parameterValues = array_merge(
-            ['_r' => $this],
-            $this->getParameterValues(),
-        );
+        $parameterValues = collect(['_r' => $this])
+            ->merge($this->getParameterValues())
+            /** @phpstan-ignore-next-line */
+            ->map(fn ($paramValue) => is_array($paramValue) ? new HtmlString(json_encode($paramValue)) : $paramValue)
+            ->toArray();
+
         $template = \Str::of($template)
             ->replaceMatches('/"<<\s*(.*?)\s*>>"/', fn ($match) => '{{'.$match[1].'}}')
             ->toString();
 
         $resolvedParameters = Collection::fromJson(Blade::render($template, $parameterValues));
 
+        return $this->fireAfterResolutionHooks($resolvedParameters, $afterResolution)->toArray();
+    }
+
+    protected function fireAfterResolutionHooks(Collection $resolvedParameters, Collection $afterResolution): Collection
+    {
         return $resolvedParameters->mapWithKeys(function ($parameterValue, $parameterKey) use ($afterResolution) {
             if ($afterResolution->hasAny($parameterKey)) {
                 $afterResolutionMethod = $afterResolution[$parameterKey];
@@ -105,7 +113,7 @@ abstract class AbstractParameterResolver
             }
 
             return [$parameterKey => $parameterValue];
-        })->toArray();
+        });
     }
 
     protected function resolveParameters(string $parameters, Collection $afterResolution): array
