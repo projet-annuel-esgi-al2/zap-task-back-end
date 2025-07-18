@@ -20,6 +20,7 @@ enum Identifier: string
     case GoogleSheetsCreateSpreadSheet = 'google-sheets-create-spreadsheet';
     case GoogleDocsCreateEmptyDoc = 'google-docs-create-empty-doc';
     case GoogleSheetsAddRow = 'google-sheets-add-row';
+    case GoogleSheetsAddColumn = 'google-sheets-add-column';
     case GoogleDocsAddContent = 'google-docs-add-content';
     case GoogleCalendarDeleteEvent = 'google-calendar-delete-event';
     case GoogleTasksDeleteTask = 'google-tasks-delete-task';
