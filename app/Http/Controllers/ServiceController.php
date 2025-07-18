@@ -43,7 +43,7 @@ class ServiceController extends Controller
             ->where('service_id', $service->id)
             ->first();
         $oauthToken = $serviceSubscription->oauthToken;
-        $service->actions = $service->actions
+        $service->serviceActions = $service->serviceActions
             ->map(fn ($serviceAction) => ParameterResolver::make($serviceAction, oauthToken: $oauthToken)->resolve());
 
         return $service

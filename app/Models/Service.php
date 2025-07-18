@@ -43,6 +43,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Database\Factories\ServiceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Service whereOauthTokenOptions($value)
  *
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceAction> $serviceActions
+ * @property-read int|null $service_actions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ServiceAction> $triggers
+ * @property-read int|null $triggers_count
+ *
  * @mixin \Eloquent
  */
 class Service extends Model
