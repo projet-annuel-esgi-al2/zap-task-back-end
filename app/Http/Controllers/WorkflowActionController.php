@@ -8,12 +8,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Workflow\SetWorkflowAsTestedIfPossible;
+use App\Enums\WorkflowAction\Status;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
-use App\Http\Resources\Api\WorkflowActionHistoryResource;
+use App\Http\Resources\Api\WorkflowResource;
 use App\Models\WorkflowAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Str;
 
 class WorkflowActionController extends Controller
 {
@@ -40,17 +40,15 @@ class WorkflowActionController extends Controller
     {
         WorkflowActionTriggered::dispatch($action);
 
+        $action->workflow->setAsUndeployed();
+        $action->workflow->setAsSaved();
         SetWorkflowAsTestedIfPossible::run($action->workflow);
 
-        if (! empty($action->refresh()->latestExecution)) {
-            if (Str::of($action->latestExecution->response_http_code)->startsWith('2')) {
-                return response()->json(WorkflowActionHistoryResource::make($action->latestExecution));
-            } else {
-                return response()->json(WorkflowActionHistoryResource::make($action->latestExecution), Response::HTTP_I_AM_A_TEAPOT);
-            }
+        if ($action->status === Status::Tested) {
+            return response()->json(WorkflowResource::make($action->workflow));
         }
 
-        return response()->json();
+        return response()->json(WorkflowResource::make($action->workflow), Response::HTTP_I_AM_A_TEAPOT);
     }
 
     /**

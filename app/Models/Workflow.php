@@ -114,6 +114,7 @@ class Workflow extends Model
     public function setAsSaved(): self
     {
         $this->update([
+            'status' => Status::Draft,
             'saved_at' => now(),
         ]);
 

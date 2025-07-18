@@ -106,8 +106,8 @@ class WorkflowController extends Controller
         ]);
 
         /** @var Workflow $workflow */
+        $workflow->setAsUndeployed();
         $workflow->setAsSaved();
-
         SetWorkflowAsTestedIfPossible::run($workflow);
 
         return response()->json(WorkflowResource::make($workflow));
