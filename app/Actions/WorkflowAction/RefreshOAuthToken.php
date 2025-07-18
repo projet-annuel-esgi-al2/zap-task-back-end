@@ -3,6 +3,7 @@
 namespace App\Actions\WorkflowAction;
 
 use App\Events\WorkflowAction\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowTriggerActionTriggered;
 use App\Models\OAuthToken;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -36,7 +37,7 @@ class RefreshOAuthToken
         ]);
     }
 
-    public function asListener(WorkflowActionTriggered $event): void
+    public function asListener(WorkflowActionTriggered|WorkflowTriggerActionTriggered $event): void
     {
         $action = $event->action;
 

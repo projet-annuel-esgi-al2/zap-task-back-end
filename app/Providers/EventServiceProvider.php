@@ -15,6 +15,7 @@ use App\Actions\WorkflowAction\RefreshOAuthToken;
 use App\Events\Workflow\WorkflowDeploymentTriggered;
 use App\Events\WorkflowAction\WorkflowActionExecuted;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowTriggerActionTriggered;
 use App\Listeners\Workflow\DeployWorkflow;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -24,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
         WorkflowActionTriggered::class => [
             RefreshOAuthToken::class,
             RefreshDeploymentId::class,
+            ExecuteWorkflowAction::class,
+        ],
+        WorkflowTriggerActionTriggered::class => [
+            RefreshOAuthToken::class,
             ExecuteWorkflowAction::class,
         ],
         WorkflowActionExecuted::class => [

@@ -9,6 +9,7 @@ namespace App\Actions\WorkflowAction;
 
 use App\Events\WorkflowAction\WorkflowActionExecuted;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowTriggerActionTriggered;
 use App\Http\Integrations\Workflow\Exceptions\OAuthTokenExpiredException;
 use App\Http\Integrations\Workflow\Requests\WorkflowActionRequest;
 use App\Http\Integrations\Workflow\ServiceConnector;
@@ -57,7 +58,7 @@ class ExecuteWorkflowAction
         $this->handle($action);
     }
 
-    public function asListener(WorkflowActionTriggered $actionTriggered): void
+    public function asListener(WorkflowActionTriggered|WorkflowTriggerActionTriggered $actionTriggered): void
     {
         $this->handle($actionTriggered->action);
     }

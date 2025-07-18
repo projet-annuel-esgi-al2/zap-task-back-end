@@ -5,7 +5,7 @@ namespace App\Listeners\Workflow;
 use App\Enums\ServiceAction\Identifier;
 use App\Enums\Workflow\Status;
 use App\Events\Workflow\WorkflowDeploymentTriggered;
-use App\Events\WorkflowAction\WorkflowActionTriggered;
+use App\Events\WorkflowAction\WorkflowTriggerActionTriggered;
 use App\Services\GoogleCalendar\CalendarEventObserver;
 
 class DeployWorkflow
@@ -32,7 +32,7 @@ class DeployWorkflow
                 ->createOrRefreshSyncToken();
         }
 
-        WorkflowActionTriggered::dispatch($trigger);
+        WorkflowTriggerActionTriggered::dispatch($trigger);
 
         $workflow->setAsDeployed();
     }
