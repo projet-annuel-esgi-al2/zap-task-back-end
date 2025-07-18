@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            //ServiceSeeder::class,
-            //ServiceScopeSeeder::class,
+            // ServiceSeeder::class,
+            // ServiceScopeSeeder::class,
             ServiceActionSeeder::class,
         ]);
     }

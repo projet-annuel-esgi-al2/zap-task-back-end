@@ -13,7 +13,7 @@ class WorkflowStatsController extends Controller
 
         $workflows = Workflow::with([
             'actions.history.workflowAction',
-            'actions.serviceAction.service'
+            'actions.serviceAction.service',
         ])
             ->where('user_id', $user->id)
             ->get();
@@ -24,11 +24,12 @@ class WorkflowStatsController extends Controller
             ->groupBy('status')
             ->mapWithKeys(function ($group, $status) use ($totalWorkflows) {
                 $count = $group->count();
+
                 return [
                     $status => [
                         'count' => $count,
                         'percent' => round(($count / max($totalWorkflows, 1)) * 100, 1),
-                    ]
+                    ],
                 ];
             });
 
@@ -43,11 +44,12 @@ class WorkflowStatsController extends Controller
             ->groupBy('status')
             ->mapWithKeys(function ($group, $status) use ($totalActions) {
                 $count = $group->count();
+
                 return [
                     $status => [
                         'count' => $count,
                         'percent' => round(($count / max($totalActions, 1)) * 100, 1),
-                    ]
+                    ],
                 ];
             });
 
@@ -58,11 +60,12 @@ class WorkflowStatsController extends Controller
             ->groupBy('execution_status')
             ->mapWithKeys(function ($group, $status) use ($totalExecutions) {
                 $count = $group->count();
+
                 return [
                     $status => [
                         'count' => $count,
                         'percent' => round(($count / max($totalExecutions, 1)) * 100, 1),
-                    ]
+                    ],
                 ];
             });
 

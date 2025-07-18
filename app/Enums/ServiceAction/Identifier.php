@@ -33,6 +33,4 @@ enum Identifier: string
             Identifier::GoogleCalendarEventUpdated,
         ]))->contains($identifier->value);
     }
-
-
 }
