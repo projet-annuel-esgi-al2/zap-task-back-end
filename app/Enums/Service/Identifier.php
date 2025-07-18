@@ -15,4 +15,9 @@ enum Identifier: string
 
     case GoogleCalendar = 'google-calendar';
     case GoogleMail = 'google-mail';
+
+    case GoogleSheets = 'google-sheets';
+    case GoogleDocs = 'google-docs';
+    case GoogleTasks = 'google-tasks';
+
 }
