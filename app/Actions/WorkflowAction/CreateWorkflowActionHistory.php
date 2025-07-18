@@ -32,6 +32,7 @@ class CreateWorkflowActionHistory implements ShouldQueue, ShouldQueueAfterCommit
             'exception' => $event->exception,
             'parameters' => $workflowAction->getParametersForApi(),
             'executed_at' => $event->executedAt,
+            'deployment_id' => $workflowAction->workflow->deployment_id,
         ]);
     }
 

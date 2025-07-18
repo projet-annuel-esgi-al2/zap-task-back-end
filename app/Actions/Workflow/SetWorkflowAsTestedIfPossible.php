@@ -20,7 +20,8 @@ class SetWorkflowAsTestedIfPossible
         }
 
         $allActionsTested = $workflow->actions
-            ->every(fn (WorkflowAction $action) => $action->status === WorkflowActionStatus::Tested);
+            ->every(fn (WorkflowAction $action) => $action->status === WorkflowActionStatus::Tested)
+        && $workflow->actions->isNotEmpty();
 
         if ($allActionsTested) {
             $workflow->setAsTested();

@@ -47,6 +47,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereResponseHttpCode($value)
  * @method static \Database\Factories\WorkflowActionHistoryFactory factory($count = null, $state = [])
  *
+ * @property string|null $deployment_id
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowActionHistory whereDeploymentId($value)
+ *
  * @mixin \Eloquent
  */
 class WorkflowActionHistory extends Model
@@ -64,6 +68,7 @@ class WorkflowActionHistory extends Model
         'exception',
         'parameters',
         'executed_at',
+        'deployment_id',
     ];
 
     protected function casts(): array
