@@ -34,7 +34,7 @@ class ServiceController extends Controller
      * */
     public function get(Request $request, Identifier $serviceIdentifier): JsonResponse
     {
-        $service = Service::with('actions')
+        $service = Service::with('serviceActions')
             ->where('identifier', $serviceIdentifier)
             ->first();
         $user = auth()->user();

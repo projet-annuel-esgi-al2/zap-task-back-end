@@ -20,7 +20,9 @@ class ServiceResource extends JsonResource
         return [
             'identifier' => $this->identifier->value,
             'name' => $this->name,
-            'actions' => $this->whenLoaded('actions', fn () => ServiceActionResource::collection($this->actions)),
+            'serviceActions' => $this->whenLoaded('serviceActions', fn () => ServiceActionResource::collection($this->serviceActions)),
+            'hasTriggers' => $this->triggers()->exists(),
+            'hasActions' => $this->actions()->exists(),
         ];
     }
 }

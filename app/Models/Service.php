@@ -8,6 +8,7 @@
 namespace App\Models;
 
 use App\Enums\Service\Identifier;
+use App\Enums\ServiceAction\Type;
 use App\Models\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -67,9 +68,21 @@ class Service extends Model
         ];
     }
 
-    public function actions(): HasMany
+    public function serviceActions(): HasMany
     {
         return $this->hasMany(ServiceAction::class);
+    }
+
+    public function triggers(): HasMany
+    {
+        return $this->hasMany(ServiceAction::class)
+            ->where('type', Type::Trigger);
+    }
+
+    public function actions(): HasMany
+    {
+        return $this->hasMany(ServiceAction::class)
+            ->where('type', Type::Action);
     }
 
     public function scopes(): HasMany

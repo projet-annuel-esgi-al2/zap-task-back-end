@@ -17,6 +17,13 @@ enum Identifier: string
     case GoogleCalendarEventUpdated = 'google-calendar-event-updated';
     case GoogleCalendarCreateEvent = 'google-calendar-create-event';
     case GoogleMailSend = 'google-mail-send';
+    case GoogleSheetsCreateSpreadSheet = 'google-sheets-create-spreadsheet';
+    case GoogleDocsCreateEmptyDoc = 'google-docs-create-empty-doc';
+    case GoogleSheetsAddRow = 'google-sheets-add-row';
+    case GoogleDocsAddContent = 'google-docs-add-content';
+    case GoogleCalendarDeleteEvent = 'google-calendar-delete-event';
+    case GoogleTasksDeleteTask = 'google-tasks-delete-task';
+    case GoogleTasksCreateTask = 'google-tasks-create-task';
 
     public static function isGoogleTrigger(Identifier $identifier): bool
     {
