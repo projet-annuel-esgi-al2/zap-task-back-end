@@ -150,7 +150,7 @@ class WorkflowAction extends Model
 
         $resolvedServiceAction = $this->serviceAction;
         if (! is_null($oauthToken)) {
-            $resolvedServiceAction = ServiceActionParameterResolver::make($resolvedServiceAction, oauthToken: $oauthToken)
+            $resolvedServiceAction = ServiceActionParameterResolver::make($resolvedServiceAction, values: $this->parameters, oauthToken: $oauthToken)
                 ->resolve();
         }
 
@@ -161,7 +161,7 @@ class WorkflowAction extends Model
                 }
 
                 if (Arr::get($param, 'parameter_key') === 'attendees') {
-                    $emails = collect($param['parameter_value'])->pluck('email')->values()->toArray();
+                    $emails = collect($workflowActionParameters['attendees'])->pluck('email')->values()->toArray();
                     Arr::set($param, 'parameter_value', $emails);
 
                     return $param;
