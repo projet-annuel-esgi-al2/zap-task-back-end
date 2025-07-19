@@ -184,6 +184,7 @@ class WorkflowController extends Controller
      * */
     public function destroy(Workflow $workflow): JsonResponse
     {
+        $workflow->setAsUndeployed();
         $workflow->actions->each(fn (WorkflowAction $action) => $action->history()->delete());
         $workflow->actions->each->delete();
         $workflow->delete();

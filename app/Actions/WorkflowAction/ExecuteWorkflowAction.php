@@ -7,6 +7,7 @@
 
 namespace App\Actions\WorkflowAction;
 
+use App\Enums\ServiceAction\Identifier;
 use App\Events\WorkflowAction\WorkflowActionExecuted;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Events\WorkflowAction\WorkflowTriggerActionTriggered;
@@ -31,9 +32,17 @@ class ExecuteWorkflowAction
             'last_executed_at' => now(),
         ]);
 
+        $action->refresh();
+
         try {
             $response = ServiceConnector::make()
                 ->send(WorkflowActionRequest::fromWorkflowAction($action));
+
+            if (Identifier::isGoogleTrigger($action->serviceAction->identifier)) {
+                $action->update([
+                    'watcher_id' => $response->json('resourceId'),
+                ]);
+            }
 
             if ($response->successful()) {
                 $action->setAsTested();

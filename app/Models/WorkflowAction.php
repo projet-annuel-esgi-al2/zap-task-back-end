@@ -72,6 +72,10 @@ use Saloon\Enums\Method;
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereHttpMethod($value)
  *
+ * @property string|null $watcher_id
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowAction whereWatcherId($value)
+ *
  * @mixin \Eloquent
  */
 class WorkflowAction extends Model
@@ -93,6 +97,7 @@ class WorkflowAction extends Model
         'resolved_body',
         'http_method',
         'last_executed_at',
+        'watcher_id',
     ];
 
     protected function casts(): array

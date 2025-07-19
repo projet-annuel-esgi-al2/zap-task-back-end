@@ -35,8 +35,9 @@ class EventServiceProvider extends ServiceProvider
             CreateWorkflowActionHistory::class,
         ],
         WorkflowDeploymentTriggered::class => [
-            SetWorkflowAsTestedIfPossible::class,
+            // flip these so that if deployed, refreshdeploymentId undeploys watcher before setAsTested runs
             RefreshDeploymentId::class,
+            SetWorkflowAsTestedIfPossible::class,
             DeployWorkflow::class,
         ],
     ];

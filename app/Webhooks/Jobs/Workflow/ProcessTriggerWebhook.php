@@ -11,7 +11,11 @@ use App\Actions\Workflow\ExecuteWorkflow;
 use App\Enums\ServiceAction\Identifier;
 use App\Enums\Workflow\Status;
 use App\Models\Workflow;
+use App\Models\WorkflowAction;
 use App\Services\GoogleCalendar\CalendarEventObserver;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Uri;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
@@ -31,6 +35,10 @@ class ProcessTriggerWebhook extends ProcessWebhookJob
             ->firstOrFail();
 
         if ($workflow->status !== Status::Deployed) {
+            return;
+        }
+
+        if (empty($workflow->trigger)) {
             return;
         }
 
@@ -56,14 +64,35 @@ class ProcessTriggerWebhook extends ProcessWebhookJob
 
         $observer = CalendarEventObserver::make($workflow->trigger, $oauthToken);
 
+        $calendarId = Arr::get($workflow->trigger->url_parameters, 'calendarId');
+        $numberOfSimultaneousTriggers = Cache::get($calendarId.$workflow->trigger->serviceAction->id);
+
+        if (is_null($numberOfSimultaneousTriggers)) {
+            $numberOfSimultaneousTriggers = WorkflowAction::where('service_action_id', $workflow->trigger->serviceAction->id)
+                ->where('url_parameters->calendarId', $calendarId)
+                ->count();
+            Log::info('$numberOfSimultaneousTriggers = '.$numberOfSimultaneousTriggers);
+            Cache::set($calendarId.$workflow->trigger->serviceAction->id, $numberOfSimultaneousTriggers);
+        }
+
         if ($workflow->trigger->serviceAction->identifier === Identifier::GoogleCalendarEventCreated
             && $observer->hasNewlyCreatedEvent()) {
-            $observer->createOrRefreshSyncToken();
+            $numberOfSimultaneousTriggers -= 1;
+
+            if ($numberOfSimultaneousTriggers === 0) {
+                Cache::forget($calendarId.$workflow->trigger->serviceAction->id);
+                $observer->createOrRefreshSyncToken();
+            }
 
             return true;
         } elseif ($workflow->trigger->serviceAction->identifier === Identifier::GoogleCalendarEventUpdated
             && $observer->hasUpdatedEvent()) {
-            $observer->createOrRefreshSyncToken();
+            $numberOfSimultaneousTriggers -= 1;
+
+            if ($numberOfSimultaneousTriggers === 0) {
+                Cache::forget($calendarId.$workflow->trigger->serviceAction->id);
+                $observer->createOrRefreshSyncToken();
+            }
 
             return true;
         }

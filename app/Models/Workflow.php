@@ -9,6 +9,8 @@ namespace App\Models;
 
 use App\Enums\ServiceAction\Type;
 use App\Enums\Workflow\Status;
+use App\Http\Requests\Google\Calendar\GoogleCalendarConnector;
+use App\Http\Requests\Google\Calendar\Requests\StopWatcher;
 use App\Models\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -140,8 +142,34 @@ class Workflow extends Model
         return $this;
     }
 
+    public function undeploy(): self
+    {
+        /** @var \App\Models\User $user */
+        $user = $this->user;
+        /** @var \App\Models\ServiceSubscription $serviceSubscription */
+        $serviceSubscription = $user->serviceSubscriptions()
+            ->where('service_id', $this->trigger->serviceAction->service->id)
+            ->first();
+
+        if (! empty($this->trigger->watcher_id)) {
+            $res = GoogleCalendarConnector::make($serviceSubscription->oauthToken->value)
+                ->send(StopWatcher::fromWorkflow($this));
+            if ($res->successful()) {
+                $this->trigger->update([
+                    'watcher_id' => null,
+                ]);
+            }
+        }
+
+        return $this;
+    }
+
     public function setAsUndeployed(): self
     {
+        if ($this->trigger()->exists()) {
+            $this->undeploy();
+        }
+
         $this->update([
             'status' => Status::Draft,
             'deployment_id' => \Str::uuid()->toString(),

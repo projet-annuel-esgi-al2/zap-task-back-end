@@ -68,6 +68,7 @@ class WorkflowActionHistory extends Model
         'exception',
         'parameters',
         'executed_at',
+        'url',
         'deployment_id',
     ];
 

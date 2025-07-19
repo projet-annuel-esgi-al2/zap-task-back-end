@@ -21,6 +21,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class CalendarEventObserver
 {
@@ -101,9 +102,13 @@ class CalendarEventObserver
 
     public function hasNewlyCreatedEvent(): bool
     {
-        return $this->getEvents()
-            ->filter(fn (Event $event) => Carbon::parse($event->getCreated())->isSameAs('Y-m-d\TH:i:s', Carbon::parse($event->getUpdated())))
-            ->count() !== 0;
+        $events = $this->getEvents();
+
+        $createdEvents = $events
+            ->filter(fn (Event $event) => Carbon::parse($event->getCreated())->isSameAs('Y-m-d\TH:i:s', Carbon::parse($event->getUpdated())));
+        Log::info('events count = '.json_encode($createdEvents->count()));
+
+        return $createdEvents->count() !== 0;
     }
 
     public function hasUpdatedEvent(): bool

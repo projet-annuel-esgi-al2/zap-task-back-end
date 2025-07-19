@@ -7,6 +7,7 @@ use App\Events\Workflow\WorkflowDeploymentTriggered;
 use App\Events\WorkflowAction\WorkflowActionTriggered;
 use App\Models\Workflow;
 use App\Services\ParameterResolver\WorkflowAction\ParameterResolver;
+use Illuminate\Support\Facades\Log;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class RefreshDeploymentId
@@ -15,8 +16,12 @@ class RefreshDeploymentId
 
     public function handle(Workflow $workflow)
     {
-        $workflow->refreshDeploymentId();
+        $workflow->undeploy()
+            ->refreshDeploymentId();
 
+        Log::info('before refresh deployment id = '.$workflow->deployment_id);
+        $workflow->refresh();
+        Log::info('after refresh deployment id = '.$workflow->deployment_id);
         $parameterResolver = ParameterResolver::make($workflow->trigger);
         $bodyParametersWithNewWebhookAddress = $parameterResolver->resolveBodyParameters();
         $bodyWithNewWebhookAddress = $parameterResolver->resolveBody();
