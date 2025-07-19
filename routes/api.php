@@ -58,4 +58,4 @@ Route::middleware([VerifyPersonalAccessToken::class])->group(function () {
     });
 });
 
-Route::webhooks('/workflows/trigger', 'trigger-workflow-webhook');
+Route::webhooks('/trigger-workflow', 'trigger-workflow-webhook');

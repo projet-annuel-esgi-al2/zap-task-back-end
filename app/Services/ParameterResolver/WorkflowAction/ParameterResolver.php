@@ -115,7 +115,7 @@ class ParameterResolver extends AbstractParameterResolver
     public function webhookAddress(): HtmlString
     {
         return new HtmlString(Uri::of(config('app.url'))
-            ->withPath('/api/workflows/trigger')
+            ->withPath('/api/trigger-workflow')
             ->withQuery([
                 'w' => $this->workflowAction->workflow->id,
                 'd' => $this->workflowAction->workflow->deployment_id,

@@ -49,7 +49,7 @@ trait HasGoogleCalendarDynamicParameters
 
     public function formatToGoogleCalendarString(string $date): string
     {
-        return Carbon::parse($date)
+        return Carbon::parse($date, 'Europe/Paris')
             ->toRfc3339String();
     }
 }
