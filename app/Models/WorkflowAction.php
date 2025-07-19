@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
 
@@ -157,6 +158,17 @@ class WorkflowAction extends Model
             ->map(function ($param) use ($workflowActionParameters) {
                 if (isset($param['options'])) {
                     $workflowActionParameters['options'] = $param['options'];
+                }
+
+                if ($param['parameter_type'] === 'array') {
+                    Arr::set($param, 'parameter_value', $workflowActionParameters[$param['parameter_key']]);
+
+                    if ($param['parameter_key'] === 'attendees') {
+                        $emails = collect($param['parameter_value'])->pluck('email')->values()->toArray();
+                        Arr::set($param, 'parameter_value', $emails);
+
+                        return $param;
+                    }
                 }
 
                 $param['parameter_value'] = $workflowActionParameters[$param['parameter_key']];

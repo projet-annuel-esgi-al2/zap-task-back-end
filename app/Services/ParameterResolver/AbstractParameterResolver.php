@@ -16,6 +16,8 @@ use Illuminate\Support\Uri;
 
 abstract class AbstractParameterResolver
 {
+    protected array $values = [];
+
     abstract public function resolve(): Model;
 
     abstract public function getBodyTemplate(): ?string;
@@ -38,35 +40,37 @@ abstract class AbstractParameterResolver
             return $this->resolveBodyParameters();
         }
 
-        return $this->resolveTemplate($this->getBodyTemplate(), self::getAfterResolutionParameters($this->getBodyParameters()));
+        $parameters = $this->getBodyParameters();
+
+        return $this->resolveTemplate($this->getBodyTemplate(), self::getAfterResolutionParameters($parameters), self::getBeforeResolutionParameters($parameters));
     }
 
     public function resolveBodyParameters(): array
     {
         $parameters = $this->getBodyParameters();
 
-        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters), self::getBeforeResolutionParameters($parameters));
     }
 
     public function resolveQueryParameters(): array
     {
         $parameters = $this->getQueryParameters();
 
-        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters), self::getBeforeResolutionParameters($parameters));
     }
 
     public function resolveUrlParameters(): array
     {
         $parameters = $this->getUrlParameters();
 
-        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters), self::getBeforeResolutionParameters($parameters));
     }
 
     public function resolveHeaders(): array
     {
         $parameters = $this->getHeaders();
 
-        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters));
+        return $this->resolveParameters(json_encode($parameters), self::getAfterResolutionParameters($parameters), self::getBeforeResolutionParameters($parameters));
     }
 
     public function resolveUrl(array $urlParameters, array $queryParameters): string
@@ -86,10 +90,12 @@ abstract class AbstractParameterResolver
         return $uri->value();
     }
 
-    protected function resolveTemplate(string $template, Collection $afterResolution): array
+    protected function resolveTemplate(string $template, Collection $afterResolution, Collection $beforeResolution): array
     {
+        $parameters = $this->fireBeforeResolutionHooks($this->getParameterValues(), $beforeResolution);
+
         $parameterValues = collect(['_r' => $this])
-            ->merge($this->getParameterValues())
+            ->merge($parameters)
             /** @phpstan-ignore-next-line */
             ->map(fn ($paramValue) => is_array($paramValue) ? new HtmlString(json_encode($paramValue)) : $paramValue)
             ->toArray();
@@ -101,6 +107,19 @@ abstract class AbstractParameterResolver
         $resolvedParameters = Collection::fromJson(Blade::render($template, $parameterValues));
 
         return $this->fireAfterResolutionHooks($resolvedParameters, $afterResolution)->toArray();
+    }
+
+    protected function fireBeforeResolutionHooks(array $parameters, Collection $beforeResolution): Collection
+    {
+        return collect($parameters)->mapWithKeys(function ($parameterValue, $parameterKey) use ($beforeResolution) {
+            if ($beforeResolution->hasAny($parameterKey)) {
+                $beforeResolutionMethod = $beforeResolution[$parameterKey];
+
+                return [$parameterKey => $this->{$beforeResolutionMethod}($parameterValue)];
+            }
+
+            return [$parameterKey => $parameterValue];
+        });
     }
 
     protected function fireAfterResolutionHooks(Collection $resolvedParameters, Collection $afterResolution): Collection
@@ -116,9 +135,9 @@ abstract class AbstractParameterResolver
         });
     }
 
-    protected function resolveParameters(string $parameters, Collection $afterResolution): array
+    protected function resolveParameters(string $parameters, Collection $afterResolution, Collection $beforeResolution): array
     {
-        return $this->resolveTemplate($parameters, $afterResolution);
+        return $this->resolveTemplate($parameters, $afterResolution, $beforeResolution);
     }
 
     private static function getAfterResolutionParameters(array $parameters): Collection
@@ -126,5 +145,12 @@ abstract class AbstractParameterResolver
         return collect($parameters)
             ->filter(fn ($parameter) => ! is_null(Arr::get($parameter, 'afterResolutionHook')))
             ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['afterResolutionHook']]);
+    }
+
+    private static function getBeforeResolutionParameters(array $parameters): Collection
+    {
+        return collect($parameters)
+            ->filter(fn ($parameter) => ! is_null(Arr::get($parameter, 'beforeResolutionHook')))
+            ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['beforeResolutionHook']]);
     }
 }

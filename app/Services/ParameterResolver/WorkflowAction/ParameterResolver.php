@@ -7,13 +7,16 @@
 
 namespace App\Services\ParameterResolver\WorkflowAction;
 
+use App\Models\OAuthToken;
 use App\Models\WorkflowAction;
 use App\Services\ParameterResolver\AbstractParameterResolver;
+use App\Services\ParameterResolver\ServiceAction\Traits\HasGoogleCalendarDynamicParameters;
 use App\Services\ParameterResolver\WorkflowAction\Traits\HasGMailDynamicParameters;
 use App\Services\ParameterResolver\WorkflowAction\Traits\HasGoogleDynamicParameters;
 use App\Services\ParameterResolver\WorkflowAction\Traits\HasGoogleSheetsDynamicParameters;
 use App\Traits\Makeable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Uri;
@@ -21,11 +24,17 @@ use Illuminate\Support\Uri;
 class ParameterResolver extends AbstractParameterResolver
 {
     use HasGMailDynamicParameters;
+    use HasGoogleCalendarDynamicParameters;
     use HasGoogleDynamicParameters;
     use HasGoogleSheetsDynamicParameters;
     use Makeable;
 
     public function __construct(protected WorkflowAction $workflowAction, protected array $values = []) {}
+
+    public function oauthToken(): ?OAuthToken
+    {
+        return null;
+    }
 
     public function workflowAction(): WorkflowAction
     {
@@ -90,9 +99,9 @@ class ParameterResolver extends AbstractParameterResolver
         ]);
     }
 
-    protected function resolveParameters(string $parameters, Collection $afterResolution): array
+    protected function resolveParameters(string $parameters, Collection $afterResolution, Collection $beforeResolution): array
     {
-        $resolvedParameters = collect(parent::resolveParameters($parameters, $afterResolution))
+        $resolvedParameters = collect(parent::resolveParameters($parameters, $afterResolution, $beforeResolution))
             ->filter(fn ($parameter) => ! empty($parameter['parameter_value']))
             ->mapWithKeys(fn ($parameter) => [$parameter['parameter_key'] => $parameter['parameter_value']]);
 
@@ -112,5 +121,10 @@ class ParameterResolver extends AbstractParameterResolver
                 'd' => $this->workflowAction->workflow->deployment_id,
             ])
             ->value());
+    }
+
+    public function formatToRfc3339String(string|array $date): string
+    {
+        return Carbon::parse($date)->toRfc3339String();
     }
 }

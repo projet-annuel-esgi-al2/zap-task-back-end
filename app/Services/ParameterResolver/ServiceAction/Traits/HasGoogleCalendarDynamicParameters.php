@@ -12,6 +12,7 @@ use App\Http\Requests\Google\Calendar\GoogleCalendarConnector;
 use App\Http\Requests\Google\Calendar\Requests\GetCalendars;
 use App\Models\OAuthToken;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\HtmlString;
 
 trait HasGoogleCalendarDynamicParameters
@@ -35,5 +36,19 @@ trait HasGoogleCalendarDynamicParameters
             ->toArray();
 
         return new HtmlString(json_encode($calendarIds));
+    }
+
+    public function formatEmailsForGoogleCalendar($value): HtmlString
+    {
+        $emails = collect($value)
+            ->mapWithKeys(fn ($email) => ['email' => $email])
+            ->toArray();
+
+        return new HtmlString(json_encode([$emails]));
+    }
+
+    public function formatToGoogleCalendarString(string|array $date): string
+    {
+        return Carbon::parse($date)->format('Y-m-d\TH:i:s\Z');
     }
 }
