@@ -160,7 +160,7 @@ class WorkflowAction extends Model
                     $workflowActionParameters['options'] = $param['options'];
                 }
 
-                if ($param['parameter_type'] === 'array') {
+                if (Arr::get($param, 'parameter_type') === 'array') {
                     Arr::set($param, 'parameter_value', $workflowActionParameters[$param['parameter_key']]);
 
                     if ($param['parameter_key'] === 'attendees') {
