@@ -160,15 +160,11 @@ class WorkflowAction extends Model
                     $workflowActionParameters['options'] = $param['options'];
                 }
 
-                if (Arr::get($param, 'parameter_type') === 'array') {
-                    Arr::set($param, 'parameter_value', $workflowActionParameters[$param['parameter_key']]);
+                if (Arr::get($param, 'parameter_key') === 'attendees') {
+                    $emails = collect($param['parameter_value'])->pluck('email')->values()->toArray();
+                    Arr::set($param, 'parameter_value', $emails);
 
-                    if ($param['parameter_key'] === 'attendees') {
-                        $emails = collect($param['parameter_value'])->pluck('email')->values()->toArray();
-                        Arr::set($param, 'parameter_value', $emails);
-
-                        return $param;
-                    }
+                    return $param;
                 }
 
                 $param['parameter_value'] = $workflowActionParameters[$param['parameter_key']];
