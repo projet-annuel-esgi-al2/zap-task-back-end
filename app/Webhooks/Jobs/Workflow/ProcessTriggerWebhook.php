@@ -9,6 +9,7 @@ namespace App\Webhooks\Jobs\Workflow;
 
 use App\Actions\Workflow\ExecuteWorkflow;
 use App\Enums\ServiceAction\Identifier;
+use App\Enums\Workflow\Status;
 use App\Models\Workflow;
 use App\Services\GoogleCalendar\CalendarEventObserver;
 use Illuminate\Support\Uri;
@@ -28,6 +29,10 @@ class ProcessTriggerWebhook extends ProcessWebhookJob
         $workflow = Workflow::where('id', $workflowId)
             ->where('deployment_id', $deploymentId)
             ->firstOrFail();
+
+        if ($workflow->status !== Status::Deployed) {
+            return;
+        }
 
         if (Identifier::isGoogleTrigger($workflow->trigger->serviceAction->identifier)) {
             if (self::shouldHandleGoogleCalendarWorkflows($workflow)) {

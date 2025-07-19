@@ -47,8 +47,9 @@ trait HasGoogleCalendarDynamicParameters
         return new HtmlString(json_encode([$emails]));
     }
 
-    public function formatToGoogleCalendarString(string|array $date): string
+    public function formatToGoogleCalendarString(string $date): string
     {
-        return Carbon::parse($date)->format('Y-m-d\TH:i:s\Z');
+        return Carbon::parse($date)
+            ->toRfc3339String();
     }
 }
